@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Launches openni kinect  node -->
+  <include file="$(find freenect_launch)/launch/freenect.launch" />
+</launch>
+

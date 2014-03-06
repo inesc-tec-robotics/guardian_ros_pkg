@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+	<param name="robot_description" textfile="$(find robotnik_powerball_basics)/launch/gball.urdf"/>
+	<param name="use_gui" value="True"/>
+	<!--node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node-->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+	<!-- Publish the wheel tf's-->
+	<node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="-0.30 0.265 0 0 0 0 1 base_link back_left_wheel 100" />
+	<node pkg="tf" type="static_transform_publisher" name="link2_broadcaster" args="-0.30 -0.265 0 0 0 0 1 base_link back_right_wheel 100" />
+	<node pkg="tf" type="static_transform_publisher" name="link3_broadcaster" args="0.30 0.265 0 0 0 0 1 base_link front_left_wheel 100" />
+	<node pkg="tf" type="static_transform_publisher" name="link4_broadcaster" args="0.30 -0.265 0 0 0 0 1 base_link front_right_wheel 100" />
+
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find urdf_tutorial)/urdf.vcg" />
+</launch>

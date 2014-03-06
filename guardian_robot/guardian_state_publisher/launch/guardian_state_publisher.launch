@@ -1,0 +1,6 @@
+<launch>
+    <node pkg="robot_state_publisher" type="state_publisher" name="guardian_st_pub" >
+ 	<param name="robot_description"  textfile="$(find guardian_description_r)/urdf/gball_ita.urdf"/>
+	<param name="publish_frequency" type="double" value="50.0" /> 
+    </node>
+</launch>

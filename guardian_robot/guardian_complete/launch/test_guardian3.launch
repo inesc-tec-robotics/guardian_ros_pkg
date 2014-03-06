@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- start modbus_io node -->
+  <param name="modbus_io_node/ip_address" value="192.168.2.185" />
+  <node pkg="modbus_io" type="modbus_io_node" name="modbus_io_node" output="screen"/> 
+   
+   
+    <!-- Motor controller -->
+  <param name="motor_dev" value="/dev/ttyS0" type="string"/>
+  <node type="guardian_node" name="guardian_node" pkg="guardian_node"/>
+
+  <!-- Axes -->
+  	<param name="cmd_topic" value="/guardian_node/command" type="string"/>
+  	<param name="num_of_buttons" value="15" type="int"/>
+  	<param name="axis_linear" value="1" type="int"/>
+  	<param name="axis_angular" value="2" type="int"/>  <!--  value = 0 -->
+  	<param name="scale_linear" value="1" type="double"/>
+  	<param name="scale_angular" value="2" type="double"/>
+  	<param name="speed_up_button" value="12" type="int"/>
+  	<param name="speed_down_button" value="14" type="int"/>
+  	<param name="dead_man_button" value="11" type="int"/>
+  	<param name="cmd_topic_io" value="/modbus_io/write_digital_output" type="string"/>
+  	<param name="button_output_1" value="15" type="int"/>
+  	<param name="button_output_2" value="13" type="int"/>
+  	<param name="output_1" value="0" type="int"/>
+  	<param name="output_2" value="2" type="int"/>
+  	<param name="cmd_topic_ptz" value="/sphereptz/command_ptz" type="string"/>
+  	<param name="ptz_tilt_up" value="4" type="int"/>
+  	<param name="ptz_tilt_down" value="6" type="int"/>
+  	<param name="ptz_pan_right" value="5" type="int"/>
+  	<param name="ptz_pan_left" value="7" type="int"/>
+  <node name="guardian_pad" pkg="guardian_pad" type="guardian_pad"/>
+  
+  <!-- node name="guardian_pad" pkg="guardian_pad" type="guardian_pad" args="load thrustmaster.yaml" / --> 
+  <!-- node name="guardian_pad" pkg="guardian_pad" type="guardian_pad" args="load logitech.yaml" / --> 
+
+</launch>
+

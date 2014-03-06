@@ -1,0 +1,942 @@
+<?xml version="1.0"?>
+<robot name="gball" 
+
+       xmlns:xi="http://www.w3.org/2001/XInclude"
+       xmlns:gazebo="http://playerstage.sourceforge.net/gazebo/xmlschema/#gz"
+       xmlns:model="http://playerstage.sourceforge.net/gazebo/xmlschema/#model"
+       xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:body="http://playerstage.sourceforge.net/gazebo/xmlschema/#body"
+       xmlns:geom="http://playerstage.sourceforge.net/gazebo/xmlschema/#geom"
+       xmlns:joint="http://playerstage.sourceforge.net/gazebo/xmlschema/#joint"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:rendering="http://playerstage.sourceforge.net/gazebo/xmlschema/#rendering"
+       xmlns:renderable="http://playerstage.sourceforge.net/gazebo/xmlschema/#renderable"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:physics="http://playerstage.sourceforge.net/gazebo/xmlschema/#physics">
+
+
+<!-- BASE FOOTPRINT -->
+  <!-- base_footprint is a fictitious link(frame) that is on the ground right below base_link origin,
+             navigation stack depends on this frame -->
+  <link name="base_footprint">
+      <inertial>
+          <mass value="0.0001" />
+          <origin xyz="0 0 0" />
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                         iyy="0.0001" iyz="0.0" 
+                         izz="0.0001" />
+      </inertial>
+
+      <visual>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+             <box size="0.001 0.001 0.001" />
+          </geometry>
+      </visual>
+
+      <collision>
+          <origin xyz="0 0 0.0" rpy="0 0 0" />
+          <geometry>
+            <box size="0.001 0.001 0.001" />
+         </geometry>
+     </collision>
+  </link>
+
+  <gazebo reference="base_footprint">
+    <material>Gazebo/Green</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <joint name="base_footprint_joint" type="fixed">
+     <!--NB: While you would think this would make it go up, it is oddly reversed.
+      This moves the joint to 0,0,0 where we want it for rviz, etc. -->
+     <!-- origin xyz="0 0 0.130" rpy="0 0 0" / -->
+     <origin xyz="0 0 0.18" rpy="0 0 0" />
+     <parent link="base_footprint"/>
+     <child link="base_link" />
+  </joint>
+
+
+  <!-- BASE_LINK (RED) -->
+  <link name="base_link">
+    <inertial>
+      <mass value="95.0" />
+      <origin xyz="0 0 0" />
+      <inertia  ixx="3.737" ixy="0.008"  ixz="-0.144"  iyy="8.311"  iyz="-0.004"  izz="8.893" />
+    </inertial>
+    <visual>
+       <origin xyz="0 0 0" rpy="0 0 0" />
+       <geometry>
+	 <mesh filename="package://guardian_description_r/meshes/chassis/v6/chassisV6.stl"/>
+       </geometry>
+    </visual>
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0 " />
+       <geometry>
+         <mesh filename="package://guardian_description_r/meshes/chassis/v6/chassisV6.stl"/>
+       </geometry>
+    </collision>     
+  </link>
+  <gazebo reference="base_link">
+    <material>Gazebo/Red</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+
+  <!-- LEFT TRACK (BLACK) -->
+  <link name="left_track">
+    <inertial>
+      <mass value="1.250" />
+      <origin xyz="0 0 0" /> 
+      <inertia  ixx="0.0109375" ixy="0.0"  ixz="0.0"  iyy="0.021125"  iyz="0.0"  izz="0.0109375" />
+    </inertial>
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" /> 
+        <geometry>
+	 <mesh filename="package://guardian_description_r/meshes/others/v5/trackV5_l.stl"/>
+        </geometry>
+	<material name="black">
+  		<color rgba="0.1 0.1 0.1 1"/>
+      	</material>
+    </visual>
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0" />
+       <geometry>
+         <mesh filename="package://guardian_description_r/meshes/others/v5/trackV5_l.stl"/>
+       </geometry>
+    </collision>
+  </link>
+  <gazebo reference="left_track">
+    <material>Gazebo/FlatBlack</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <joint name="joint_left_track" type="fixed">
+    <parent link="base_link"/>
+    <child link="left_track"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0" /> 
+  </joint>
+
+
+  <!-- RIGHT TRACK (BLACK) -->
+  <link name="right_track">
+    <inertial>
+      <mass value="1.250" />
+      <origin xyz="0 0 0" /> 
+      <inertia  ixx="0.0109375" ixy="0.0"  ixz="0.0"  iyy="0.021125"  iyz="0.0"  izz="0.0109375" />
+    </inertial>
+    <visual>
+       <origin xyz="0 0 0" rpy="0 0 0" /> 
+       <geometry>
+	 <mesh filename="package://guardian_description_r/meshes/others/v5/trackV5_l.stl"/>
+       </geometry>
+	<material name="black">
+		<color rgba="0.1 0.1 0.1 1"/>
+      	</material>
+    </visual>
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0" />
+       <geometry>
+         <mesh filename="package://guardian_description_r/meshes/others/v5/trackV5_l.stl"/>
+       </geometry>
+    </collision>
+  </link>
+  <gazebo reference="right_track">
+    <material>Gazebo/FlatBlack</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <joint name="joint_right_track" type="fixed">
+    <parent link="base_link"/>
+    <child link="right_track"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 3.1415926535" /> 
+    <!-- axis xyz="0 1 0" rpy="0 0 0" / -->
+  </joint>
+
+
+
+  <!-- BACK LEFT WHEEL (GREY) -->
+  <link name="back_left_wheel">
+    <inertial>
+      <mass value="4.5" />
+      <origin xyz="0 0 0" /> 
+      <inertia  ixx="0.059" ixy="0.0"  ixz="0.0"  iyy="0.055"  iyz="0.0"  izz="0.059" />
+    </inertial>
+    <visual>
+       <origin xyz="0 0 0" rpy="0 0 3.1416" /> 
+       <geometry>
+	 <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+       </geometry>
+	<material name="grey">
+		<color rgba="0.3 0.3 0.3 1"/>
+      	</material>
+    </visual>
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0" />
+       <geometry>
+         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+       </geometry>
+    </collision>
+  </link>
+  <gazebo reference="back_left_wheel">
+    <mu1 value="10.0"/>
+    <mu2 value="0.5"/> 
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <joint name="joint_back_left_wheel" type="fixed">
+    <parent link="base_link"/>
+    <child link="back_left_wheel"/>
+    <origin xyz="-0.30 0.265 0" rpy="0 0 0" /> 
+    <axis xyz="0 1 0" rpy="0 0 0" />
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+  </joint>
+
+  <transmission name="joint_blw_trans" type="pr2_mechanism_model/SimpleTransmission">
+     <actuator name="joint_blw_motor" />
+     <joint name="joint_back_left_wheel" />
+     <mechanicalReduction>1</mechanicalReduction>
+     <motorTorqueConstant>1</motorTorqueConstant>
+  </transmission>
+
+
+  <!-- BACK RIGHT WHEEL (BLACK) -->
+  <link name="back_right_wheel">
+    <inertial>
+      <mass value="4.5" />
+      <origin xyz="0 0 0" />
+      <inertia  ixx="0.059" ixy="0.0"  ixz="0.0"  iyy="0.055"  iyz="0.0"  izz="0.059" />
+    </inertial>
+    <visual>
+       <origin xyz="0 0 0" rpy="0 0 0" /> 
+       <geometry>
+         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+       </geometry>
+	<material name="gray">
+		<color rgba="0.3 0.3 0.3 1"/>
+      	</material>
+    </visual>
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0" /> 
+       <geometry>
+         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+       </geometry>
+    </collision>
+  </link>
+  <gazebo reference="back_right_wheel">
+    <mu1 value="10.0"/> <!-- 2.0 -->
+    <mu2 value="0.5"/> <!-- 0.5 -->
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <joint name="joint_back_right_wheel" type="fixed">
+    <parent link="base_link"/>
+    <child link="back_right_wheel"/>
+    <origin xyz="-0.30 -0.265 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+  </joint>
+
+  <transmission name="joint_brw_trans" type="pr2_mechanism_model/SimpleTransmission">
+     <actuator name="joint_brw_motor" />
+     <joint name="joint_back_right_wheel" />
+     <mechanicalReduction>1</mechanicalReduction>
+     <motorTorqueConstant>1</motorTorqueConstant>
+  </transmission>
+
+  <!-- FRONT LEFT WHEEL (GREY) -->
+  <link name="front_left_wheel">
+    <inertial>
+      <mass value="4.5" />
+      <origin xyz="0 0 0" />
+      <inertia  ixx="0.059" ixy="0.0"  ixz="0.0"  iyy="0.055"  iyz="0.0"  izz="0.059" />
+    </inertial>
+    <visual>
+       <origin xyz="0 0 0" rpy="0 0 3.1416" /> 
+       <geometry>
+         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+       </geometry>
+	<material name="grey">
+		<color rgba="0.3 0.3 0.3 1"/>
+      	</material>
+    </visual>
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0" /> 
+       <geometry>
+         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+       </geometry>
+    </collision>
+  </link>
+  <gazebo reference="front_left_wheel">
+    <mu1 value="10.0"/> <!-- 2.0 -->
+    <mu2 value="0.5"/> <!-- 0.5 -->
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <joint name="joint_front_left_wheel" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_left_wheel"/>
+    <origin xyz="0.30 0.265 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+  </joint>
+
+  <transmission name="joint_flw_trans" type="pr2_mechanism_model/SimpleTransmission">
+     <actuator name="joint_flw_motor" />
+     <joint name="joint_front_left_wheel" />
+     <mechanicalReduction>1</mechanicalReduction>
+     <motorTorqueConstant>1</motorTorqueConstant>
+  </transmission>
+
+
+  <!-- FRONT RIGHT WHEEL (GREY) -->
+  <link name="front_right_wheel">
+    <inertial>
+      <mass value="4.5" />
+      <origin xyz="0 0 0" />
+      <inertia  ixx="0.059" ixy="0.0"  ixz="0.0"  iyy="0.055"  iyz="0.0"  izz="0.059" />
+    </inertial>
+    <visual>
+       <origin xyz="0 0 0" rpy="0 0 0" /> 
+       <geometry>
+         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+       </geometry>
+	<material name="grey">
+		<color rgba="0.3 0.3 0.3 1"/>
+      	</material>
+    </visual>
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0" /> 
+       <geometry>
+         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/> 
+       </geometry>
+    </collision>
+  </link>
+  <gazebo reference="front_right_wheel">
+    <mu1 value="10.0"/> <!-- 2.0 -->
+    <mu2 value="0.5"/> <!-- 0.5 -->
+    <fdir1 value="1 0 0"/>
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <joint name="joint_front_right_wheel" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_right_wheel"/>
+    <origin xyz="0.30 -0.265 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+  </joint>
+
+  <transmission name="joint_frw_trans" type="pr2_mechanism_model/SimpleTransmission">
+     <actuator name="joint_frw_motor" />
+     <joint name="joint_front_right_wheel" />
+     <mechanicalReduction>1</mechanicalReduction>
+     <motorTorqueConstant>1</motorTorqueConstant>
+  </transmission>
+
+
+
+  <!-- HOKUYO SENSOR -->
+  <joint name="hokuyo_laser_joint" type="fixed">
+     <axis xyz="0 1 0" />
+     <origin xyz="0.5 0 0.31"/>
+     <parent link="base_link"/>
+     <child link="hokuyo_laser_link"/>
+  </joint>
+  <link name="hokuyo_laser_link" type="laser">
+     <inertial>
+       <mass value="0.001" />
+       <origin xyz="0 0 0" rpy="0 0 0" />
+       <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001" />
+    </inertial>
+  </link>
+  
+	
+	<!-- KINECT CAMERA -->
+  <joint name="camera_joint" type="fixed">
+     <axis xyz="0 1 0" />
+     <origin xyz="0.5 0 0.31"/>
+     <parent link="base_link"/>
+     <child link="camera_link"/>
+  </joint>
+  <link name="camera_link">
+     <inertial>
+       <mass value="0.001" />
+       <origin xyz="0 0 0" rpy="0 0 0" />
+       <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001" />
+    </inertial>
+  </link>
+
+  <!-- IMU SENSOR -->
+
+  <joint name="imu_joint" type="fixed">
+      <axis xyz="1 0 0"/> <!-- 0 1 0 -->
+      <origin xyz="0 0 0.2825"/>
+      <parent link="base_link"/>
+      <child link="imu_link"/>
+  </joint>
+
+  <link name="imu_link">
+      <inertial>
+        <mass value="0.001"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
+      </inertial>
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <box size="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <box size=".001 .001 .001"/>
+        </geometry>
+      </collision>
+  </link>
+
+  <!-- POWERBALL ARM -->
+ 
+  <joint name="guardian_powerball_joint" type="fixed">
+    <origin xyz="0.15 0 0.378" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="powerball_base_link"/>
+  </joint>
+  <link name="powerball_base_link">
+    <inertial>
+      <mass value="0.01" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001"  ixy="0.0"  ixz="0.0"
+               iyy="0.001"  iyz="0.0"
+               izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.01" radius="0.1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.01" radius="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <gazebo reference="powerball_base_link">
+    <material>Gazebo/FlatBlack</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  
+  
+  <!-- arm -->
+  <joint name="arm_0_joint" type="fixed">
+    <origin rpy="3.1415926 0 0" xyz="0 0 0.005"/>
+    <parent link="powerball_base_link"/>
+    <child link="arm_0_link"/>
+  </joint>
+  <link name="arm_0_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.29364"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball0.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball0.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_1_joint" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 -0.0897"/>
+    <parent link="arm_0_link"/>
+    <child link="arm_1_link"/>
+    <axis xyz="0 0 -1"/>
+    <calibration rising="0"/>
+    <dynamics damping="10"/>
+    <!--limit effort="370" lower="-6.2831853" upper="6.2831853" velocity="2.0"/-->
+    <limit effort="370" lower="-2.97" upper="2.97" velocity="2.0"/>
+    <safety_controller k_position="20" k_velocity="50" soft_lower_limit="-6.2731853" soft_upper_limit="6.2731853"/>
+  </joint>
+  <link name="arm_1_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.29364"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball1.stl"/>
+      </geometry>
+      <material name="grey">
+	<color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball1.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_2_joint" type="revolute">
+    <origin rpy="1.5708 0 0" xyz="0 0 0"/>
+    <parent link="arm_1_link"/>
+    <child link="arm_2_link"/>
+    <axis xyz="0 0 -1"/>
+    <calibration rising="0"/>
+    <dynamics damping="10"/>
+    <!--limit effort="370" lower="-2.0943951" upper="2.0943951" velocity="2.0"/-->
+    <limit effort="370" lower="-1.92" upper="1.92" velocity="2.0"/>
+    <safety_controller k_position="20" k_velocity="50" soft_lower_limit="-2.0843" soft_upper_limit="2.0843"/>
+  </joint>
+  <link name="arm_2_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="1.68311"/>
+      <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball2_robotnik.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball2_robotnik.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_3_joint" type="revolute">
+    <!--origin rpy="3.14159 0 0" xyz="0 -0.350 0"/-->
+    <origin rpy="3.14159 0 0" xyz="0 -0.500 0"/>
+    <parent link="arm_2_link"/>
+    <child link="arm_3_link"/>
+    <axis xyz="0 0 -1"/>
+    <calibration rising="0"/>
+    <dynamics damping="5"/>
+    <!--limit effort="176" lower="-6.2831853" upper="6.2831853" velocity="2.0"/-->
+    <limit effort="176" lower="-2.71" upper="2.71" velocity="2.0"/>
+    <safety_controller k_position="20" k_velocity="25" soft_lower_limit="-6.2731853" soft_upper_limit="6.2731853"/>
+  </joint>
+  <link name="arm_3_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="2.1"/>
+      <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball3.stl"/>
+      </geometry>
+      <material name="grey">
+	<color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball3.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_4_joint" type="revolute">
+    <origin rpy="1.5708 3.14159 0" xyz="0 0 0"/>
+    <parent link="arm_3_link"/>
+    <child link="arm_4_link"/>
+    <axis xyz="0 0 -1"/>
+    <calibration rising="0"/>
+    <dynamics damping="5"/>
+    <!--limit effort="176" lower="-2.0943951" upper="2.0943951" velocity="2.0"/-->
+    <limit effort="176" lower="-2.97" upper="2.97" velocity="2.0"/>
+    <safety_controller k_position="20" k_velocity="25" soft_lower_limit="-2.0843951" soft_upper_limit="2.0843951"/>
+  </joint>
+  <link name="arm_4_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="1.68311"/>
+      <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball4_robotnik.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball4_robotnik.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_5_joint" type="revolute">
+    <!--origin rpy="1.5708 0 0" xyz="0 0.005 -0.3049"/-->
+    <origin rpy="1.5708 0 0" xyz="0 0.005 -0.365"/>
+    <parent link="arm_4_link"/>
+    <child link="arm_5_link"/>
+    <axis xyz="0 0 -1"/>
+    <calibration rising="0"/>
+    <dynamics damping="5"/>
+    <!--limit effort="41.6" lower="-6.2831853" upper="6.2831853" velocity="2.0"/-->
+    <limit effort="41.6" lower="-2.44" upper="2.44" velocity="2.0"/>
+    <safety_controller k_position="20" k_velocity="25" soft_lower_limit="-6.2731853" soft_upper_limit="6.2731853"/>
+  </joint>
+  <link name="arm_5_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.807"/>
+      <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball5.stl"/>
+      </geometry>
+    </visual>
+    <material name="grey">
+	<color rgba="0.5 0.5 0.5 1"/>
+    </material>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball5.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_6_joint" type="revolute">
+    <origin rpy="-1.5708 0 0" xyz="0 0 0"/>
+    <parent link="arm_5_link"/>
+    <child link="arm_6_link"/>
+    <axis xyz="0 0 -1"/>
+    <calibration rising="0"/>
+    <dynamics damping="5"/>
+    <!--limit effort="20.1" lower="-2.0943951" upper="2.0943951" velocity="2.0"/-->
+    <limit effort="20.1" lower="-2.97" upper="2.97" velocity="2.0"/>
+    <safety_controller k_position="20" k_velocity="25" soft_lower_limit="-2.0843951" soft_upper_limit="2.0843951"/>
+  </joint>
+  <link name="arm_6_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.819"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball6.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotnik_powerball_description/meshes/powerball6.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="arm_0_link">
+    <material value="PR2/Grey"/>
+    <turnGravityOff>false</turnGravityOff>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+  <gazebo reference="arm_1_link">
+    <material value="PR2/Blue"/>
+    <turnGravityOff>false</turnGravityOff>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+  <gazebo reference="arm_2_link">
+    <material value="PR2/Grey"/>
+    <turnGravityOff>false</turnGravityOff>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+  <gazebo reference="arm_3_link">
+    <material value="PR2/Blue"/>
+    <turnGravityOff>false</turnGravityOff>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+  <gazebo reference="arm_4_link">
+    <material value="PR2/Grey"/>
+    <turnGravityOff>false</turnGravityOff>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+  <gazebo reference="arm_5_link">
+    <material value="PR2/Blue"/>
+    <turnGravityOff>false</turnGravityOff>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+  <gazebo reference="arm_6_link">
+    <material value="PR2/Grey"/>
+    <turnGravityOff>false</turnGravityOff>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+  <transmission name="arm_1_trans" type="pr2_mechanism_model/SimpleTransmission">
+    <actuator name="arm_1_motor"/>
+    <joint name="arm_1_joint"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+  <transmission name="arm_2_trans" type="pr2_mechanism_model/SimpleTransmission">
+    <actuator name="arm_2_motor"/>
+    <joint name="arm_2_joint"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+  <transmission name="arm_3_trans" type="pr2_mechanism_model/SimpleTransmission">
+    <actuator name="arm_3_motor"/>
+    <joint name="arm_3_joint"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+  <transmission name="arm_4_trans" type="pr2_mechanism_model/SimpleTransmission">
+    <actuator name="arm_4_motor"/>
+    <joint name="arm_4_joint"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+  <transmission name="arm_5_trans" type="pr2_mechanism_model/SimpleTransmission">
+    <actuator name="arm_5_motor"/>
+    <joint name="arm_5_joint"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+  <transmission name="arm_6_trans" type="pr2_mechanism_model/SimpleTransmission">
+    <actuator name="arm_6_motor"/>
+    <joint name="arm_6_joint"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+
+  
+  <!-- GRIPPER -->
+  
+  <joint name="arm_gripper_joint" type="fixed">
+    <origin rpy="3.1415 0 0" xyz="0 0 -0.085"/>
+    <parent link="arm_6_link"/>
+    <child link="gripper_base_link"/>
+  </joint>
+  
+ <!-- BASE LINK -->
+ <link name="gripper_base_link">
+      <inertial>
+          <mass value="1.2" />
+          <origin xyz="0 0 0" />
+     	  <!--inertia ixx="1.0" ixy="0.0" ixz="0.0"
+               iyy="100.0" iyz="0.0" 
+               izz="1.0" /-->
+      	  <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="1.0"  iyz="0.0"  izz="1.0" />
+      </inertial>
+
+      <visual>
+          <origin xyz="0.0 0 0" rpy="0 0 0" />
+          <geometry>
+             <mesh filename="package://robotnik_powerball_description/meshes/pg70_base.stl" scale="1 1 1"/>
+	     <!--box size="0.146 0.05 0.0735"/-->
+          </geometry>
+          <material name="grey">
+		<color rgba="0.5 0.5 0.5 1"/>
+      	  </material>
+      </visual>
+
+      <collision>
+          <origin xyz="0.0 0 0" rpy="0 0 0" />
+          <geometry>
+	     <!--box size="0.146 0.05 0.0735"/-->
+             <mesh filename="package://robotnik_powerball_description/meshes/pg70_base.stl" scale="1 1 1"/>
+         </geometry>
+     </collision>
+  </link>
+
+  <gazebo reference="gripper_base_link">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+
+  <!-- GRIPPER LEFT -->
+
+  <joint name="base_joint_gripper_left" type="fixed">
+     <limit lower="-0.055" upper="-0.0027" effort="1.0" velocity="1.0"/>
+     <origin xyz="0 0 0" rpy="0 0 0" />      <!--origin xyz="-0.0067 0 0.049" rpy="0 0 0" /-->
+     <parent link="gripper_base_link"/>
+     <child link="gripper_left" />
+     <dynamics friction="100" damping="100" />
+     <axis xyz="1 0 0"/>
+     <limit effort="100" velocity="100"/>
+  </joint>
+
+  <!--transmission name="base_trans_left" type="pr2_mechanism_model/SimpleTransmission">
+     <actuator name="base_motor_left" />
+     <joint name="base_joint_gripper_left" />
+     <mechanicalReduction>1</mechanicalReduction>
+     <motorTorqueConstant>1</motorTorqueConstant>
+  </transmission-->
+
+  <link name="gripper_left">
+      <inertial>
+          <mass value="0.1" />
+          <origin xyz="0 0 0" />
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+               iyy="1.0" iyz="0.0" 
+               izz="1.0" />
+      </inertial>
+
+      <visual>
+          <origin xyz="0.0 0 0" rpy="0 0 0" />
+          <geometry>
+             <mesh filename="package://robotnik_powerball_description/meshes/pg70_jaw.stl" scale="1 1 1"/>
+	     <!--box size="0.0175 0.03 0.024"/-->
+          </geometry>
+          <material name="black">
+		<color rgba="0 0 0 0"/>
+      	  </material>
+      </visual>
+
+      <collision>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+	     <!--box size="0.0175 0.03 0.024"/-->
+             <mesh filename="package://robotnik_powerball_description/meshes/pg70_jaw.stl" scale="1 1 1"/>
+         </geometry>
+     </collision>
+  </link>
+
+  <gazebo reference="gripper_left">
+    <material>Gazebo/Blue</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+
+  <!-- GRIPPER RIGHT -->
+
+  <joint name="base_joint_gripper_right" type="fixed">
+     <limit lower="0.0027" upper="0.055" effort="1.0" velocity="1.0"/>
+     <origin xyz="0 0 0" rpy="0 0 3.14159" />
+     <parent link="gripper_base_link"/>
+     <child link="gripper_right" />
+     <axis xyz="-1 0 0"/>
+     <dynamics friction="100" damping="100" />
+     <limit effort="100" velocity="100"/>
+  </joint>
+
+  <!--transmission name="base_trans_right" type="pr2_mechanism_model/SimpleTransmission">
+     <actuator name="base_motor_right" />
+     <joint name="base_joint_gripper_right" />
+     <mechanicalReduction>1</mechanicalReduction>
+     <motorTorqueConstant>1</motorTorqueConstant>
+  </transmission-->
+	
+    <link name="gripper_right">
+      <inertial>
+          <mass value="0.1" />
+          <origin xyz="0 0 0" />
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+               iyy="1.0" iyz="0.0" 
+               izz="1.0" />
+      </inertial>
+
+      <visual>
+          <origin xyz="0.0 0 0" rpy="0 0 0" />
+          <geometry>
+             <mesh filename="package://robotnik_powerball_description/meshes/pg70_jaw.stl" scale="1 1 1"/>
+	     <!--box size="0.0175 0.03 0.024"/-->
+          </geometry>
+          <material name="black">
+		<color rgba="0 0 0 0"/>
+      	  </material>
+      </visual>
+
+      <collision>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+	     <!--box size="0.0175 0.03 0.024"/-->
+             <mesh filename="package://robotnik_powerball_description/meshes/pg70_jaw.stl" scale="1 1 1"/>
+         </geometry>
+     </collision>
+  </link>
+
+  <gazebo reference="gripper_right">
+    <material>Gazebo/White</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+
+  <!-- Other controllers (HOKUYO SENSOR) -->
+
+  <gazebo reference = "hokuyo_laser_link">
+    <sensor:ray name="hokuyo_laser">
+       <rayCount>640</rayCount>
+       <rangeCount>640</rangeCount>
+       <laserCount>1</laserCount>
+
+       <origin>0.0 0.0 0.0</origin>
+       <displayRays>fan</displayRays>
+
+       <minAngle>-120.0</minAngle>
+       <maxAngle>120.0</maxAngle>
+     
+       <minRange>0.05</minRange>
+       <maxRange>4.0</maxRange>
+       <resRange>0.001</resRange>
+       <updateRate>10.0</updateRate>
+       <controller:gazebo_ros_laser name="gazebo_ros_hokuyo_laser_controller" plugin="libgazebo_ros_laser.so">
+         <gaussianNoise>0.005</gaussianNoise>
+         <alwaysOn>true</alwaysOn>
+         <updateRate>10.0</updateRate>
+         <topicName>hokuyo_laser_topic</topicName>
+         <frameName>hokuyo_laser_link</frameName>
+         <interface:laser name="gazebo_ros_hokuyo_laser_iface" />
+       </controller:gazebo_ros_laser>
+    </sensor:ray>
+   </gazebo>
+
+   <!-- Other controllers (IMU SENSOR) -->
+
+  <!--gazebo reference = "imu_link">
+      <material>Gazebo/Green</material>
+      <turnGravityOff>false</turnGravityOff>
+      <controller:gazebo_ros_imu name="imu_controller" plugin="libgazebo_ros_imu.so">
+         <alwaysOn>true</alwaysOn>
+         <updateRate>50.0</updateRate>
+         <bodyName>imu_link</bodyName>
+         <topicName>imu_data</topicName>
+         <xyzOffsets>0 0 0</xyzOffsets--> <!-- option to initialize odometry for fake localization-->
+         <!--rpyOffsets>0 0 0</rpyOffsets>
+	 <gaussianNoise>0.01</gaussianNoise>
+	 <frameName>map</frameName>
+         <interface:position name="imu_base_position"/--> <!--imu_position_iface-->
+      <!--/controller:gazebo_ros_imu>
+  </gazebo-->
+
+  <gazebo>
+    <controller:gazebo_ros_imu name="imu_controller" plugin="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>50.0</updateRate> <!-- 100 -->
+      <bodyName>imu_link</bodyName>
+      <topicName>imu_data</topicName>
+      <gaussianNoise>2.89e-08</gaussianNoise>
+      <xyzOffsets>0 0 0</xyzOffsets>
+      <rpyOffsets>0 0 0</rpyOffsets>
+      <interface:position name="imu_position"/>
+    </controller:gazebo_ros_imu>
+  </gazebo>
+  
+</robot>
+

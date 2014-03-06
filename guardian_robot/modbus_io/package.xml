@@ -1,0 +1,29 @@
+<package>
+  <name>modbus_io</name>
+  <version>0.1.0</version>
+  <description>modbus_io</description>
+  <maintainer email="info@robotnik.es">Robotnik</maintainer>
+
+  <author>Roberto</author>
+  <license>BSD</license>
+  <url>http://ros.org/wiki/modbus_io</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>message_generation</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>self_test</build_depend>
+  <build_depend>diagnostic_updater</build_depend>
+  <build_depend>std_srvs</build_depend>
+
+  <run_depend>message_runtime</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>self_test</run_depend>
+  <run_depend>diagnostic_updater</run_depend>
+  <run_depend>std_srvs</run_depend>
+
+  <export>
+	<cpp cflags="-I${prefix}/include  -I${prefix}/srv_gen/cpp/include -I${prefix}/msg_gen/cpp/include"/>
+  </export>
+
+</package>

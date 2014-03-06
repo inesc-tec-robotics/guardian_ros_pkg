@@ -1,0 +1,11 @@
+<launch>
+  <node pkg="guardian_static_tf" type="guardian_tf" name="guardian_static_tf_node" output="screen"/>
+
+  <node pkg="hokuyo_node" type="hokuyo_node" name="guardian_hokuyo_node" output="screen">
+	<param name="frame_id" value="scan"/>
+	<!--param name="intensity" value="true"/ NOT SUPORTED-->
+	<param name="min_ang" value="-2.0"/>	
+	<param name="max_ang" value="2.0"/>
+  </node>
+
+</launch>

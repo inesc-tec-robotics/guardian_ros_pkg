@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/4/trunk/guardian/guardian_robot/modbus_io/src
+END
+modbus.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/4/trunk/guardian/guardian_robot/modbus_io/src/modbus.c
+END
+modbus-tcp.c
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/4/trunk/guardian/guardian_robot/modbus_io/src/modbus-tcp.c
+END
+modbus-data.c
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/4/trunk/guardian/guardian_robot/modbus_io/src/modbus-data.c
+END
+modbus-rtu.c
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/4/trunk/guardian/guardian_robot/modbus_io/src/modbus-rtu.c
+END
+modbus_io_node.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/4/trunk/guardian/guardian_robot/modbus_io/src/modbus_io_node.cpp
+END

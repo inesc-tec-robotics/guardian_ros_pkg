@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<launch>
+  
+
+  <!-- HOKUYO -->
+  <node name="hokuyo" pkg="hokuyo_node" type="hokuyo_node" respawn="false" output="screen">
+
+    <!-- If false, starts up faster, but timestamps will be inaccurate. -->
+    <param name="calibrate_time" type="bool" value="true"/>
+
+    <!-- Set the port to connect to here -->
+    <param name="port" type="string" value="/dev/ttyACM0"/>
+
+    <param name="intensity" type="bool" value="false"/>
+  </node>
+  
+  <!-- Launches guardian  node -->
+  <include file="$(find guardian_node)/launch/guardian_real.launch" />
+  
+  <!-- Launches ARDUIMU -->
+  <include file="$(find robotnik_arduimu)/launch/robotnik_arduimu_madgwick.launch" />
+  
+  <!-- Runs guardian_description_r -->
+  <include file="$(find guardian_description_r)/launch/guardian_description_r.launch" />
+ 
+  
+  <!-- Runs guardian_state_publisher -->
+  <include file="$(find guardian_state_publisher)/launch/guardian_state_publisher.launch" />
+ 
+  <!-- Launches guardian  pose ekf -->
+  <include file="$(find guardian_node)/launch/guardian_pose_ekf.launch" />
+  
+  <!-- Launches modbus_io node -->
+  <param name="modbus_io_node/ip_address" value="192.168.2.185" />
+  <node pkg="modbus_io" type="modbus_io_node" name="modbus_io_node" output="screen"/> 
+
+</launch>
+

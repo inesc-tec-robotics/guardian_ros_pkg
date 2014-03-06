@@ -1,0 +1,21 @@
+<package>
+  <name>guardian_navigation</name>
+  <version>0.1.0</version>
+  <description>Contains all the configuration files needed to execute the AMCL and SLAM navigation algorism in the robot. </description>
+  <maintainer email="info@robotnik.es">Robotnik</maintainer>
+
+  <author>>Robotnik Automation SLL</author>
+  <license>BSD</license>
+  <url>http://ros.org/wiki/guardian_description_r</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>move_base</build_depend>
+  <build_depend>guardian_static_tf</build_depend>
+
+  <run_depend>move_base</run_depend>
+  <run_depend>guardian_static_tf</run_depend>
+
+</package>
+
+

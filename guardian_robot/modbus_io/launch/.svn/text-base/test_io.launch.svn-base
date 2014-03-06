@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- start modbus_io node -->
+  <param name="modbus_io_node/ip_address" value="192.168.1.185" />
+  <node pkg="modbus_io" type="modbus_io_node" name="modbus_io_node" output="screen"/>    
+</launch>

@@ -1,0 +1,14 @@
+<package>
+  <description brief="robotnik_powerball_basics">
+
+     This package contains the necessary files to run both the simulated and real version of the ROS powerball driver: meshes, configuration files, urdf's, launch files...
+
+  </description>
+  <author>Robotnik Automation SLL</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/robotnik_powerball_basics</url>
+
+</package>
+
+
