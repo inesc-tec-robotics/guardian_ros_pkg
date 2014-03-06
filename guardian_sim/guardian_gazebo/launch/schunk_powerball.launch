@@ -26,4 +26,6 @@
   <!-- ros_control guardian launch file -->
   <include file="$(find guardian_control)/launch/schunk_powerball_control.launch" />
 
+   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find guardian_gazebo)/launch/gazebo.rviz"/>
+
 </launch>

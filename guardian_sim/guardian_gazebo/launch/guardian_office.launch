@@ -26,4 +26,7 @@
   <!-- ros_control guardian launch file -->
   <include file="$(find guardian_control)/launch/guardian_control.launch" />
 
+   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find guardian_gazebo)/launch/gazebo.rviz"/>
+   
+
 </launch>

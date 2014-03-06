@@ -25,5 +25,7 @@
 
   <!-- ros_control gball launch file -->
   <include file="$(find guardian_control)/launch/gball_control.launch" />
+
+   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find guardian_gazebo)/launch/gazebo.rviz"/>
   
 </launch>

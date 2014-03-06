@@ -13,7 +13,7 @@
   <param name="cmd_service_io" value="/modbus_io/write_digital_output" type="string"/>
   <param name="cmd_topic_ptz" value="/guardian_robot_control/command_ptz" type="string"/>
   
-  <rosparam command="load" file="$(find guardian_joystick)/launch/ps3.yaml" />
+  <rosparam command="load" file="$(find guardian_joystick)/launch/logitech.yaml" />
   <node name="guardian_joystick" pkg="guardian_joystick" type="guardian_joystick" output="screen"/>
   
 </launch>
