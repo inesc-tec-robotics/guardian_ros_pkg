@@ -2,7 +2,7 @@
 <launch>
 
  <!-- keyboard teleop node -->
-  <node pkg="guardian_joystick" type="guardian_keyboard" name="keyboard_node" respawn="true" >
+  <node pkg="guardian_joystick" type="guardian_keyboard" name="keyboard_node" respawn="true" output="screen" >
 	<remap from="/guardian_controller/command" to="/guardian/cmd_vel"/>
   </node>
 

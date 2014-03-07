@@ -39,6 +39,7 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 //#include "sstream"
+#include <iostream>
 
 #define KEYCODE_W 0x77
 #define KEYCODE_A 0x61
@@ -127,9 +128,9 @@ void GuardianKeyboardTeleopNode::keyboardLoop()
     raw.c_cc[VEOF] = 2;
     tcsetattr(kfd, TCSANOW, &raw);
     
-    puts("Reading from keyboard");
-    puts("Use WASD keys to control the robot");
-    puts("Press Shift to move faster");
+   puts("\r\rReading from keyboard");
+   puts("\r\rUse WASD keys to control the robot");
+   puts("\r\rPress Shift to move faster");
     
     struct pollfd ufd;
     ufd.fd = kfd;
@@ -173,28 +174,30 @@ void GuardianKeyboardTeleopNode::keyboardLoop()
                 speed = 1;
                 turn = 0;
                 dirty = true;
-                puts("straight");
+               //puts("straight\r");
+                //std::cout<<"\rstraight";
+                //printf("straight");
                 break;
             case KEYCODE_S:
                 max_tv = walk_vel_;
                 speed = -1;
                 turn = 0;
                 dirty = true;
-                puts("backwards");
+               //puts("\r\rbackwards");
                 break;
             case KEYCODE_A:
                 max_rv = yaw_rate_;
                 speed = 0;
                 turn = 1;
                 dirty = true;
-                puts("turn anti-clock");
+               //puts("\r\rturn anti-clock");
                 break;
             case KEYCODE_D:
                 max_rv = yaw_rate_;
                 speed = 0;
                 turn = -1;
                 dirty = true;
-                puts("turn clock");
+               //puts("\r\rturn clock");
                 break;
                 
             case KEYCODE_W_CAP:
@@ -202,28 +205,28 @@ void GuardianKeyboardTeleopNode::keyboardLoop()
                 speed = 1;
                 turn = 0;
                 dirty = true;
-                puts("straight");
+               //puts("\r\rstraight");
                 break;
             case KEYCODE_S_CAP:
                 max_tv = run_vel_;
                 speed = -1;
                 turn = 0;
                 dirty = true;
-                puts("backwards");
+               //puts("\r\rbackwards");
                 break;
             case KEYCODE_A_CAP:
                 max_rv = yaw_rate_run_;
                 speed = 0;
                 turn = 1;
                 dirty = true;
-                puts("turn anti-clock");
+               //puts("\r\rturn anti-clock");
                 break;
             case KEYCODE_D_CAP:
                 max_rv = yaw_rate_run_;
                 speed = 0;
                 turn = -1;
                 dirty = true;
-                puts("turn anti-clock");
+               //puts("\r\rturn anti-clock");
                 break;
                 
             default:
