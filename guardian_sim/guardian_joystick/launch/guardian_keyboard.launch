@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+ <!-- keyboard teleop node -->
+  <node pkg="guardian_joystick" type="guardian_keyboard" name="keyboard_node" respawn="true" >
+	<remap from="/guardian_controller/command" to="/guardian/cmd_vel"/>
+  </node>
+
+</launch>
+
