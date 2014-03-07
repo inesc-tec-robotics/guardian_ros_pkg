@@ -15,6 +15,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
+find_package(Boost REQUIRED COMPONENTS system thread)
+
 #######################################
 ## Declare ROS messages and services ##
 #######################################
@@ -56,7 +58,8 @@ catkin_package(
     roscpp 
     sensor_msgs 
     geometry_msgs 
-#  DEPENDS system_lib
+  #DEPENDS system_lib
+  DEPENDS thread
 )
 
 ###########
@@ -67,13 +70,21 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
-  include 
+  include
+  ${Boost_INCLUDE_DIRS} 
   ${catkin_INCLUDE_DIRS} 
 )
 
 
+
 ## Declare a cpp executable
 add_executable(guardian_joystick src/guardian_joystick.cpp)
+add_executable(guardian_keyboard src/guardian_keyboard_teleop.cpp)
+
+#link_boost(guardian_keyboard thread)
+#target_link_libraries(guardian_keyboard thread ${catkin_LIBRARIES})
+#target_link_boost(guardian_keyboard thread ${catkin_LIBRARIES})
+
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -83,4 +94,11 @@ add_executable(guardian_joystick src/guardian_joystick.cpp)
 target_link_libraries(guardian_joystick
    ${catkin_LIBRARIES}
  )
+
+	#target_link_boost(${CORE_LIBRARY_TARGET})
+
+
+include_directories(${Boost_INCLUDE_DIRS})
+target_link_libraries(guardian_keyboard ${Boost_LIBRARIES} ${catkin_LIBRARIES}) 
+
 
