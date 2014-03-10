@@ -26,7 +26,7 @@
     <commandTopic>cmd_vel</commandTopic>
     <odometryTopic>odom</odometryTopic>
     <odometryFrame>odom</odometryFrame>
-    
+
     <!-- broadcastTF>false</broadcastTF -->
   </plugin>
 </gazebo>
