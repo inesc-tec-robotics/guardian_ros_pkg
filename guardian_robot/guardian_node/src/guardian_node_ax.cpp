@@ -331,7 +331,7 @@ void check_powersupply(diagnostic_updater::DiagnosticStatusWrapper &stat)
 int main(int argc, char** argv){
 
 	ros::init(argc, argv, "guardian_node");
-	ros::NodeHandle n;
+	ros::NodeHandle n, pn("~");
 	pose robot_pose;	// Position & velocity from the odometry
 	double max_linear_speed_, max_angular_speed_;
 	double diameter_wheels_, distance_between_wheels_;	// Diameter of the wheels and distance between them
@@ -367,22 +367,22 @@ int main(int argc, char** argv){
 	ROS_INFO("Running Guardian ROS.");
 	// READING PARAMETERS
 	//n.param("modbus_io_topic", modbus_io_topic_,  sDefaultIOtopic);
-	n.param("motor_dev", sDevicePort,  sDefaultPort);
-	n.param("max_linear_speed", max_linear_speed_,  GUARDIAN_DEFAULT_MAX_LINEAR_SPEED);
-	n.param("max_angular_speed", max_angular_speed_,  GUARDIAN_DEFAULT_MAX_ANGULAR_SPEED);
-	n.param("odometry_type", sOdometryType_, sDefaultOdometryType);
-	n.param("diameter_wheels", diameter_wheels_,  MOTOR_DIAMETER_WHEEL);
-	n.param("distance_between_wheels", distance_between_wheels_,  MOTOR_D_WHEELS_M_GWAM);
-	n.param("pid_p_l_divisor", pid_p_l_divisor_,  AX3500_DEFAULT_P_L_DIVISOR);
-	n.param("pid_p_a_divisor", pid_p_a_divisor_,  AX3500_DEFAULT_P_A_DIVISOR);
-	n.param("pid_i_l", pid_i_l_,  AX3500_DEFAULT_I_L);
-	n.param("pid_i_a", pid_i_a_,  AX3500_DEFAULT_I_A);
-	n.param("pid_err_sat_l_divisor", pid_err_sat_l_divisor_,  AX3500_DEFAULT_ERR_SAT_L_DIVISOR);
-	n.param("pid_err_sat_a_divisor", pid_err_sat_a_divisor_,  AX3500_DEFAULT_ERR_SAT_A_DIVISOR);
-	n.param("encoder_config", encoder_config_, AX3500_ENCODER_CONF);
-	n.param("encoder_dir", encoder_dir_, AX3500_ENCODER_DIR);
-	n.param("angular_dir", angular_dir_, AX3500_ANGULAR_DIR);
-	n.param("publish_tf", publish_tf_, publish_tf_);
+	pn.param("motor_dev", sDevicePort,  sDefaultPort);
+	pn.param("max_linear_speed", max_linear_speed_,  GUARDIAN_DEFAULT_MAX_LINEAR_SPEED);
+	pn.param("max_angular_speed", max_angular_speed_,  GUARDIAN_DEFAULT_MAX_ANGULAR_SPEED);
+	pn.param("odometry_type", sOdometryType_, sDefaultOdometryType);
+	pn.param("diameter_wheels", diameter_wheels_,  MOTOR_DIAMETER_WHEEL);
+	pn.param("distance_between_wheels", distance_between_wheels_,  MOTOR_D_WHEELS_M_GWAM);
+	pn.param("pid_p_l_divisor", pid_p_l_divisor_,  AX3500_DEFAULT_P_L_DIVISOR);
+	pn.param("pid_p_a_divisor", pid_p_a_divisor_,  AX3500_DEFAULT_P_A_DIVISOR);
+	pn.param("pid_i_l", pid_i_l_,  AX3500_DEFAULT_I_L);
+	pn.param("pid_i_a", pid_i_a_,  AX3500_DEFAULT_I_A);
+	pn.param("pid_err_sat_l_divisor", pid_err_sat_l_divisor_,  AX3500_DEFAULT_ERR_SAT_L_DIVISOR);
+	pn.param("pid_err_sat_a_divisor", pid_err_sat_a_divisor_,  AX3500_DEFAULT_ERR_SAT_A_DIVISOR);
+	pn.param("encoder_config", encoder_config_, AX3500_ENCODER_CONF);
+	pn.param("encoder_dir", encoder_dir_, AX3500_ENCODER_DIR);
+	pn.param("angular_dir", angular_dir_, AX3500_ANGULAR_DIR);
+	pn.param("publish_tf", publish_tf_, publish_tf_);
 	
 	        
 	////// PRINTING INFORMATION
@@ -430,20 +430,20 @@ int main(int argc, char** argv){
 	}
 	//
 	// Defining subscribers to obtain information through the sensors and joysticks
-  	ros::Subscriber cmd_sub_ = n.subscribe<geometry_msgs::Twist>("/guardian_node/command", 1, cmdCallback); 
+  	ros::Subscriber cmd_sub_ = pn.subscribe<geometry_msgs::Twist>("command", 1, cmdCallback); 
   	ros::Subscriber imu_sub_ = n.subscribe("/imu/data", 1, imuCallback);
 	//ros::Subscriber io_sub_ = n.subscribe(modbus_io_topic_, 1, ioCallback);
 	//
 	// Defining publishers
-	ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("/guardian_node/odom", 30);
-	ros::Publisher state_pub = n.advertise<guardian_node::guardian_state>("/guardian_node/state", 30);
+	ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("/odom", 30);
+	ros::Publisher state_pub = pn.advertise<guardian_node::guardian_state>("state", 30);
 	tf::TransformBroadcaster odom_broadcaster;
 	//
 	// Defining services
 
-	ros::ServiceServer set_odometry_srv_ = n.advertiseService("/guardian_node/set_odometry",  set_odometry);
-	ros::ServiceServer get_pid_srv_ = n.advertiseService("/guardian_node/get_pid",  get_pid);
-	ros::ServiceServer set_pid_srv_ = n.advertiseService("/guardian_node/set_pid",  set_pid);
+	ros::ServiceServer set_odometry_srv_ = pn.advertiseService("set_odometry",  set_odometry);
+	ros::ServiceServer get_pid_srv_ = pn.advertiseService("get_pid",  get_pid);
+	ros::ServiceServer set_pid_srv_ = pn.advertiseService("set_pid",  set_pid);
 	
 	
 	// Topics freq control 
