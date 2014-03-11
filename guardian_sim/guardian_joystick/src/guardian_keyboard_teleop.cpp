@@ -92,6 +92,13 @@ int kfd = 0;
 struct termios cooked, raw;
 bool done;
 
+
+void quit(int sig) {
+	tcsetattr(kfd, TCSANOW, &cooked);
+	exit(0);
+}
+
+
 int main(int argc, char** argv)
 {
 
@@ -99,6 +106,8 @@ int main(int argc, char** argv)
     ros::init(argc,argv,"tbk", ros::init_options::AnonymousName | ros::init_options::NoSigintHandler);
     GuardianKeyboardTeleopNode tbk;
     
+    signal(SIGINT, quit);
+
     boost::thread t = boost::thread(boost::bind(&GuardianKeyboardTeleopNode::keyboardLoop, &tbk));
     //ROS_INFO("I am here 2\n");
     ros::spin();
@@ -106,10 +115,11 @@ int main(int argc, char** argv)
     t.interrupt();
     t.join();
     tbk.stopRobot();
-    tcsetattr(kfd, TCSANOW, &cooked);
     
     return(0);
 }
+
+
 
 void GuardianKeyboardTeleopNode::keyboardLoop()
 {
