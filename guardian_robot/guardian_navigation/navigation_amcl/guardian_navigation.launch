@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- roslaunch arguments -->	
+	<arg name="map_file" default="$(find guardian_navigation)/maps/willow_garage/willow_garage.yaml" />	
+	<arg name="rviz_config" default="-d $(find guardian_navigation)/rviz/guardian_localization.rviz" />
+
+	<!-- gazebo simulator -->
+	<include file="$(find guardian_gazebo)/launch/guardian.launch">
+		<arg name="rviz_config" default="$(arg rviz_config)" />
+	</include>
+
+	<!-- local navigation -->
+	<!-- <include file="$(find guardian_navigation)/navigation_local/move_base_local.launch" /> -->
+
+	<!-- global navigation -->
+	<include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" />
+	<remap from="cmd_vel" to="guardian_node/command" />
+
+	<!-- <node name="snap_map_icp" pkg="SnapMapICP" type="SnapMapICP" respawn="false" output="screen" /> -->
+
+	<!-- run the map server -->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+	<!-- Run move_base -->
+	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+		<!--remap from="odom" to="robot_pose_ekf/odom_combined" / -->
+		<!--remap from="odom" to="odom" / -->
+		<rosparam file="$(find guardian_navigation)/navigation_config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find guardian_navigation)/navigation_config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find guardian_navigation)/navigation_config/local_costmap_params.yaml" command="load" />
+		<rosparam file="$(find guardian_navigation)/navigation_config/global_costmap_params.yaml" command="load" />
+		<rosparam file="$(find guardian_navigation)/navigation_config/base_local_planner_params.yaml" command="load" />
+	</node>
+</launch>

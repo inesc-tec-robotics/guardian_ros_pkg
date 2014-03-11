@@ -586,10 +586,10 @@ bool srvCallback_GetMode(robotnik_msgs::get_mode::Request& request, robotnik_msg
 // Service SetOdometry 
 bool srvCallback_SetOdometry(robotnik_msgs::set_odometry::Request &request, robotnik_msgs::set_odometry::Response &response )
 {
-	// ROS_INFO("guardian_odometry::set_odometry: request -> x = %f, y = %f, a = %f", req.x, req.y, req.orientation);
-	//robot_pose_px_ = req.x;
-	//robot_pose_py_ = req.y;
-	//robot_pose_pa_ = req.orientation;
+	/*ROS_INFO("guardian_odometry::set_odometry: request -> x = %f, y = %f, a = %f", request.x, request.y, request.orientation);
+	robot_pose_px_ = request.x;
+	robot_pose_py_ = request.y;
+	robot_pose_pa_ = request.orientation;*/
 
 	response.ret = true;
 	return true;
