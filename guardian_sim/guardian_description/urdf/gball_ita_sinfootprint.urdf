@@ -25,13 +25,13 @@
     <visual>
        <origin xyz="0 0 0" rpy="0 0 0" />
        <geometry>
-	 <mesh filename="package://guardian_description_r/meshes/chassis/v6/chassisV6.stl"/>
+	 <mesh filename="package://guardian_description/meshes/chassis/v6/chassisV6.stl"/>
        </geometry>
     </visual>
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
-         <mesh filename="package://guardian_description_r/meshes/chassis/v6/chassisV6.stl"/>
+         <mesh filename="package://guardian_description/meshes/chassis/v6/chassisV6.stl"/>
        </geometry>
     </collision>     
   </link>
@@ -51,7 +51,7 @@
     <visual>
         <origin xyz="0 0 0" rpy="0 0 0" /> 
         <geometry>
-	 <mesh filename="package://guardian_description_r/meshes/others/v5/trackV5_l.stl"/>
+	 <mesh filename="package://guardian_description/meshes/others/v5/trackV5_l.stl"/>
         </geometry>
 	<material name="black">
   		<color rgba="0.1 0.1 0.1 1"/>
@@ -60,7 +60,7 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0" />
        <geometry>
-         <mesh filename="package://guardian_description_r/meshes/others/v5/trackV5_l.stl"/>
+         <mesh filename="package://guardian_description/meshes/others/v5/trackV5_l.stl"/>
        </geometry>
     </collision>
   </link>
@@ -86,7 +86,7 @@
     <visual>
        <origin xyz="0 0 0" rpy="0 0 0" /> 
        <geometry>
-	 <mesh filename="package://guardian_description_r/meshes/others/v5/trackV5_l.stl"/>
+	 <mesh filename="package://guardian_description/meshes/others/v5/trackV5_l.stl"/>
        </geometry>
 	<material name="black">
 		<color rgba="0.1 0.1 0.1 1"/>
@@ -95,7 +95,7 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0" />
        <geometry>
-         <mesh filename="package://guardian_description_r/meshes/others/v5/trackV5_l.stl"/>
+         <mesh filename="package://guardian_description/meshes/others/v5/trackV5_l.stl"/>
        </geometry>
     </collision>
   </link>
@@ -123,7 +123,7 @@
     <visual>
        <origin xyz="0 0 0" rpy="0 0 3.1416" /> 
        <geometry>
-	 <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+	 <mesh filename="package://guardian_description/meshes/wheel.stl"/>
        </geometry>
 	<material name="grey">
 		<color rgba="0.3 0.3 0.3 1"/>
@@ -132,7 +132,7 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0" />
        <geometry>
-         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+         <mesh filename="package://guardian_description/meshes/wheel.stl"/>
        </geometry>
     </collision>
   </link>
@@ -171,7 +171,7 @@
     <visual>
        <origin xyz="0 0 0" rpy="0 0 0" /> 
        <geometry>
-         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+         <mesh filename="package://guardian_description/meshes/wheel.stl"/>
        </geometry>
 	<material name="gray">
 		<color rgba="0.3 0.3 0.3 1"/>
@@ -180,7 +180,7 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0" /> 
        <geometry>
-         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+         <mesh filename="package://guardian_description/meshes/wheel.stl"/>
        </geometry>
     </collision>
   </link>
@@ -218,7 +218,7 @@
     <visual>
        <origin xyz="0 0 0" rpy="0 0 3.1416" /> 
        <geometry>
-         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+         <mesh filename="package://guardian_description/meshes/wheel.stl"/>
        </geometry>
 	<material name="grey">
 		<color rgba="0.3 0.3 0.3 1"/>
@@ -227,7 +227,7 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0" /> 
        <geometry>
-         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+         <mesh filename="package://guardian_description/meshes/wheel.stl"/>
        </geometry>
     </collision>
   </link>
@@ -266,7 +266,7 @@
     <visual>
        <origin xyz="0 0 0" rpy="0 0 0" /> 
        <geometry>
-         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/>
+         <mesh filename="package://guardian_description/meshes/wheel.stl"/>
        </geometry>
 	<material name="grey">
 		<color rgba="0.3 0.3 0.3 1"/>
@@ -275,7 +275,7 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0" /> 
        <geometry>
-         <mesh filename="package://guardian_description_r/meshes/wheel.stl"/> 
+         <mesh filename="package://guardian_description/meshes/wheel.stl"/> 
        </geometry>
     </collision>
   </link>

@@ -20,8 +20,8 @@
   <!-- Launches ARDUIMU -->
   <include file="$(find robotnik_arduimu)/launch/robotnik_arduimu_madgwick.launch" />
   
-  <!-- Runs guardian_description_r -->
-  <include file="$(find guardian_description_r)/launch/guardian_description_r.launch" />
+  <!-- Runs guardian_description -->
+  <include file="$(find guardian_description)/launch/guardian_description.launch" />
  
   
   <!-- Runs guardian_state_publisher -->

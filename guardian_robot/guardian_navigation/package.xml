@@ -6,7 +6,7 @@
 
   <author>>Robotnik Automation SLL</author>
   <license>BSD</license>
-  <url>http://ros.org/wiki/guardian_description_r</url>
+  <url>http://ros.org/wiki/guardian_description</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 

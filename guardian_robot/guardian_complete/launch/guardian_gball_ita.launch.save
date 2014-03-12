@@ -35,8 +35,8 @@
   <include file="$(find guardian_node)/launch/guardian_real.launch" />
 
    
-  <!-- Runs guardian_description_r -->
-  <include file="$(find guardian_description_r)/launch/gball_description.launch" /> 
+  <!-- Runs guardian_description -->
+  <include file="$(find guardian_description)/launch/gball_description.launch" /> 
  
   
   <!-- Runs guardian_state_publisher -->
