@@ -9,7 +9,8 @@ find_package(catkin REQUIRED COMPONENTS
     robotnik_msgs
     roscpp 
     sensor_msgs 
-    geometry_msgs 
+    geometry_msgs
+    message_generation 
     )
     
 ## System dependencies are found with CMake's conventions
@@ -58,6 +59,7 @@ catkin_package(
     roscpp 
     sensor_msgs 
     geometry_msgs 
+    message_runtime
   #DEPENDS system_lib
   DEPENDS thread
 )
@@ -91,14 +93,13 @@ add_executable(guardian_keyboard src/guardian_keyboard_teleop.cpp)
 # add_dependencies(guardian_joystick guardian_joystick_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(guardian_joystick
-   ${catkin_LIBRARIES}
- )
+target_link_libraries(guardian_joystick ${catkin_LIBRARIES})
+target_link_libraries(guardian_keyboard ${Boost_LIBRARIES} ${catkin_LIBRARIES})
 
-	#target_link_boost(${CORE_LIBRARY_TARGET})
+add_dependencies(guardian_joystick ${PROJECT_NAME}_generate_messages_cpp)
 
+#target_link_boost(${CORE_LIBRARY_TARGET})
 
-include_directories(${Boost_INCLUDE_DIRS})
-target_link_libraries(guardian_keyboard ${Boost_LIBRARIES} ${catkin_LIBRARIES}) 
+ 
 
 

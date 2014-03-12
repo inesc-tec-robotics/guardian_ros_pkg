@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <launch>
   <!-- start modbus_io node -->
-  <param name="modbus_io_node/ip_address" value="192.168.1.185" />
+  <param name="modbus_io_node/ip_address" value="192.168.2.185" />
+  <param name="digital_outputs" value="8"/>
+  <param name="digital_inputs" value="8"/>
+  <param name="analog_outputs" value="2"/>
+  <param name="analog_inputs" value="2"/>
   <node pkg="modbus_io" type="modbus_io_node" name="modbus_io_node" output="screen"/>    
 </launch>

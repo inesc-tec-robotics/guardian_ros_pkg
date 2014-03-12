@@ -12,12 +12,6 @@
 
   <!-- slam -->
   <node pkg="tf" type="static_transform_publisher" name="link_broadcaster" args="0 0 0 0 0 0 odom_combined base_footprint 100" /> 
-  <include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch" /> 
-  <!-- <node name="guardian_robot_control" pkg="guardian_robot_control" type="guardian_robot_control" output="screen">
-    <rosparam command="load" file="$(find guardian_robot_control)/config/guardian.yaml" />
-    <rosparam command="load" file="$(find guardian_robot_control)/config/guardian_robot_control.yaml" />
-    <remap from="odom_combined" to="odom" />
-  </node> -->
 
   <include file="$(find guardian_navigation)/navigation_slam/slam_gmapping.launch" />
   <node pkg="costmap_2d" type="costmap_2d_markers" name="voxel_visualizer">
@@ -32,8 +26,7 @@
 
   <!--- Run EFK Filter -->
   <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
-    <param name="output_frame" value="odom_combined" />
-    Output topic, in this case, as we define "odom", the topic is published to "/robot_pose_ekf/odom", if we define "/odom" the topic will publish to "/odom"
+    <param name="output_frame" value="odom_combined" />    
     <param name="freq" value="30.0" />
     <param name="sensor_timeout" value="1.0" />
     <param name="publish_tf" value="true" />
@@ -45,7 +38,7 @@
 
   <!-- Run move_base -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-	<!-- <remap from="odom" to="robot_pose_ekf/odom_combined" /> -->
+	<remap from="odom" to="guardian/odom" />
     <rosparam file="$(find guardian_navigation)/navigation_config/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find guardian_navigation)/navigation_config/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find guardian_navigation)/navigation_config/local_costmap_params.yaml" command="load" />

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(guardian_pad)
 
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg tf)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs robotnik_msgs message_generation tf)
 
 add_service_files(DIRECTORY srv 
   FILES
@@ -14,7 +14,10 @@ generate_messages(
 
 #generate_messages()
 
-catkin_package()
+catkin_package(
+    CATKIN_DEPENDS
+    robotnik_msgs
+)
 
 #include_directories(include ${PROJECT_SOURCE_DIR}/include/guardian_pad ${PROJECT_SOURCE_DIR}/srv_gen/cpp/include/guardian_pad ${catkin_INCLUDE_DIRS})
 
@@ -33,3 +36,4 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_link_boost(${PROJECT_NAME} thread)
 add_executable(guardian_pad src/guardian_pad.cpp)
 target_link_libraries(guardian_pad ${catkin_LIBRARIES})
+add_dependencies(guardian_pad ${catkin_EXPORTED_TARGETS})

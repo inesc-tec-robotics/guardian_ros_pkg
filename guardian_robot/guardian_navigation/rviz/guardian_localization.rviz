@@ -5,7 +5,6 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Camera1
       Splitter Ratio: 0.463196
     Tree Height: 506
   - Class: rviz/Tool Properties
@@ -343,10 +342,10 @@ Visualization Manager:
       Color Transformer: Intensity
       Decay Time: 0
       Enabled: true
-      Max Color: 255; 255; 255
-      Max Intensity: 101
+      Max Color: 255; 170; 0
+      Max Intensity: 1.61321e-19
       Min Color: 255; 217; 0
-      Min Intensity: 101
+      Min Intensity: 0
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
@@ -354,7 +353,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.01
       Style: Points
-      Topic: /base_scan
+      Topic: /scan
       Use Fixed Frame: true
       Use rainbow: false
       Value: true
@@ -366,7 +365,7 @@ Visualization Manager:
       Length: 1
       Name: Odometry
       Position Tolerance: 0.1
-      Topic: /base_pose_ground_truth
+      Topic: /guardian/odom
       Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
@@ -432,7 +431,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 0; 0; 0
-    Fixed Frame: /base_link
+    Fixed Frame: /odom
   Name: root
   Tools:
     - Class: rviz/MoveCamera
@@ -447,14 +446,14 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 22.7892
+      Distance: 24.0852
       Focal Point:
         X: 3.93173
         Y: -3.56593
         Z: 1.33896
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 1.5598
+      Pitch: 1.5248
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
       Yaw: 4.70856

@@ -10,7 +10,10 @@
 	</include>
 
 	<!-- keyboard teleop -->
-	<!-- <include file="$(find guardian_joystick)/launch/guardian_keyboard.launch" /> -->
+	<include file="$(find guardian_joystick)/launch/guardian_keyboard.launch" />
+
+	<!-- Use the dwa local planner -->
+	<param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
 
 	<!-- local navigation -->
 	<!-- <include file="$(find guardian_navigation)/navigation_local/move_base_local.launch" /> -->
@@ -29,6 +32,7 @@
 
 	<!--- Run EFK Filter -->
 	<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+		<remap from="odom" to="guardian/odom" />
 		<param name="output_frame" value="odom_combined" />
 		<param name="freq" value="50.0" />
 		<param name="sensor_timeout" value="1.0" />
@@ -40,9 +44,12 @@
 		<remap from="imu_data" to="imu/data" />
 	</node>
 
+	<node pkg="tf" type="static_transform_publisher" name="link_broadcaster" args="0 0 0 0 0 0 odom_combined base_footprint 100" />
+
 	<!-- Run move_base -->
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-		<remap from="odom" to="robot_pose_ekf/odom_combined" />		
+		<!-- <remap from="odom" to="robot_pose_ekf/odom_combined" /> -->
+		<remap from="odom" to="guardian/odom" />
 		<rosparam file="$(find guardian_navigation)/navigation_config/costmap_common_params.yaml" command="load" ns="global_costmap" />
 		<rosparam file="$(find guardian_navigation)/navigation_config/costmap_common_params.yaml" command="load" ns="local_costmap" />
 		<rosparam file="$(find guardian_navigation)/navigation_config/local_costmap_params.yaml" command="load" />

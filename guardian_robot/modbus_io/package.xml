@@ -1,29 +1,37 @@
+<?xml version="1.0"?>
 <package>
   <name>modbus_io</name>
-  <version>0.1.0</version>
-  <description>modbus_io</description>
-  <maintainer email="info@robotnik.es">Robotnik</maintainer>
+  <version>0.0.0</version>
+  <description>
+	   The modbus_io package allows the control of decentralized peripheral I/O based in modbus devices (usually Phoenix Contact)
+  </description>
 
-  <author>Roberto</author>
+  <!-- One maintainer tag required, multiple allowed, one person per tag --> 
+  <maintainer email="inf@robotnik.es">Robotnik</maintainer>
+
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
   <license>BSD</license>
-  <url>http://ros.org/wiki/modbus_io</url>
 
   <buildtool_depend>catkin</buildtool_depend>
-
-  <build_depend>message_generation</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>self_test</build_depend>
   <build_depend>diagnostic_updater</build_depend>
   <build_depend>std_srvs</build_depend>
-
-  <run_depend>message_runtime</run_depend>
+  <build_depend>robotnik_msgs</build_depend>
+  
   <run_depend>roscpp</run_depend>
   <run_depend>self_test</run_depend>
   <run_depend>diagnostic_updater</run_depend>
   <run_depend>std_srvs</run_depend>
-
+  <run_depend>robotnik_msgs</run_depend>
+  
+  <!-- The export tag contains other, unspecified, tags -->
   <export>
-	<cpp cflags="-I${prefix}/include  -I${prefix}/srv_gen/cpp/include -I${prefix}/msg_gen/cpp/include"/>
-  </export>
+    <!-- You can specify that this package is a metapackage here: -->
+    <!-- <metapackage/> -->
 
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
 </package>
