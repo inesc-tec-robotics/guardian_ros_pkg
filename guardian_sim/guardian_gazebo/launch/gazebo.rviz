@@ -9,6 +9,8 @@ Panels:
         - /RobotModel1
         - /LaserScan1
         - /TF1
+        - /Map1
+        - /Map1/Status1
       Splitter Ratio: 0.5
     Tree Height: 745
   - Class: rviz/Selection
@@ -147,9 +149,9 @@ Visualization Manager:
       Decay Time: 0
       Enabled: true
       Max Color: 255; 255; 255
-      Max Intensity: 0
+      Max Intensity: 1.61321e-19
       Min Color: 0; 0; 0
-      Min Intensity: 0
+      Min Intensity: 1.61321e-19
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
@@ -191,6 +193,8 @@ Visualization Manager:
           Value: true
         /left_track:
           Value: true
+        /odom:
+          Value: true
         /right_track:
           Value: true
         All Enabled: true
@@ -224,7 +228,16 @@ Visualization Manager:
               {}
             /right_track:
               {}
+        /odom:
+          {}
       Update Interval: 0
+      Value: true
+    - Alpha: 0.7
+      Class: rviz/Map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic: /map
       Value: true
   Enabled: true
   Global Options:
@@ -249,11 +262,11 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.88695
+      Distance: 33.9511
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: 3.16466
+        Y: 7.04603
+        Z: -4.65215
       Name: Current View
       Near Clip Distance: 0.01
       Pitch: 0.8054
