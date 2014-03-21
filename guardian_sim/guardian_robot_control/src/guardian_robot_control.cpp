@@ -369,7 +369,7 @@ void UpdateControl()
 
 	  // Calculate its own velocities for realize the motor control 
 	  v_left_mps = ((joint_state_.velocity[blw_vel_] + joint_state_.velocity[flw_vel_]) / 2.0) * (guardian_wheel_diameter_ / 2.0);
-	  v_right_mps = -((joint_state_.velocity[brw_vel_] + joint_state_.velocity[frw_vel_]) / 2.0) * (guardian_wheel_diameter_ / 2.0); 
+      v_right_mps = ((joint_state_.velocity[brw_vel_] + joint_state_.velocity[frw_vel_]) / 2.0) * (guardian_wheel_diameter_ / 2.0);
 	  // sign according to urdf (if wheel model is not symetric, should be inverted)
 
 	  linearSpeedXMps_ = (v_right_mps + v_left_mps) / 2.0;                       // m/s

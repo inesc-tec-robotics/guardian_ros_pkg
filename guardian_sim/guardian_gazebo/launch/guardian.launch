@@ -4,10 +4,12 @@
 	<arg name="debug" default="false" />
 	<arg name="gui" default="true" />
 	<arg name="rviz_config" default="-d $(find guardian_gazebo)/launch/gazebo.rviz" />
+    <arg name="world_model" default="-d $(find guardian_gazebo)/worlds/guardian.world" />
 
 	<!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
-		<arg name="world_name" value="$(find guardian_navigation)/worlds/guardian_navigation.world" />
+		<!--arg name="world_name" value="$(find guardian_navigation)/worlds/guardian_navigation.world" /-->
+		<arg name="world_name" value="$(arg world_model)"/>
 		<arg name="debug" value="$(arg debug)" />
 		<arg name="gui" value="$(arg gui)" />
 		<arg name="paused" value="false" />
@@ -24,6 +26,7 @@
 	<!-- ros_control guardian launch file -->
 	<include file="$(find guardian_control)/launch/guardian_control.launch" />
 	<include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch" />
+    <include file="$(find guardian_joystick)/launch/guardian_joystick.launch" />
 
 	<node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config)" />
 

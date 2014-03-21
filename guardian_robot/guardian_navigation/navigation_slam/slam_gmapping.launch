@@ -3,7 +3,7 @@
 	<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
 		<remap from="scan" to="/scan" />
 		<param name="base_frame" value="base_footprint" />
-		<param name="odom_frame" value="odom_combined" />
+		<param name="odom_frame" value="odom" /> <!--odom_combined-->
 		<param name="map_update_interval" value="2.0" /> <!-- 30.0 i 50.0, lo normal és 5.0! -->
 		<param name="maxUrange" value="180.0" /> <!-- 4.0 -->
 		<param name="sigma" value="0.05" />

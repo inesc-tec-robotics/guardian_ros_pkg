@@ -10,6 +10,7 @@
                       joint_flw_velocity_controller
                       joint_pan_position_controller
                       joint_tilt_position_controller
+                      joint_laser_tilt_position_controller
                       joint_read_state_controller 
                       "/>
 
