@@ -131,7 +131,7 @@ public:
   // Topics - ptz
   std::string pan_pos_topic_;
   std::string tilt_pos_topic_;
-    
+
   // Selected operation mode
   int kinematic_modes_;   
   int active_kinematic_mode_;
@@ -351,8 +351,8 @@ int starting()
     blw_vel_ = find (joint_names.begin(),joint_names.end(), string(joint_back_left_wheel)) - joint_names.begin();
     brw_vel_ = find (joint_names.begin(),joint_names.end(), string(joint_back_right_wheel)) - joint_names.begin();
 	// For publishing the ptz joint state   
-	//pan_pos_ = find(joint_names.begin(), joint_names.end(), string(joint_camera_pan)) - joint_names.begin();
-	//tilt_pos_ = find(joint_names.begin(), joint_names.end(), string(joint_camera_tilt)) - joint_names.begin();
+    //pan_pos_ = find(joint_names.begin(), joint_names.end(), string(joint_camera_pan)) - joint_names.begin();
+    //tilt_pos_ = find(joint_names.begin(), joint_names.end(), string(joint_camera_tilt)) - joint_names.begin();
     return 0;
     }
   else return -1;
@@ -435,7 +435,7 @@ void UpdateControl()
 	 std_msgs::Float64 pan_ref_pos_msg, tilt_ref_pos_msg;
      pan_ref_pos_msg.data = pos_ref_pan_;            //saturation( pos_ref_pan_, 0.0, 0.5); 
      ref_pos_pan_.publish( pan_ref_pos_msg );
-     tilt_ref_pos_msg.data = pos_ref_tilt_;          //saturation( pos_ref_tilt_, 0.0, 0.5); 
+     tilt_ref_pos_msg.data = pos_ref_tilt_;          //saturation( pos_ref_tilt_, 0.0, 0.5);
      ref_pos_tilt_.publish( tilt_ref_pos_msg );
 }
 
@@ -617,8 +617,20 @@ void commandCallback(const geometry_msgs::TwistConstPtr& msg)
 // Topic ptz command
 void command_ptzCallback(const robotnik_msgs::ptzConstPtr& msg)
 {
+
   pos_ref_pan_ += msg->pan / 180.0 * PI;
   pos_ref_tilt_ += msg->tilt / 180.0 * PI;
+
+  if (pos_ref_tilt_ >= 0.523598776)
+  {    pos_ref_tilt_ = 0.523598776;
+      std::cout<<"*Limit UP reached (+30 deg) "<<std::endl;
+  }
+
+  if (pos_ref_tilt_ <= -0.523598776)
+  {      pos_ref_tilt_ = -0.523598776;
+      std::cout<<"*Limit DOWN reached (-30 deg)"<<std::endl;
+  }
+
 }
 
 // Imu callback

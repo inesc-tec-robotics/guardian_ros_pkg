@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- roslaunch arguments -->
+  <arg name="debug" default="false"/>
+  <arg name="gui" default="true"/>
+
+  <!-- gazebo simulator -->
+  <include file="$(find guardian_gazebo)/launch/guardian.launch">
+    <arg name="world_model" value="$(find guardian_gazebo)/worlds/guardian_ship_interior.world"/>
+  </include>
+
+ 
+</launch>

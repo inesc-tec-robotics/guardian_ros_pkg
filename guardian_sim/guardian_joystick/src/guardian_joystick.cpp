@@ -138,9 +138,9 @@ GuardianJoy::GuardianJoy():
 	nh_.param("output_1", output_1_, output_1_);
 	nh_.param("output_2", output_2_, output_2_);
 	// PANTILT CONF
-	nh_.param("cmd_topic_ptz", cmd_topic_ptz_, cmd_topic_ptz_);
-	nh_.param("button_ptz_tilt_up", ptz_tilt_up_, ptz_tilt_up_);
-	nh_.param("button_ptz_tilt_down", ptz_tilt_down_, ptz_tilt_down_);
+    nh_.param("cmd_topic_ptz", cmd_topic_ptz_, cmd_topic_ptz_);
+    nh_.param("button_ptz_tilt_up", ptz_tilt_up_, ptz_tilt_up_);
+    nh_.param("button_ptz_tilt_down", ptz_tilt_down_, ptz_tilt_down_);
 	nh_.param("button_ptz_pan_right", ptz_pan_right_, ptz_pan_right_);
 	nh_.param("button_ptz_pan_left", ptz_pan_left_, ptz_pan_left_);
 	nh_.param("pan_increment", pan_increment_, 1);
@@ -156,7 +156,7 @@ GuardianJoy::GuardianJoy():
 		bRegisteredButtonEvent[i] = false;
 	}
 
-	ROS_INFO("Topic PTZ = [%s]", cmd_topic_ptz_.c_str());
+    ROS_INFO("Topic PTZ = [%s]", cmd_topic_ptz_.c_str());
 	ROS_INFO("Service set_mode = [%s]", cmd_set_mode_.c_str());
 	ROS_INFO("Service I/O = [%s]", cmd_topic_vel_.c_str());
 	ROS_INFO("Axis linear X = %d", linear_x_);
@@ -211,9 +211,9 @@ bool GuardianJoy::EnableDisable(guardian_joystick::enable_disable::Request &req,
 void GuardianJoy::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
 	geometry_msgs::Twist vel;
-	robotnik_msgs::ptz ptz;
+    robotnik_msgs::ptz ptz;
     bool ptzEvent = false;
-	
+
   	// Actions dependant on dead-man button
  	if (joy->buttons[dead_man_button_] == 1) {
 		//ROS_ERROR("GuardianJoy::padCallback: DEADMAN button %d", dead_man_button_);
@@ -283,29 +283,29 @@ void GuardianJoy::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		// PTZ CAMERA
 		// TILT-MOVEMENTS (RELATIVE POS)
 		// TILT-MOVEMENTS (RELATIVE POS)
-		ptz.pan = ptz.tilt = ptz.zoom = 0.0;
-		ptz.relative = true;
-		if (joy->buttons[ptz_tilt_up_] == 1) {		
-			if(!bRegisteredButtonEvent[ptz_tilt_up_]){
-				ptz.tilt = tilt_increment_;
-				//ROS_INFO("GuardianPad::padCallback: TILT UP");
-				bRegisteredButtonEvent[ptz_tilt_up_] = true;
-				ptzEvent = true;
-			}
-		}else {
-			bRegisteredButtonEvent[ptz_tilt_up_] = false;
-		}
+        ptz.pan = ptz.tilt = ptz.zoom = 0.0;
+        ptz.relative = true;
+        if (joy->buttons[ptz_tilt_up_] == 1) {
+            if(!bRegisteredButtonEvent[ptz_tilt_up_]){
+                ptz.tilt = tilt_increment_;
+                //ROS_INFO("GuardianPad::padCallback: TILT UP");
+                bRegisteredButtonEvent[ptz_tilt_up_] = true;
+                ptzEvent = true;
+            }
+        }else {
+            bRegisteredButtonEvent[ptz_tilt_up_] = false;
+        }
 
-		if (joy->buttons[ptz_tilt_down_] == 1) {
-			if(!bRegisteredButtonEvent[ptz_tilt_down_]){
-			  	ptz.tilt = -tilt_increment_;
-				//ROS_INFO("GuardianPad::padCallback: TILT DOWN");
-				bRegisteredButtonEvent[ptz_tilt_down_] = true;
-				ptzEvent = true;
-			}
-		}else{
-			bRegisteredButtonEvent[ptz_tilt_down_] = false;
-		}
+        if (joy->buttons[ptz_tilt_down_] == 1) {
+            if(!bRegisteredButtonEvent[ptz_tilt_down_]){
+                ptz.tilt = -tilt_increment_;
+                //ROS_INFO("GuardianPad::padCallback: TILT DOWN");
+                bRegisteredButtonEvent[ptz_tilt_down_] = true;
+                ptzEvent = true;
+            }
+        }else{
+            bRegisteredButtonEvent[ptz_tilt_down_] = false;
+        }
 		 
 		// PAN-MOVEMENTS (RELATIVE POS)
 		if (joy->buttons[ptz_pan_left_] == 1) {			
