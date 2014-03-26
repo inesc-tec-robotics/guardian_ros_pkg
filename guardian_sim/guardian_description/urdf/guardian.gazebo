@@ -164,7 +164,7 @@
   <gazebo reference="hokuyo_laser_tilt_link">
     <material>Gazebo/Grey</material>
     <sensor type="ray" name="tilt_hokuyo_sensor">
-      <pose>0 0 0 0 0 3.14</pose>
+      <pose>0 0 0 0 0 0</pose>
       <visualize>true</visualize>
       <update_rate>30</update_rate>
       <ray>

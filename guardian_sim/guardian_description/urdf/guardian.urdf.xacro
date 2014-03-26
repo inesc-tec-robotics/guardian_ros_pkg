@@ -354,7 +354,7 @@
   <joint name="laser_tilt_joint" type="revolute">
      <axis xyz="0 1 0" />
      <!--origin xyz="0.180 0.0 0.270"/-->
-     <origin xyz="0.5 0 0.31" rpy="0 0 ${PI}" />
+     <origin xyz="0.5 0 0.31" rpy="0 0 0" />
      <parent link="base_link"/>
      <child link="hokuyo_laser_tilt_link"/>
      <limit effort="${ptz_joint_effort_limit}" velocity="${ptz_joint_velocity_limit}" lower="-1.5708" upper="1.5708"/>
