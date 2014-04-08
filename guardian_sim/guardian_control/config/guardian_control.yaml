@@ -1,7 +1,6 @@
 guardian:
   joint_blw_velocity_controller:
-#    type: velocity_controllers/JointVelocityController
-    type: effort_controllers/JointEffortController
+    type: effort_controllers/JointEffortController #type: velocity_controllers/JointVelocityController
     joint: joint_back_left_wheel
     pid: {p: 100.0, i: 0.01, d: 20.0}
   joint_brw_velocity_controller:
@@ -32,6 +31,6 @@ guardian:
     joint: laser_tilt_joint
     pid: {p: 100.0, i: 0.01, d: 50.0}
 
-  joint_read_state_controller:
+  joint_read_state_controller: # Publishes the joint states of all the joints with hardware_interfaces and advertises the topic on /joint_states. 
     type: joint_state_controller/JointStateController 
     publish_rate: 100.0

@@ -3,7 +3,9 @@ raytrace_range: 3.0
 footprint: [[0.5, -0.275], [0.5, 0.275], [-0.5,0.275], [-0.5, -0.275]]
 inflation_radius: 0.55
 
-observation_sources: hokuyo_laser
+observation_sources: hokuyo_laser_front hokuyo_laser_back
 
-hokuyo_laser: {sensor_frame: hokuyo_laser_link, data_type: LaserScan, topic: scan, marking: true, clearing: true}
+hokuyo_laser_front: {sensor_frame: hokuyo_laser_tilt_link, data_type: LaserScan, topic: tilt_scan, marking: true, clearing: true}
+
+hokuyo_laser_back: {sensor_frame: hokuyo_laser_link, data_type: LaserScan, topic: scan, marking: true, clearing: true}
 

@@ -100,10 +100,10 @@ public:
   ros::Subscriber joint_state_sub_;
 
   // High level robot command
-  ros::Subscriber cmd_sub_;
+  ros::Subscriber cmd_sub_; // cmd_vel
 	
   // High level robot command
-  ros::Subscriber ptz_sub_;
+  ros::Subscriber ptz_sub_; // command_ptz
 
   //ros::Subscriber gyro_sub_;
 
@@ -131,6 +131,8 @@ public:
   // Topics - ptz
   std::string pan_pos_topic_;
   std::string tilt_pos_topic_;
+  std::string cmd_topic;
+
 
   // Selected operation mode
   int kinematic_modes_;   
@@ -245,6 +247,9 @@ GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
   private_node_handle_.param<std::string>("joint_camera_pan", joint_camera_pan, "joint_camera_pan");
   private_node_handle_.param<std::string>("joint_camera_tilt", joint_camera_tilt, "joint_camera_tilt");
 
+  //velocity command topic
+  private_node_handle_.param<std::string>("cmd_topic", cmd_topic, "command");
+
   // Robot parameters
   if (!private_node_handle_.getParam("guardian_wheel_diameter", guardian_wheel_diameter_))
     guardian_wheel_diameter_ = GUARDIAN_WHEEL_DIAMETER;
@@ -296,7 +301,7 @@ GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
   // Subscribe to imu data
   imu_sub_ = guardian_robot_control_node_handle.subscribe("/guardian/imu_data", 1, &GuardianControllerClass::imuCallback, this);
 
-  // Adevertise reference topics for the controllers 
+  // Advertise reference topics for the controllers
   ref_vel_frw_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>( frw_vel_topic_, 50);
   ref_vel_flw_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>( flw_vel_topic_, 50);
   ref_vel_blw_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>( blw_vel_topic_, 50);
@@ -306,7 +311,7 @@ GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
   ref_pos_tilt_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>( tilt_pos_topic_, 50);
 
   // Subscribe to command topic
-  cmd_sub_ = guardian_robot_control_node_handle.subscribe<geometry_msgs::Twist>("command", 1, &GuardianControllerClass::commandCallback, this);
+  cmd_sub_ = guardian_robot_control_node_handle.subscribe<geometry_msgs::Twist>(cmd_topic, 1, &GuardianControllerClass::commandCallback, this);
 
   // Subscribe to ptz command topic
   ptz_sub_ = guardian_robot_control_node_handle.subscribe<robotnik_msgs::ptz>("command_ptz", 1, &GuardianControllerClass::command_ptzCallback, this);
@@ -368,7 +373,7 @@ void UpdateControl()
   	  double v_left_mps, v_right_mps;
 
 	  // Calculate its own velocities for realize the motor control 
-	  v_left_mps = ((joint_state_.velocity[blw_vel_] + joint_state_.velocity[flw_vel_]) / 2.0) * (guardian_wheel_diameter_ / 2.0);
+      v_left_mps = ((joint_state_.velocity[blw_vel_] + joint_state_.velocity[flw_vel_]) / 2.0) * (guardian_wheel_diameter_ / 2.0);
       v_right_mps = ((joint_state_.velocity[brw_vel_] + joint_state_.velocity[frw_vel_]) / 2.0) * (guardian_wheel_diameter_ / 2.0);
 	  // sign according to urdf (if wheel model is not symetric, should be inverted)
 
@@ -420,15 +425,15 @@ void UpdateControl()
 	  
       double k1 = 0.5; 
 	  
-	  frw_ref_msg.data = saturation( -k1 * dUr, -limit, limit);  
-	  flw_ref_msg.data = saturation( k1 * dUl, -limit, limit);
+      frw_ref_msg.data = saturation( -k1 * dUr, -limit, limit);
+      flw_ref_msg.data = saturation( k1 * dUl, -limit, limit);
       blw_ref_msg.data = saturation( k1 * dUl, -limit, limit);
-	  brw_ref_msg.data = saturation( -k1 * dUr, -limit, limit);
-	  
-	  ref_vel_frw_.publish( frw_ref_msg );
-	  ref_vel_flw_.publish( flw_ref_msg );
-	  ref_vel_blw_.publish( blw_ref_msg );
-	  ref_vel_brw_.publish( brw_ref_msg );
+      brw_ref_msg.data = saturation( -k1 * dUr, -limit, limit);
+
+      ref_vel_frw_.publish( frw_ref_msg );
+      ref_vel_flw_.publish( flw_ref_msg );
+      ref_vel_blw_.publish( blw_ref_msg );
+      ref_vel_brw_.publish( brw_ref_msg );
 	  }
 	  
      // PTZ 
@@ -507,9 +512,9 @@ void PublishOdometry()
     odom.twist.twist.linear.x = robot_pose_vx_;
     odom.twist.twist.linear.y = robot_pose_vy_;
 	odom.twist.twist.linear.z = 0.0;
-	// Angular velocities
-	odom.twist.twist.angular.x = ang_vel_x_;
-	odom.twist.twist.angular.y = ang_vel_y_;
+    // Angular velocities
+    odom.twist.twist.angular.x = ang_vel_x_;
+    odom.twist.twist.angular.y = ang_vel_y_;
     odom.twist.twist.angular.z = ang_vel_z_;
 	// Twist covariance
 	for(int i = 0; i < 6; i++)
@@ -606,6 +611,7 @@ void jointStateCallback(const sensor_msgs::JointStateConstPtr& msg)
 // Topic command
 void commandCallback(const geometry_msgs::TwistConstPtr& msg)
 {
+
   // Safety check
   last_command_time_ = ros::Time::now();
   subs_command_freq->tick();			// For diagnostics
@@ -618,17 +624,18 @@ void commandCallback(const geometry_msgs::TwistConstPtr& msg)
 void command_ptzCallback(const robotnik_msgs::ptzConstPtr& msg)
 {
 
+	//reversed signal because when msg is positive the joint is going backwards - CHECK WHY
   pos_ref_pan_ += msg->pan / 180.0 * PI;
-  pos_ref_tilt_ += msg->tilt / 180.0 * PI;
+  pos_ref_tilt_ -= msg->tilt / 180.0 * PI;
 
   if (pos_ref_tilt_ >= 0.523598776)
   {    pos_ref_tilt_ = 0.523598776;
-      std::cout<<"*Limit UP reached (+30 deg) "<<std::endl;
+       std::cout<<"*Limit DOWN reached (-30 deg)"<<std::endl;
   }
 
   if (pos_ref_tilt_ <= -0.523598776)
   {      pos_ref_tilt_ = -0.523598776;
-      std::cout<<"*Limit DOWN reached (-30 deg)"<<std::endl;
+         std::cout<<"*Limit UP reached (+30 deg) "<<std::endl;
   }
 
 }

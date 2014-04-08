@@ -3,9 +3,12 @@
   <master auto="start"/>
 
   <!-- Run the map server -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find guardian_navigation)/maps/ita/demo.yaml">
-    <rospam name="frame_id" value="map" />
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find guardian_navigation)/maps/ship_interior/ship_interior.yaml">
+    <param name="frame_id" value="map" />
   </node>
+  <!--node name="map_server" pkg="map_server" type="map_server" args="$(find guardian_navigation)/maps/ita/demo.yaml">
+    <rospam name="frame_id" value="map" />
+  </node-->
 
   <!--- Run AMCL -->
   <include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" />
