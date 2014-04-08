@@ -100,7 +100,7 @@ public:
   ros::Subscriber joint_state_sub_;
 
   // High level robot command
-  ros::Subscriber cmd_sub_; // cmd_vel
+  //ros::Subscriber cmd_sub_; // cmd_vel
 	
   // High level robot command
   ros::Subscriber ptz_sub_; // command_ptz
@@ -113,17 +113,17 @@ public:
   ros::ServiceServer srv_GetMode_;
   
   // Topics - skid - velocity
-  std::string frw_vel_topic_;
+ /* std::string frw_vel_topic_;
   std::string flw_vel_topic_;
   std::string brw_vel_topic_;
   std::string blw_vel_topic_;
-  
+  */
   // Joint names - skid - velocity 
   std::string joint_front_right_wheel;
   std::string joint_front_left_wheel;
   std::string joint_back_left_wheel;
   std::string joint_back_right_wheel;
-
+/*
   // Joint names - ptz - position
   std::string joint_camera_pan;
   std::string joint_camera_tilt;
@@ -131,8 +131,13 @@ public:
   // Topics - ptz
   std::string pan_pos_topic_;
   std::string tilt_pos_topic_;
-  std::string cmd_topic;
+  std::string cmd_topic;*/
 
+  std::string tilt_pos_topic_;
+  std::string odom_topic_;
+  std::string cmd_ptz_topic_;
+  std::string jointstates_topic_;
+  std::string imu_topic_;
 
   // Selected operation mode
   int kinematic_modes_;   
@@ -158,14 +163,14 @@ public:
   sensor_msgs::JointState joint_state_;
   
   // Command reference
-  geometry_msgs::Twist base_vel_msg_;
+ // geometry_msgs::Twist base_vel_msg_;
 
   // External speed references
   double v_ref_x_;
   double v_ref_y_;
   double w_ref_;
   double v_ref_z_;
-  double pos_ref_pan_;
+ // double pos_ref_pan_;
   double pos_ref_tilt_;
   
   // Flag to indicate if joint_state has been read
@@ -230,11 +235,11 @@ GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
   else ROS_INFO("Robot Model : %s", robot_model_.c_str());
 
   // Skid configuration - topics
-  private_node_handle_.param<std::string>("frw_vel_topic", frw_vel_topic_, "/guardian/joint_frw_velocity_controller/command");
+  /*private_node_handle_.param<std::string>("frw_vel_topic", frw_vel_topic_, "/guardian/joint_frw_velocity_controller/command");
   private_node_handle_.param<std::string>("flw_vel_topic", flw_vel_topic_, "/guardian/joint_flw_velocity_controller/command");
   private_node_handle_.param<std::string>("blw_vel_topic", blw_vel_topic_, "/guardian/joint_blw_velocity_controller/command");
   private_node_handle_.param<std::string>("brw_vel_topic", brw_vel_topic_, "/guardian/joint_brw_velocity_controller/command");
-
+*/
   // Skid configuration - Joint names 
   private_node_handle_.param<std::string>("joint_front_right_wheel", joint_front_right_wheel, "joint_front_right_wheel");
   private_node_handle_.param<std::string>("joint_front_left_wheel", joint_front_left_wheel, "joint_front_left_wheel");
@@ -242,13 +247,19 @@ GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
   private_node_handle_.param<std::string>("joint_back_right_wheel", joint_back_right_wheel, "joint_back_right_wheel");
 
   // PTZ topics
-  private_node_handle_.param<std::string>("pan_pos_topic", pan_pos_topic_, "/guardian/joint_pan_position_controller/command");
+  /*private_node_handle_.param<std::string>("pan_pos_topic", pan_pos_topic_, "/guardian/joint_pan_position_controller/command");
   private_node_handle_.param<std::string>("tilt_pos_topic", tilt_pos_topic_, "/guardian/joint_tilt_position_controller/command");
   private_node_handle_.param<std::string>("joint_camera_pan", joint_camera_pan, "joint_camera_pan");
-  private_node_handle_.param<std::string>("joint_camera_tilt", joint_camera_tilt, "joint_camera_tilt");
+  private_node_handle_.param<std::string>("joint_camera_tilt", joint_camera_tilt, "joint_camera_tilt");*/
+
+  private_node_handle_.param<std::string>("tilt_pos_topic", tilt_pos_topic_, "/guardian/joint_tilt_position_controller/command");
+  private_node_handle_.param<std::string>("odom_topic",odom_topic_, "/guardian/odom");
+  private_node_handle_.param<std::string>("cmd_ptz_topic", cmd_ptz_topic_, "/guardian_robot_control/command_ptz");
+  private_node_handle_.param<std::string>("jointstates_topic", jointstates_topic_, "/guardian/joint_states");
+  private_node_handle_.param<std::string>("imu_topic", imu_topic_ , "/guardian/imu");
 
   //velocity command topic
-  private_node_handle_.param<std::string>("cmd_topic", cmd_topic, "command");
+  //private_node_handle_.param<std::string>("cmd_topic", cmd_topic, "command");
 
   // Robot parameters
   if (!private_node_handle_.getParam("guardian_wheel_diameter", guardian_wheel_diameter_))
@@ -279,7 +290,7 @@ GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
   v_ref_y_ = 0.0;
   w_ref_ = 0.0;
   v_ref_z_ = 0.0;
-  pos_ref_pan_ = 0.0;
+  //pos_ref_pan_ = 0.0;
   pos_ref_tilt_= 0.0;
 
   // Imu variables
@@ -296,30 +307,30 @@ GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
   srv_SetOdometry_ = guardian_robot_control_node_handle.advertiseService("set_odometry",  &GuardianControllerClass::srvCallback_SetOdometry, this);
 
   // Subscribe to joint states topic
-  joint_state_sub_ = guardian_robot_control_node_handle.subscribe<sensor_msgs::JointState>("/guardian/joint_states", 1, &GuardianControllerClass::jointStateCallback, this);
+  joint_state_sub_ = guardian_robot_control_node_handle.subscribe<sensor_msgs::JointState>(jointstates_topic_, 1, &GuardianControllerClass::jointStateCallback, this);
 
   // Subscribe to imu data
-  imu_sub_ = guardian_robot_control_node_handle.subscribe("/guardian/imu_data", 1, &GuardianControllerClass::imuCallback, this);
+  imu_sub_ = guardian_robot_control_node_handle.subscribe(imu_topic_, 1, &GuardianControllerClass::imuCallback, this);
 
   // Advertise reference topics for the controllers
-  ref_vel_frw_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>( frw_vel_topic_, 50);
+  /*ref_vel_frw_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>( frw_vel_topic_, 50);
   ref_vel_flw_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>( flw_vel_topic_, 50);
   ref_vel_blw_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>( blw_vel_topic_, 50);
   ref_vel_brw_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>( brw_vel_topic_, 50);
   	  
-  ref_pos_pan_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>( pan_pos_topic_, 50);
-  ref_pos_tilt_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>( tilt_pos_topic_, 50);
+  ref_pos_pan_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>( pan_pos_topic_, 50);*/
+  ref_pos_tilt_ = guardian_robot_control_node_handle.advertise<std_msgs::Float64>(tilt_pos_topic_, 50);
 
   // Subscribe to command topic
-  cmd_sub_ = guardian_robot_control_node_handle.subscribe<geometry_msgs::Twist>(cmd_topic, 1, &GuardianControllerClass::commandCallback, this);
+  //cmd_sub_ = guardian_robot_control_node_handle.subscribe<geometry_msgs::Twist>(cmd_topic, 1, &GuardianControllerClass::commandCallback, this);
 
   // Subscribe to ptz command topic
-  ptz_sub_ = guardian_robot_control_node_handle.subscribe<robotnik_msgs::ptz>("command_ptz", 1, &GuardianControllerClass::command_ptzCallback, this);
+  ptz_sub_ = guardian_robot_control_node_handle.subscribe<robotnik_msgs::ptz>(cmd_ptz_topic_, 1, &GuardianControllerClass::command_ptzCallback, this);
   // /guardian_robot_control/command_ptz
   
   // TODO odom topic as parameter
   // Publish odometry 
-  odom_pub_ = guardian_robot_control_node_handle.advertise<nav_msgs::Odometry>("/guardian/odom", 1000);
+  odom_pub_ = guardian_robot_control_node_handle.advertise<nav_msgs::Odometry>(odom_topic_, 1000);
 
   // Component frequency diagnostics
   diagnostic_.setHardwareID("guardian_robot_control - simulation");
@@ -384,7 +395,7 @@ void UpdateControl()
 		//	linearSpeedXMps_, linearSpeedYMps_, angularSpeedRads_); 
 
 	  // Current controllers close this loop allowing (v,w) references.
-	  double epv=0.0;
+	  /*double epv=0.0;
 	  double epw=0.0;
 	  static double epvant =0.0;
 	  static double epwant =0.0;
@@ -414,11 +425,11 @@ void UpdateControl()
 
 	  // Motor control actions
 	  double limit = 100.0;
-	  
+	  */
 	  //ROS_INFO("epv=%5.2f, epw=%5.2f ***  dUl=%5.2f  dUr=%5.2f", epv, epw, dUl, dUr);
 
 	  // 
-      std_msgs::Float64 frw_ref_msg; 
+     /* std_msgs::Float64 frw_ref_msg;
       std_msgs::Float64 flw_ref_msg;
       std_msgs::Float64 blw_ref_msg;
       std_msgs::Float64 brw_ref_msg;
@@ -433,13 +444,14 @@ void UpdateControl()
       ref_vel_frw_.publish( frw_ref_msg );
       ref_vel_flw_.publish( flw_ref_msg );
       ref_vel_blw_.publish( blw_ref_msg );
-      ref_vel_brw_.publish( brw_ref_msg );
+      ref_vel_brw_.publish( brw_ref_msg );*/
 	  }
 	  
      // PTZ 
-	 std_msgs::Float64 pan_ref_pos_msg, tilt_ref_pos_msg;
-     pan_ref_pos_msg.data = pos_ref_pan_;            //saturation( pos_ref_pan_, 0.0, 0.5); 
-     ref_pos_pan_.publish( pan_ref_pos_msg );
+	 //std_msgs::Float64 pan_ref_pos_msg, tilt_ref_pos_msg;
+	 std_msgs::Float64 tilt_ref_pos_msg;
+    /* pan_ref_pos_msg.data = pos_ref_pan_;            //saturation( pos_ref_pan_, 0.0, 0.5);
+     ref_pos_pan_.publish( pan_ref_pos_msg );*/
      tilt_ref_pos_msg.data = pos_ref_tilt_;          //saturation( pos_ref_tilt_, 0.0, 0.5);
      ref_pos_tilt_.publish( tilt_ref_pos_msg );
 }
@@ -609,7 +621,7 @@ void jointStateCallback(const sensor_msgs::JointStateConstPtr& msg)
 }
 
 // Topic command
-void commandCallback(const geometry_msgs::TwistConstPtr& msg)
+/*void commandCallback(const geometry_msgs::TwistConstPtr& msg)
 {
 
   // Safety check
@@ -618,23 +630,25 @@ void commandCallback(const geometry_msgs::TwistConstPtr& msg)
 
   base_vel_msg_ = *msg;
   this->setCommand(base_vel_msg_);
-}
+}*/
 
 // Topic ptz command
 void command_ptzCallback(const robotnik_msgs::ptzConstPtr& msg)
 {
 
 	//reversed signal because when msg is positive the joint is going backwards - CHECK WHY
-  pos_ref_pan_ += msg->pan / 180.0 * PI;
+  //pos_ref_pan_ += msg->pan / 180.0 * PI;
   pos_ref_tilt_ -= msg->tilt / 180.0 * PI;
 
-  if (pos_ref_tilt_ >= 0.523598776)
-  {    pos_ref_tilt_ = 0.523598776;
+  double limit = 0.523598776; //30 degrees
+
+  if (pos_ref_tilt_ >= limit)
+  {    pos_ref_tilt_ = limit;
        std::cout<<"*Limit DOWN reached (-30 deg)"<<std::endl;
   }
 
-  if (pos_ref_tilt_ <= -0.523598776)
-  {      pos_ref_tilt_ = -0.523598776;
+  if (pos_ref_tilt_ <= -1*limit)
+  {      pos_ref_tilt_ = -1*limit;
          std::cout<<"*Limit UP reached (+30 deg) "<<std::endl;
   }
 

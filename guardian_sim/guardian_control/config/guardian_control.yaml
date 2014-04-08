@@ -1,30 +1,30 @@
 guardian:
-  joint_blw_velocity_controller:
-    type: effort_controllers/JointEffortController #type: velocity_controllers/JointVelocityController
-    joint: joint_back_left_wheel
-    pid: {p: 100.0, i: 0.01, d: 20.0}
-  joint_brw_velocity_controller:
-    type: effort_controllers/JointEffortController
-    joint: joint_back_right_wheel
-    pid: {p: 100.0, i: 0.01, d: 20.0}
-  joint_frw_velocity_controller:
-    type: effort_controllers/JointEffortController
-    joint: joint_front_right_wheel
-    pid: {p: 100.0, i: 0.01, d: 20.0}
-  joint_flw_velocity_controller:
-    type: effort_controllers/JointEffortController
-    joint: joint_front_left_wheel
-    pid: {p: 100.0, i: 0.01, d: 20.0}
+ # joint_blw_velocity_controller:
+   # type: effort_controllers/JointEffortController #type: velocity_controllers/JointVelocityController
+   # joint: joint_back_left_wheel
+   # pid: {p: 100.0, i: 0.01, d: 20.0}
+ # joint_brw_velocity_controller:
+   # type: effort_controllers/JointEffortController
+   # joint: joint_back_right_wheel
+   # pid: {p: 100.0, i: 0.01, d: 20.0}
+ # joint_frw_velocity_controller:
+   # type: effort_controllers/JointEffortController
+   # joint: joint_front_right_wheel
+   # pid: {p: 100.0, i: 0.01, d: 20.0}
+ # joint_flw_velocity_controller:
+   # type: effort_controllers/JointEffortController
+   # joint: joint_front_left_wheel
+   # pid: {p: 100.0, i: 0.01, d: 20.0}
 
-  joint_pan_position_controller:
-    type: effort_controllers/JointPositionController
-    joint: joint_camera_pan
-    pid: {p: 100.0, i: 0.01, d: 50.0}
+ # joint_pan_position_controller:
+   # type: effort_controllers/JointPositionController
+   # joint: joint_camera_pan
+   # pid: {p: 100.0, i: 0.01, d: 50.0}
 
-  joint_tilt_position_controller:
-    type: effort_controllers/JointPositionController
-    joint: joint_camera_tilt
-    pid: {p: 100.0, i: 0.01, d: 50.0}
+ # joint_tilt_position_controller:
+   # type: effort_controllers/JointPositionController
+   # joint: joint_camera_tilt
+   # pid: {p: 100.0, i: 0.01, d: 50.0}
 
   joint_laser_tilt_position_controller:
     type: effort_controllers/JointPositionController

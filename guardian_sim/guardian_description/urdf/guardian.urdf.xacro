@@ -458,7 +458,7 @@
   </link>
 
   <!-- AXIS PTZ CAMERA WITH PAN AND TILT -->
-  <link name="camera_base_link">
+  <!-- link name="camera_base_link">
      <inertial>
        <mass value="0.1" />
        <origin xyz="0 0 0" rpy="0 0 0" />
@@ -517,6 +517,6 @@
 	   <hardwareInterface>EffortJointInterface</hardwareInterface>
        <mechanicalReduction>${ptz_mechanical_reduction}</mechanicalReduction>
      </actuator>
-  </transmission>
+  </transmission-->
 </robot>
 
