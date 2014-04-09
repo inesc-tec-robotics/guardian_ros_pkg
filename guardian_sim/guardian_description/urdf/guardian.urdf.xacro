@@ -70,13 +70,13 @@
     <visual>
        <origin xyz="0 0 0" rpy="0 0 0" />
        <geometry>
-	 <mesh filename="package://guardian_description/meshes/chassis/v6/chassisV6.dae"/>
+	     <mesh filename="package://guardian_description/meshes/chassis/two_lasers/guardian2lasers.dae"/>
        </geometry>
     </visual>
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
-         <mesh filename="package://guardian_description/meshes/chassis/v6/chassisV6.dae"/>
+         <mesh filename="package://guardian_description/meshes/chassis/two_lasers/guardian2lasers.dae"/>
        </geometry>
     </collision>     
   </link>
@@ -347,7 +347,7 @@
   <joint name="laser_tilt_joint" type="revolute">
      <axis xyz="0 1 0" />
      <!--origin xyz="0.180 0.0 0.270"/-->
-     <origin xyz="0.5 0 0.31" rpy="0 0 0" />
+     <origin xyz="0.48856 0 0.24" rpy="0 0 0" /> <!-- 0.1885 --><!--   <origin xyz="0.5 0 0.31" rpy="0 0 0" /> -->
      <parent link="base_link"/>
      <child link="hokuyo_laser_tilt_link"/>
      <limit effort="${ptz_joint_effort_limit}" velocity="${ptz_joint_velocity_limit}" lower="-1.5708" upper="1.5708"/>
@@ -370,23 +370,13 @@
         <material name="Red" />
       </visual-->
 
-      <collision>
+      <!-- collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <!--mesh filename="package://pr2_description/meshes/tilting_laser_v0/tilting_hokuyo_L.stl" /-->
           <mesh filename="package://guardian_description/meshes/hokuyo-utm30-lx.dae"/>
         </geometry>
-      </collision>
+      </collision-->
   </link>
-
-  <!--joint name="joint_laser_tilt" type="continuous">
-     <axis xyz="0 1 0" />
-     <origin xyz="0.0 0.0 0.0"/>
-     <parent link="hokuyo_laser_tilt_link"/>
-     <child link="laser_tilt_link"/>
-     <limit effort="${ptz_joint_effort_limit}" velocity="${ptz_joint_velocity_limit}" lower="-1.5708" upper="1.5708"/>
-     <joint_properties damping="${ptz_joint_damping}" friction="{ptz_joint_friction}"/>
-  </joint-->
 
   <transmission name="joint_laser_tilt_trans">
    <type>transmission_interface/SimpleTransmission</type>
@@ -400,14 +390,14 @@
 
   <!-- HOKUYO SENSOR -->
   <joint name="hokuyo_laser_joint" type="fixed">
-     <axis xyz="0 1 0" />
-     <origin xyz="-0.55 0 0.31" rpy="0 0 ${PI}" />
+     <axis xyz="0 1 0" /> 
+     <origin xyz="-0.43235 0 0.3" rpy="0 0 ${PI}" /> <!--  z: 0.24199 --> <!-- <origin xyz="-0.55 0 0.31" rpy="0 0 ${PI}" /> -->
      <parent link="base_link"/>
      <child link="hokuyo_laser_link"/>
   </joint>
   <!-- Hokuyo Laser -->
   <link name="hokuyo_laser_link">
-    <collision>
+    <!--  collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
 	<box size="0.1 0.1 0.1"/>
@@ -419,7 +409,7 @@
       <geometry>
         <mesh filename="package://guardian_description/meshes/hokuyo-utm30-lx.dae"/>
       </geometry>
-    </visual>
+    </visual-->
 
     <inertial>
       <mass value="1e-5" />
