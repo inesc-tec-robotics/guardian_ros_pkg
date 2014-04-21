@@ -30,7 +30,7 @@ They were tested in Ubuntu 12.04 LTS with ROS Groovy and Hydro.
   * Script to setup the guardian-ros-pkg from the inesc repository for ROS Groovy (fork of https://github.com/RobotnikES/guardian-ros-pkg)
 * **_[d1-Guardian-Hydro.sh (required for developing in ROS Hydro)](https://github.com/inesc/guardian-ros-pkg/blob/configs/ROS-Gazebo/d1-Guardian-Hydro.sh)_**
   * Script to setup the guardian-ros-pkg from the inesc repository for ROS Hydro (fork of https://github.com/RobotnikES/guardian-ros-pkg)
-* **_[MigrationFromGoovyToHydro.sh](https://github.com/inesc/guardian-ros-pkg/blob/configs/ROS-Gazebo/MigrationFromGoovyToHydro.sh)_**
+* **_[MigrationFromGroovyToHydro.sh](https://github.com/inesc/guardian-ros-pkg/blob/configs/ROS-Gazebo/MigrationFromGroovyToHydro.sh)_**
   * Script to ease the transition from ROS Groovy to ROS Hydro
 
 
