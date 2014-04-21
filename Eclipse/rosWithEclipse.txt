@@ -35,6 +35,8 @@ in order to update the .project and .cproject files.
 After executing then again, it is necessary to either restart eclipse or refresh the eclipse project by doing
 Project Explorer -> Right click in project -> Refresh
 
+When using catkin, make sure you run catkin_make before proceeding.
+
 
 # -----------------------------------------------------------
 # >>>> Option 1 -> rosbuild
@@ -42,6 +44,8 @@ Project Explorer -> Right click in project -> Refresh
 # +++ create .project and .cproject in a folder with a CMakeLists.txt
 make eclipse-project
 
+# +++ create .project and .cproject in a folder with a multiple ros packages
+rosmake --target=eclipse-project --specified-only *
 
 
 # -----------------------------------------------------------
@@ -55,16 +59,67 @@ catkin_make --force-cmake -G"Eclipse CDT4 - Unix Makefiles"
 # or for debug builds
 catkin_make --force-cmake -G"Eclipse CDT4 - Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_ECLIPSE_MAKE_ARGUMENTS=-j8
 
+# Since catkin uses a global workspace for all projects, if you want vcs support in eclipse,
+you have to create a c++ project in the same directory where you have the .git folder (or equivalent),
+in order to eclipse be able to track file changes.
+
 
 # -----------------------------------------------------------
-# >>>>> Option 3 -> catkin within source (not recommended) 
+# >>>>> Option 3 -> using cmake-gui generator
 # -----------------------------------------------------------
 
-# +++ create .cproject and .cproject in a folder with a CMakeLists.txt
-cmake -G"Eclipse CDT4 - Unix Makefiles" .
+cmake-gui allows to inspect and change cmake project configurations using a GUI.
+Either start cmake-gui and specify the source and build directory (they should be siblings to work properly in eclipse)
+or go to the directory in the command line and type cmake-gui . (and select the build directory)
+Then click in configure -> select "Eclipse CDT4 - Unix Makefiles" -> "Use default native compilers" -> Finish
+Correct any paths and libs and select the build type
+	- Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
+	- Debug          : w/ debug symbols, w/o optimization
+	- Release        : w/o debug symbols, w/ optimization
+	- RelWithDebInfo : w/ debug symbols, w/ optimization
+	- MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
+For projects with version control:
+	- Click in advanced and mark the check box CMAKE_ECLIPSE_GENERATE_SOURCE_PROJECT
+	- Configure the project again
+	- See section bellow about VCS
+Then click in generate
+Eclipse project files should now be inside the build folder (and source folder if you checked CMAKE_ECLIPSE_GENERATE_SOURCE_PROJECT)
+
+
+
+# -----------------------------------------------------------
+# >>>>> Option 4 -> using cmake generator directly
+# -----------------------------------------------------------
+
+To create out of source builds (recommended), run the commands bellow in a build folder
+(that should be a sibling of the source folder to work properly in eclipse)
+For example if the CMakeLists.txt is in the current source folder, then
+mkdir -p ../build_eclipse
+cd ../build_eclipse
+
+# +++ create .project and .cproject in a package with a CMakeLists.txt
+cmake -G"Eclipse CDT4 - Unix Makefiles" -DCMAKE_ECLIPSE_GENERATE_SOURCE_PROJECT=TRUE ../src_folder
 
 # or for debug builds
-cmake -G"Eclipse CDT4 - Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_ECLIPSE_MAKE_ARGUMENTS=-j8
+cmake -G"Eclipse CDT4 - Unix Makefiles" -DCMAKE_ECLIPSE_GENERATE_SOURCE_PROJECT=TRUE -DCMAKE_BUILD_TYPE=Debug -DCMAKE_ECLIPSE_MAKE_ARGUMENTS=-j8 ../src_folder
+
+
+
+# ===========================================================
+# »»»»» VCS (Version Control System)
+# ===========================================================
+
+The option -DCMAKE_ECLIPSE_GENERATE_SOURCE_PROJECT=TRUE will tell cmake to create an extra project to edit the source code
+(allowing the eclipse to track the changes using the VCS).
+For building the package, the build project or rosmake can be used.
+If the project in the source directory doesn't automatically configure the VCS, then
+Project properties -> Team -> Share project -> Select your VCS -> Use or create repository
+-> Select the directory with the VCS data (it will probably be the repository at the current directory - Project in . ) -> Finish
+
+More info:
+	http://www.cmake.org/Wiki/Eclipse_CDT4_Generator
+	https://secure.mash-project.eu/wiki/index.php/CMake:_Getting_Started
+
 
 
 

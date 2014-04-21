@@ -10,7 +10,7 @@ echo "\n\n"
 echo "----------------------------------------------------"
 echo ">>>>> Cloning RViz groovy-devel"
 echo "----------------------------------------------------"
-cd ~
+cd ~/
 mkdir Projects
 cd Projects
 git clone https://github.com/ros-visualization/rviz.git -b groovy-devel
@@ -27,4 +27,6 @@ cmake ..
 make
 
 echo "export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/Projects" >> ~/.bashrc
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/Projects
 echo "source ~/Projects/rviz/build/devel/setup.bash" >> ~/.bashrc
+source ~/Projects/rviz/build/devel/setup.bash

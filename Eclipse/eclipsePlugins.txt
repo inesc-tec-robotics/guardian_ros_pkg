@@ -112,11 +112,13 @@ Install url:
 »»»»» For changing source code editor color themes
 Info:
 	http://eclipsecolorthemes.org/
+Venture Eclipse Color Theme:
+	http://eclipsecolorthemes.org/?view=theme&id=1878
 Install url:
 	http://eclipse-color-theme.github.com/update
 
 
-»»»»» For customizing eclipse layout an windows theme
+»»»»» For customizing eclipse layout and windows theme
 Info:
 	https://github.com/jeeeyul/eclipse-themes
 Install url:

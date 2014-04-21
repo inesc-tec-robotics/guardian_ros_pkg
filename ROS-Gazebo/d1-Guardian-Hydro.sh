@@ -5,6 +5,16 @@ echo "##### Installing guardian-ros-pkg"
 echo "####################################################################################################"
 
 
+echo "\n\n"
+echo "----------------------------------------------------"
+echo ">>>>> Installing dependencies"
+echo "----------------------------------------------------"
+sudo apt-get install ros-hydro-pr2-common -y
+sudo apt-get install ros-hydro-joy -y
+sudo apt-get install ros-hydro-joystick-drivers -y
+sudo apt-get install ros-hydro-ros-control -y
+sudo apt-get install ros-hydro-ros-controllers -y
+
 
 echo "\n\n"
 echo "----------------------------------------------------"

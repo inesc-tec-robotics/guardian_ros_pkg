@@ -9,41 +9,19 @@ echo "##########################################################################
 
 echo "\n\n"
 echo "----------------------------------------------------"
-echo ">>>>> Installing gazebo ros packages for ROS Groovy"
+echo ">>>>> Installing gazebo ros packages for ROS Hydro"
 echo "----------------------------------------------------"
-cd ~/catkin_ws/src
-git clone https://github.com/ros/cmake_modules.git
-git clone https://github.com/ros-simulation/gazebo_ros_pkgs.git
-git clone https://github.com/ros-controls/ros_control.git
-git clone https://github.com/ros-controls/ros_controllers.git -b groovy-backported-hydro
-git clone https://github.com/ros-controls/control_toolbox.git
-git clone https://github.com/ros-controls/realtime_tools.git
-
-
-# echo "\n\n"
-# echo "----------------------------------------------------"
-# echo ">>>>> Installing gazebo ros packages for ROS Hydro"
-# echo "----------------------------------------------------"
-# sudo apt-get install ros-hydro-gazebo-ros-pkgs ros-hydro-gazebo-ros-control -y
-
+sudo apt-get install ros-hydro-gazebo-ros-pkgs ros-hydro-gazebo-ros-control -y
 
 
 echo "\n\n"
 echo "----------------------------------------------------"
 echo ">>>>> Installing dependencies"
 echo "----------------------------------------------------"
+cd ~/catkin_ws/src
 rosdep update
-rosdep check --from-paths . --ignore-src --rosdistro groovy
-rosdep install --from-paths . --ignore-src --rosdistro groovy -y
-
-
-
-echo "\n\n"
-echo "----------------------------------------------------"
-echo ">>>>> Building catkin workspace"
-echo "----------------------------------------------------"
-cd ~/catkin_ws/
-catkin_make
+rosdep check --from-paths . --ignore-src --rosdistro hydro
+rosdep install --from-paths . --ignore-src --rosdistro hydro -y
 
 
 

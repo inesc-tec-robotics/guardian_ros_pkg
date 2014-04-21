@@ -13,5 +13,5 @@ catkin_make
 
 echo "# <ROS catkin setup.bash>" >> ~/.bashrc
 echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
-echo "# </ROS catkin setup.bash>" >> ~/.bashrc
 source ~/catkin_ws/devel/setup.bash
+echo "# </ROS catkin setup.bash>" >> ~/.bashrc
