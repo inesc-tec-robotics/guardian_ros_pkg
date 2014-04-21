@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="guardian_static_tf" type="guardian_tf" name="guardian_static_tf_node" output="screen"/>
+  <node pkg="guardian_static_tf" type="guardian_static_tf" name="guardian_static_tf_node" output="screen"/>
 
   <node pkg="hokuyo_node" type="hokuyo_node" name="guardian_hokuyo_node" output="screen">
 	<param name="frame_id" value="scan"/>

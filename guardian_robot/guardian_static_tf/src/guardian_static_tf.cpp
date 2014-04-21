@@ -1,5 +1,5 @@
 /*
- * guardian_tf
+ * guardian_static_tf
  * Copyright (c) 2011, Robotnik Automation, SLL
  * All rights reserved.
  *
@@ -36,14 +36,14 @@
 
 
 int main(int argc, char** argv){
-  ros::init(argc, argv, "guardian_tf");
+  ros::init(argc, argv, "guardian_static_tf");
   ros::NodeHandle n;
   
   ros::Rate r(50);
 
   tf::TransformBroadcaster broadcaster;
 
-  ROS_INFO("guardian_tf node loaded!");
+  ROS_INFO("guardian_static_tf node loaded!");
 
   while(n.ok()){
 

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(guardian_tf)
+project(guardian_static_tf)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -44,10 +44,10 @@ include_directories(
 )
 
 ## Declare a cpp executable
-add_executable(guardian_tf src/guardian_tf.cpp)
+add_executable(guardian_static_tf src/guardian_static_tf.cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(guardian_tf
+target_link_libraries(guardian_static_tf
   ${catkin_LIBRARIES}
 )
 

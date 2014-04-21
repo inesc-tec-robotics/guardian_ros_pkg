@@ -66,8 +66,12 @@ include_directories(
 add_executable(guardian_node src/guardian_node.cpp src/Component.cc src/guardian_controller.cc src/RoboteqDevice.cpp)
 add_executable(guardian_node_ax src/guardian_node_ax.cpp src/Component.cc src/ax3500.cc src/SerialDevice.cc)
 
-add_dependencies(guardian_node guardian_node_generate_messages_cpp)
-add_dependencies(guardian_node_ax guardian_node_generate_messages_cpp)
+add_dependencies(guardian_node ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(guardian_node_ax ${PROJECT_NAME}_generate_messages_cpp)
+
+add_dependencies(guardian_node ${catkin_EXPORTED_TARGETS})
+add_dependencies(guardian_node_ax ${catkin_EXPORTED_TARGETS})
+
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(guardian_node
