@@ -1,42 +1,31 @@
 <?xml version="1.0"?>
 <launch>
 
-	<include file="$(find guardian_gazebo)/launch/guardian_ship_interior.launch" />
+  <include file="$(find guardian_gazebo)/launch/guardian.launch">
+    <arg name="world_model" value="$(find guardian_gazebo)/worlds/guardian_ship_interior.world"/>
+    <arg name="rviz_config" value="-d $(find guardian_gazebo)/launch/navigation.rviz" />
+  </include>
+  
+  <!-- include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch" /--> <!-- in guardian_ship_interior.launch  -->
 
-	<!-- include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch" /--> <!-- in guardian_ship_interior.launch  -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find guardian_navigation)/maps/ship_interior/ship_interior.yaml"/>
 
-	<node name="map_server" pkg="map_server" type="map_server" args="$(find guardian_navigation)/maps/ship_interior/ship_interior.yaml"/>
-
-
+  <!--  set the initial pose of the robot for amcl -->
+  <include file="$(find guardian_nav)/launch/set_initial_pose.launch" />	
+  
  <!--- Run AMCL -->
   <include file="$(find amcl)/examples/amcl_diff.launch" />
+  <!--  include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" /-->	
+  <!-- substituir por node amcl com parametros (copiar o que tá no diff e mudar params)-->
+
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <!-- rosparam file="$(find guardian_navigation)/nav_config/costmap_common_params.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find guardian_navigation)/nav_config/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find guardian_navigation)/nav_config/local_costmap_params.yaml" command="load" />
-    <rosparam file="$(find guardian_navigation)/nav_config/global_costmap_params.yaml" command="load" />
-    <rosparam file="$(find guardian_navigation)/nav_config/base_local_planner_params.yaml" command="load" /-->
     <rosparam file="$(find guardian_navigation)/navigation_config/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find guardian_navigation)/navigation_config/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find guardian_navigation)/navigation_config/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find guardian_navigation)/navigation_config/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find guardian_navigation)/navigation_config/base_local_planner_params.yaml" command="load" />
+    <remap from="cmd_vel" to="/guardian/cmd_vel"/>
   </node>
 
-<!-- node pkg="tf" type="static_transform_publisher" name="mapTF" output="screen" args=" 0 0 0 0 0 0 map odom 100"-->
-    <!--param name="odom_param" value="param_value" /-->
-  <!--/node-->
-
-  <!--node pkg="guardian_gazebo" type="gua" name="sensor_node_name" output="screen">
-    <param name="sensor_param" value="param_value" />
-  </node>
-
-  <node pkg="odom_node_pkg" type="odom_node_type" name="odom_node" output="screen">
-    <param name="odom_param" value="param_value" />
-  </node>
-
-  <node pkg="transform_configuration_pkg" type="transform_configuration_type" name="transform_configuration_name" output="screen">
-    <param name="transform_configuration_param" value="param_value" />
-  </node-->
 </launch>
