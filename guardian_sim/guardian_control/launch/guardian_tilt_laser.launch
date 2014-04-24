@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+   <!-- Load laser tilt configurations from yaml file to parameter server -->
+   <rosparam file="$(find guardian_control)/config/laser_tilt_params.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="laser_tilt_command" pkg="guardian_control" type="laser_tilt_command" respawn="false"
+    output="screen"/>
+
+</launch>
+
+ 

@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(guardian_control)
 
+find_package(catkin REQUIRED COMPONENTS 
+    robotnik_msgs
+    roscpp 
+    sensor_msgs 
+    )
+    
 #######################################
 ## Declare ROS messages and services ##
 #######################################
@@ -58,16 +64,15 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-# add_executable(guardian_control_node src/guardian_control_node.cpp)
+add_executable(guardian_tilt_command src/laser_tilt_command.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(guardian_control_node guardian_control_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(guardian_control_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(guardian_tilt_command ${catkin_LIBRARIES})
+ 
 
 #############
 ## Install ##
