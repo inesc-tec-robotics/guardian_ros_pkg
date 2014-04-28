@@ -64,14 +64,15 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-add_executable(guardian_tilt_command src/laser_tilt_command.cpp)
+add_executable(laser_tilt_command src/laser_tilt_command.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(guardian_control_node guardian_control_generate_messages_cpp)
+add_dependencies(laser_tilt_command ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(guardian_tilt_command ${catkin_LIBRARIES})
+target_link_libraries(laser_tilt_command ${catkin_LIBRARIES})
  
 
 #############

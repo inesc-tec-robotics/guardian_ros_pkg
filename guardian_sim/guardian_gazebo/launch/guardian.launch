@@ -26,7 +26,9 @@
 	<!-- ros_control guardian launch file -->
 	<include file="$(find guardian_control)/launch/guardian_control.launch" />
 	<include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch" />
+	<include file="$(find guardian_joystick)/launch/guardian_keyboard.launch" />
     <include file="$(find guardian_joystick)/launch/guardian_joystick.launch" />
+	<include file="$(find guardian_control)/launch/guardian_tilt_laser.launch" />
 
 	<node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config)" />
 
