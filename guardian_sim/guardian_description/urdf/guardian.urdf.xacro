@@ -327,34 +327,19 @@
   </transmission>
 
 
-	<!-- KINECT CAMERA -->
-  <!--joint name="camera_joint" type="fixed">
-     <axis xyz="0 1 0" />
-     <origin xyz="0.5 0 0.31"/>
-     <parent link="base_link"/>
-     <child link="camera_link"/>
-  </joint>
-  <link name="camera_link">
-     <inertial>
-       <mass value="0.001" />
-       <origin xyz="0 0 0" rpy="0 0 0" />
-       <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001" />
-    </inertial>
-  </link-->
 
-
-  <!-- FRONT - TILT LASER -->
-  <joint name="laser_tilt_joint" type="revolute">
+  <!-- FRONT - TILT LASER - URG-04LX -->
+  <joint name="hokuyo_tilt_laser_joint" type="revolute">
      <axis xyz="0 1 0" />
      <!--origin xyz="0.180 0.0 0.270"/-->
      <origin xyz="0.48856 0 0.24" rpy="0 0 0" /> <!-- 0.1885 --><!--   <origin xyz="0.5 0 0.31" rpy="0 0 0" /> -->
      <parent link="base_link"/>
-     <child link="hokuyo_laser_tilt_link"/>
+     <child link="hokuyo_tilt_laser_link"/>
      <limit effort="${ptz_joint_effort_limit}" velocity="${ptz_joint_velocity_limit}" lower="-1.5708" upper="1.5708"/>
      <joint_properties damping="${ptz_joint_damping}" friction="{ptz_joint_friction}"/>
   </joint>
 
-  <link name="hokuyo_laser_tilt_link">
+  <link name="hokuyo_tilt_laser_link">
      <inertial>
        <mass value="0.1" />
        <origin xyz="0 0 0" rpy="0 0 0" />
@@ -378,10 +363,10 @@
       </collision-->
   </link>
 
-  <transmission name="joint_laser_tilt_trans">
+  <transmission name="joint_tilt_laser_trans">
    <type>transmission_interface/SimpleTransmission</type>
-     <joint name="laser_tilt_joint" />
-     <actuator name="laser_tilt_motor">
+     <joint name="hokuyo_tilt_laser_joint" />
+     <actuator name="tilt_laser_motor">
      <hardwareInterface>EffortJointInterface</hardwareInterface>
        <mechanicalReduction>${ptz_mechanical_reduction}</mechanicalReduction>
      </actuator>
@@ -389,14 +374,14 @@
 
 
   <!-- HOKUYO SENSOR -->
-  <joint name="hokuyo_laser_joint" type="fixed">
+  <joint name="hokuyo_base_laser_joint" type="fixed">
      <axis xyz="0 1 0" /> 
      <origin xyz="-0.43235 0 0.3" rpy="0 0 ${PI}" /> <!--  z: 0.24199 --> <!-- <origin xyz="-0.55 0 0.31" rpy="0 0 ${PI}" /> -->
      <parent link="base_link"/>
-     <child link="hokuyo_laser_link"/>
+     <child link="hokuyo_base_laser_link"/>
   </joint>
   <!-- Hokuyo Laser -->
-  <link name="hokuyo_laser_link">
+  <link name="hokuyo_base_laser_link">
     <!--  collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>

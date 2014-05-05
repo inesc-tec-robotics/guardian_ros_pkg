@@ -15,7 +15,7 @@ guardian_robot_control:
     # joint_flw_steer: joint_front_left_steer
     # joint_blw_steer: joint_back_left_steer
     # joint_brw_steer: joint_back_right_steer
-     tilt_pos_topic: /guardian/joint_laser_tilt_position_controller/command
+     tilt_pos_topic: /guardian/joint_tilt_laser_position_controller/command
      odom_topic: /guardian/odom
      cmd_ptz_topic: /guardian_robot_control/command_ptz
      jointstates_topic_: /guardian/joint_states

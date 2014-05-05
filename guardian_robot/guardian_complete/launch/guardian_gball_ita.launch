@@ -27,7 +27,7 @@
 	<param name="intensity" type="bool" value="false"/>
 	<!-- Set frame_id tilt -->
     	<param name="frame_id" value="/laser"/>
-    	<param name="frame_id" value="/hokuyo_laser_link"/>
+    	<param name="frame_id" value="/hokuyo_base_laser_link"/>
   </node>
 
  

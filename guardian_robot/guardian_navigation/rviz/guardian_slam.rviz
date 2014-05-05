@@ -105,7 +105,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        hokuyo_laser_link:
+        hokuyo_base_laser_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -354,7 +354,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.01
       Style: Points
-      Topic: /scan
+      Topic: /base_scan
       Use Fixed Frame: true
       Use rainbow: false
       Value: true

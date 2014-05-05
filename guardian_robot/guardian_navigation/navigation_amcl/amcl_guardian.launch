@@ -3,7 +3,7 @@
 	<node pkg="amcl" type="amcl" name="amcl" output="screen">
 
 		<!--remap from="scan" to="hokuyo_laser_topic" / -->
-		<remap from="scan" to="/scan" />
+		<remap from="scan" to="/base_scan" />
 		<remap from="cmd_vel" to="guardian_node/command" />
 
 		<param name="base_frame_id" value="base_footprint" />

@@ -50,7 +50,7 @@ int main(int argc, char** argv){
     // tf: /base_footprint -> /base_link  (base_footprint->base_link transform should thus give the height above ground as the z-component)
     broadcaster.sendTransform(tf::StampedTransform(tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0.0,0.0,0.130)),ros::Time::now(),"base_footprint", "base_link"));
 
-    // tf: /base_link -> /scan
+    // tf: /base_link -> /base_scan
     // broadcaster.sendTransform(tf::StampedTransform(tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0.12,0.0,0.285)),ros::Time::now(),"base_link", "scan"));
     broadcaster.sendTransform(tf::StampedTransform(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(0.463,0.0,0.273)), ros::Time::now(),"base_link", "laser"));
 

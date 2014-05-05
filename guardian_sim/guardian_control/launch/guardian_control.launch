@@ -7,7 +7,7 @@
   <!-- load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" ns="/guardian" args="--namespace=/guardian
-                      joint_laser_tilt_position_controller
+                      joint_tilt_laser_position_controller
                       joint_read_state_controller 
                       "/>
 

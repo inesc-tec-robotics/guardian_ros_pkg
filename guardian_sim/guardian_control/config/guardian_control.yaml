@@ -26,9 +26,9 @@ guardian:
    # joint: joint_camera_tilt
    # pid: {p: 100.0, i: 0.01, d: 50.0}
 
-  joint_laser_tilt_position_controller:
+  joint_tilt_laser_position_controller:
     type: effort_controllers/JointPositionController
-    joint: laser_tilt_joint
+    joint: hokuyo_tilt_laser_joint
     pid: {p: 100.0, i: 0.01, d: 50.0}
 
   joint_read_state_controller: # Publishes the joint states of all the joints with hardware_interfaces and advertises the topic on /joint_states. 

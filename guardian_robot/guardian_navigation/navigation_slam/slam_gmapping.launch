@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 	<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
-		<remap from="scan" to="/scan" />
+		<remap from="scan" to="/base_can" />
 		<param name="base_frame" value="base_footprint" />
 		<param name="odom_frame" value="odom" /> <!--odom_combined-->
 		<param name="map_update_interval" value="2.0" /> <!-- 30.0 i 50.0, lo normal és 5.0! -->

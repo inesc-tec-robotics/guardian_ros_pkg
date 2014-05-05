@@ -304,13 +304,13 @@
 
 
   <!-- HOKUYO SENSOR -->
-  <joint name="hokuyo_laser_joint" type="fixed">
+  <joint name="hokuyo_base_laser_joint" type="fixed">
      <axis xyz="0 1 0" />
      <origin xyz="0.45 0 0.32"/>
      <parent link="base_link"/>
-     <child link="hokuyo_laser_link"/>
+     <child link="hokuyo_base_laser_link"/>
   </joint>
-  <link name="hokuyo_laser_link" type="laser">
+  <link name="hokuyo_base_laser_link" type="laser">
      <inertial>
        <mass value="0.001" />
        <origin xyz="0 0 0" rpy="0 0 0" />
@@ -687,7 +687,7 @@
 
   <!-- Other controllers (HOKUYO SENSOR) -->
 
-  <gazebo reference = "hokuyo_laser_link">
+  <gazebo reference = "hokuyo_base_laser_link">
     <sensor:ray name="hokuyo_laser">
        <rayCount>640</rayCount>
        <rangeCount>640</rangeCount>
@@ -708,7 +708,7 @@
          <alwaysOn>true</alwaysOn>
          <updateRate>10.0</updateRate>
          <topicName>hokuyo_laser_topic</topicName>
-         <frameName>hokuyo_laser_link</frameName>
+         <frameName>hokuyo_base_laser_link</frameName>
          <interface:laser name="gazebo_ros_hokuyo_laser_iface" />
        </controller:gazebo_ros_laser>
     </sensor:ray>

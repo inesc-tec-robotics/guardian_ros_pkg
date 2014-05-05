@@ -102,12 +102,12 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        hokuyo_laser_link:
+        hokuyo_base_laser_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        hokuyo_laser_tilt_link:
+        hokuyo_tilt_laser_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -157,7 +157,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.04
       Style: Flat Squares
-      Topic: /scan
+      Topic: /base_scan
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -183,9 +183,9 @@ Visualization Manager:
           Value: true
         /front_right_wheel:
           Value: true
-        /hokuyo_laser_link:
+        /hokuyo_base_laser_link:
           Value: true
-        /hokuyo_laser_tilt_link:
+        /hokuyo_tilt_laser_link:
           Value: true
         /imu_link:
           Value: true
@@ -217,9 +217,9 @@ Visualization Manager:
                 {}
               /front_right_wheel:
                 {}
-              /hokuyo_laser_link:
+              /hokuyo_base_laser_link:
                 {}
-              /hokuyo_laser_tilt_link:
+              /hokuyo_tilt_laser_link:
                 {}
               /imu_link:
                 {}
