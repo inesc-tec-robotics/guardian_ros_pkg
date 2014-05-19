@@ -640,16 +640,16 @@ void command_ptzCallback(const robotnik_msgs::ptzConstPtr& msg)
   //pos_ref_pan_ += msg->pan / 180.0 * PI;
   pos_ref_tilt_ -= msg->tilt / 180.0 * PI;
 
-  double limit = 0.523598776; //30 degrees
+  double limit = 1.57; //90 degrees
 
   if (pos_ref_tilt_ >= limit)
   {    pos_ref_tilt_ = limit;
-       std::cout<<"*Limit DOWN reached (-30 deg)"<<std::endl;
+       std::cout<<"*Limit DOWN reached (-90 deg)"<<std::endl;
   }
 
   if (pos_ref_tilt_ <= -1*limit)
   {      pos_ref_tilt_ = -1*limit;
-         std::cout<<"*Limit UP reached (+30 deg) "<<std::endl;
+         std::cout<<"*Limit UP reached (+90 deg) "<<std::endl;
   }
 
 }

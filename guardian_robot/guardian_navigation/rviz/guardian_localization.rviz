@@ -5,20 +5,36 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-      Splitter Ratio: 0.463196
-    Tree Height: 506
+        - /Map1
+        - /PoseArray1
+      Splitter Ratio: 0.587692
+    Tree Height: 775
+  - Class: rviz/Selection
+    Name: Selection
   - Class: rviz/Tool Properties
     Expanded:
+      - /2D Pose Estimate1
       - /2D Nav Goal1
+      - /Publish Point1
     Name: Tool Properties
+    Splitter Ratio: 0.588679
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
     Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Experimental: false
+    Name: Time
+    SyncMode: 0
+    SyncSource: LaserScan Base
 Visualization Manager:
   Class: ""
   Displays:
     - Alpha: 0.5
       Cell Size: 1
       Class: rviz/Grid
-      Color: 127; 127; 127
+      Color: 160; 160; 164
       Enabled: true
       Line Style:
         Line Width: 0.03
@@ -30,27 +46,12 @@ Visualization Manager:
         Y: 0
         Z: 0
       Plane: XY
-      Plane Cell Count: 50
+      Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Class: rviz/Axes
-      Enabled: false
-      Length: 1
-      Name: Origin Axes
-      Radius: 0.1
-      Reference Frame: <Fixed Frame>
-      Value: false
-    - Class: rviz/Marker
-      Enabled: true
-      Marker Topic: visualization_marker
-      Name: Visualization Markers
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Alpha: 0.5
+    - Alpha: 0.3
       Class: rviz/RobotModel
-      Collision Enabled: false
+      Collision Enabled: true
       Enabled: true
       Links:
         All Links Enabled: true
@@ -78,22 +79,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        camera_base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_pan_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_tilt_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         front_left_wheel:
           Alpha: 1
           Show Axes: false
@@ -108,7 +93,10 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
+        hokuyo_tilt_laser_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         imu_link:
           Alpha: 1
           Show Axes: false
@@ -130,242 +118,115 @@ Visualization Manager:
       Update Interval: 0
       Value: true
       Visual Enabled: true
-    - Alpha: 0.7
-      Class: rviz/Map
-      Draw Behind: false
-      Enabled: true
-      Name: Map
-      Topic: /map
-      Value: true
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/LaserScan
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 2
-      Enabled: false
-      Max Color: 255; 255; 255
-      Max Intensity: 4096
-      Min Color: 0; 0; 0
-      Min Intensity: 0
-      Name: Head Scan
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.01
-      Style: Flat Squares
-      Topic: /tilt_scan
-      Use Fixed Frame: true
-      Use rainbow: false
-      Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/LaserScan
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: true
-      Max Color: 255; 255; 255
-      Max Intensity: 101
-      Min Color: 0; 0; 0
-      Min Intensity: 101
-      Name: Floor Scan
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.01
-      Style: Flat Squares
-      Topic: /base_scan_throttled
-      Use Fixed Frame: true
-      Use rainbow: false
-      Value: true
     - Class: rviz/TF
-      Enabled: false
+      Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        back_left_wheel:
+          Value: true
+        back_right_wheel:
+          Value: true
+        base_footprint:
+          Value: true
+        base_link:
+          Value: true
+        front_left_wheel:
+          Value: true
+        front_right_wheel:
+          Value: true
+        hokuyo_base_laser_link:
+          Value: true
+        hokuyo_tilt_laser_link:
+          Value: true
+        imu_link:
+          Value: true
+        left_track:
+          Value: true
+        map:
+          Value: true
+        odom:
+          Value: true
+        right_track:
+          Value: true
       Marker Scale: 1
-      Name: Transforms
+      Name: TF
       Show Arrows: true
       Show Axes: true
-      Show Names: true
+      Show Names: false
       Tree:
-        {}
-      Update Interval: 1
-      Value: false
-    - Arrow Length: 0.3
-      Class: rviz/PoseArray
-      Color: 255; 25; 0
-      Enabled: true
-      Name: AMCL Cloud
-      Topic: /particlecloud
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
-      Color: 255; 0; 0
-      Enabled: true
-      Name: Obstacles
-      Topic: /move_base_node/local_costmap/obstacles
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
-      Color: 0; 0; 255
-      Enabled: true
-      Name: Inflated Obstacles
-      Topic: /move_base_node/local_costmap/inflated_obstacles
-      Value: true
-    - Alpha: 1
-      Class: rviz/Polygon
-      Color: 255; 0; 0
-      Enabled: true
-      Name: Robot Footprint
-      Topic: /move_base_node/local_costmap/robot_footprint
-      Value: true
-    - Alpha: 1
-      Buffer Length: 1
-      Class: rviz/Path
-      Color: 0; 255; 0
-      Enabled: true
-      Name: Global Plan
-      Topic: /move_base_node/DWAPlannerROS/global_plan
-      Value: true
-    - Alpha: 1
-      Buffer Length: 1
-      Class: rviz/Path
-      Color: 0; 0; 255
-      Enabled: true
-      Name: Local Plan
-      Topic: /move_base_node/DWAPlannerROS/local_plan
-      Value: true
-    - Alpha: 1
-      Buffer Length: 1
-      Class: rviz/Path
-      Color: 0; 255; 0
-      Enabled: true
-      Name: Planner Plan
-      Topic: /move_base_node/NavfnROS/plan
-      Value: true
-    - Alpha: 1
-      Axes Length: 1
-      Axes Radius: 0.1
-      Class: rviz/Pose
-      Color: 255; 25; 0
-      Enabled: true
-      Head Length: 0.3
-      Head Radius: 0.2
-      Name: Current Goal
-      Shaft Length: 1
-      Shaft Radius: 0.1
-      Shape: Arrow
-      Topic: /move_base_node/current_goal
-      Value: true
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: false
-      Max Color: 255; 255; 255
-      Max Intensity: 4096
-      Min Color: 0; 0; 0
-      Min Intensity: 0
-      Name: Tilt Scan Shadow Filtered
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.01
-      Style: Flat Squares
-      Topic: /tilt_scan_shadow_filtered
-      Use Fixed Frame: true
-      Use rainbow: false
-      Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: false
-      Max Color: 255; 255; 255
-      Max Intensity: 4096
-      Min Color: 0; 0; 0
-      Min Intensity: 0
-      Name: Ground Filtered Tilt Scan
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.01
-      Style: Flat Squares
-      Topic: /ground_object_cloud
-      Use Fixed Frame: true
-      Use rainbow: false
-      Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/LaserScan
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: true
-      Max Color: 255; 170; 0
-      Max Intensity: 1.61321e-19
-      Min Color: 255; 217; 0
-      Min Intensity: 0
-      Name: LaserScan
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.01
-      Style: Points
-      Topic: /base_scan
-      Use Fixed Frame: true
-      Use rainbow: false
+        map:
+          odom:
+            {}
+      Update Interval: 0
       Value: true
     - Angle Tolerance: 0.1
       Class: rviz/Odometry
-      Color: 85; 212; 0
-      Enabled: true
+      Color: 255; 25; 0
+      Enabled: false
       Keep: 100
       Length: 1
       Name: Odometry
       Position Tolerance: 0.1
       Topic: /guardian/odom
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 0.490334
+        Min Value: 0.472262
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 255; 170; 0
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 1.61321e-19
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: LaserScan Base
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.04
+      Style: Points
+      Topic: /base_scan
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 85; 170; 0
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 0; 0
+      Max Intensity: 1.61321e-19
+      Min Color: 255; 0; 0
+      Min Intensity: 1.61321e-19
+      Name: LaserScan Tilt
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.04
+      Style: Points
+      Topic: /tilt_scan
+      Use Fixed Frame: true
+      Use rainbow: false
       Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
@@ -376,99 +237,94 @@ Visualization Manager:
       Axis: Z
       Channel Name: intensity
       Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: RGB8
+      Color: 85; 170; 255
+      Color Transformer: FlatColor
       Decay Time: 0
       Enabled: true
+      Invert Rainbow: false
       Max Color: 255; 255; 255
       Max Intensity: 4096
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: PointCloud2
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 100
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.01
       Style: Points
-      Topic: /prosilica_camera_1mb_sim_pcd/points
+      Topic: /assembled_pointcloud
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
-    - Class: rviz/Camera
+    - Alpha: 0.7
+      Class: rviz/Map
+      Color Scheme: map
+      Draw Behind: false
       Enabled: true
-      Image Rendering: background and overlay
-      Image Topic: /guardian/camera1/image_raw
-      Name: Camera
-      Overlay Alpha: 0.5
-      Queue Size: 2
-      Transport Hint: raw
+      Name: Map
+      Topic: /map
       Value: true
-      Visibility:
-        AMCL Cloud: true
-        Current Goal: true
-        Floor Scan: true
-        Global Plan: true
-        Grid: true
-        Ground Filtered Tilt Scan: true
-        Head Scan: true
-        Inflated Obstacles: true
-        LaserScan: true
-        Local Plan: true
-        Map: true
-        Obstacles: true
-        Odometry: true
-        Origin Axes: true
-        Planner Plan: true
-        PointCloud2: true
-        Robot Footprint: true
-        RobotModel: true
-        Tilt Scan Shadow Filtered: true
-        Transforms: true
-        Value: true
-        Visualization Markers: true
-      Zoom Factor: 1
+    - Arrow Length: 0.3
+      Class: rviz/PoseArray
+      Color: 255; 85; 0
+      Enabled: true
+      Name: PoseArray
+      Topic: /particlecloud
+      Value: true
   Enabled: true
   Global Options:
-    Background Color: 0; 0; 0
-    Fixed Frame: /odom
+    Background Color: 48; 48; 48
+    Fixed Frame: odom
+    Frame Rate: 30
   Name: root
   Tools:
-    - Class: rviz/MoveCamera
     - Class: rviz/Interact
       Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
     - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
     - Class: rviz/SetInitialPose
-      Topic: initialpose
+      Topic: /initialpose
     - Class: rviz/SetGoal
-      Topic: move_base_simple/goal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
   Value: true
   Views:
     Current:
-      Class: rviz/Orbit
-      Distance: 24.0852
-      Focal Point:
-        X: 3.93173
-        Y: -3.56593
-        Z: 1.33896
+      Angle: -1.57
+      Class: rviz/TopDownOrtho
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 1.5248
+      Scale: 92.3606
       Target Frame: <Fixed Frame>
-      Value: Orbit (rviz)
-      Yaw: 4.70856
+      Value: TopDownOrtho (rviz)
+      X: -0.52292
+      Y: 2.82462
     Saved: ~
 Window Geometry:
-  Camera:
-    collapsed: false
   Displays:
     collapsed: false
   Height: 1056
   Hide Left Dock: false
-  Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd00000002000000000000023f000003dafc0200000003fb000000100044006900730070006c006100790073010000002800000289000000dd00fffffffb0000000a0049006d0061006700650000000334000000ce0000000000000000fb0000000c00430061006d00650072006101000002b70000014b0000001600ffffff000000010000010000000593fc0200000001fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730000000041000005930000006400ffffff0000053b000003da00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Hide Right Dock: true
+  QMainWindow State: 000000ff00000000fd00000004000000000000014700000396fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000002800000396000000dd00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f00000396fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000002800000396000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000007800000003efc0100000002fb0000000800540069006d0065010000000000000780000002f600fffffffb0000000800540069006d00650100000000000004500000000000000000000006330000039600000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Selection:
+    collapsed: false
+  Time:
+    collapsed: false
   Tool Properties:
     collapsed: false
+  Views:
+    collapsed: true
   Width: 1920
   X: -7
   Y: 24

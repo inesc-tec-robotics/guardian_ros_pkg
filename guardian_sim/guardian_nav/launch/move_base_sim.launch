@@ -3,7 +3,7 @@
 
   <include file="$(find guardian_gazebo)/launch/guardian.launch">
     <arg name="world_model" value="$(find guardian_gazebo)/worlds/guardian_ship_interior.world"/>
-    <arg name="rviz_config" value="-d $(find guardian_gazebo)/launch/navigation.rviz" />
+    <arg name="rviz_config" value="-d $(find guardian_gazebo)/rviz/navigation.rviz" />
   </include>
   
   <!-- include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch" /--> <!-- in guardian_ship_interior.launch  -->
