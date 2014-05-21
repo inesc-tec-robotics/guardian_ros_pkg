@@ -28,15 +28,16 @@
 		<include>
 			<uri>model://ground_plane</uri>
 		</include>
-		<model name="my_mesh">
-			<pose>7.35023 8.75679 -0.01 1.5708 -0 3.13399</pose>
+		<model name="ship_interior">
+			<!-- <pose>7.35023 8.75679 -0.01 1.5708 -0 3.13399</pose> -->
+			<pose>0 0 -0.01 1.57079632679 0 0</pose>
 			<static>true</static>
 			<link name="body">
 				<visual name="visual">
 					<transparency>0.75</transparency>
 					<geometry>
 						<mesh>
-							<uri>file://ship_interior.stl</uri>
+							<uri>file://ship_interior_cliped.stl</uri>
 							<scale>0.001 0.001 0.001</scale>
 						</mesh>
 					</geometry>
@@ -44,7 +45,7 @@
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>file://ship_interior.stl</uri>
+							<uri>file://ship_interior_cliped.stl</uri>
 							<scale>0.001 0.001 0.001</scale>
 						</mesh>
 					</geometry>
@@ -53,7 +54,7 @@
 		</model>
 		<gui fullscreen='0'>
 			<camera name='user_camera'>
-				<pose>6.65321 2.58504 14.2998 0 1.09564 -3.139</pose>
+				<pose>-6.00844 -4.24066 13.567 0.0 1.57079632679 1.57079632679</pose>
 				<view_controller>orbit</view_controller>
 			</camera>
 		</gui>

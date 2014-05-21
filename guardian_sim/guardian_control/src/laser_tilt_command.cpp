@@ -14,7 +14,7 @@ double joint_pos = 0;
 void jointStateCallback(const sensor_msgs::JointStateConstPtr& msg)
 {
   joint_state = *msg;
-  joint_pos = joint_state.position[4]*180/PI; //laser joint position
+  joint_pos = joint_state.position[0]*180/PI; //laser joint position
 }
 
 int main(int argc, char **argv)

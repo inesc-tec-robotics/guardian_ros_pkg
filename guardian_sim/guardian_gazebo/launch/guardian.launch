@@ -21,14 +21,14 @@
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian.urdf.xacro'" />
 
 	<!-- Call a python script to the run a service call to gazebo_ros to spawn a URDF robot -->
-	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model guardian -param robot_description" />
+	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model guardian -param robot_description -x -3.2 -y -3.75 -Y 1.57079632679" />	
 
 	<!-- ros_control guardian launch file -->
 	<include file="$(find guardian_control)/launch/guardian_control.launch" />
 	<include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch" />
 	<include file="$(find guardian_joystick)/launch/guardian_keyboard.launch" />
     <include file="$(find guardian_joystick)/launch/guardian_joystick.launch" />
-	<include file="$(find guardian_control)/launch/guardian_tilt_laser.launch" />
+	<!-- <include file="$(find guardian_control)/launch/guardian_tilt_laser.launch" /> -->
 
 	<node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config)" />
 
