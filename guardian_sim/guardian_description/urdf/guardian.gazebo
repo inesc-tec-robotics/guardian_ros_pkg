@@ -29,7 +29,6 @@
   </plugin>
 </gazebo>
   
-
   <gazebo reference="base_footprint">
     <material>Gazebo/Green</material>
   </gazebo>
@@ -39,6 +38,7 @@
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
 
+<!-- ################# TRACKS ################# -->
   <gazebo reference="left_track">
     <material>Gazebo/FlatBlack</material>
     <turnGravityOff>false</turnGravityOff>
@@ -49,7 +49,7 @@
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
 
-
+<!-- ################# WHEELS ################# -->
   <gazebo reference="back_left_wheel">
     <mu1 value="2.5"/>
     <mu2 value="0.9"/>
@@ -63,7 +63,6 @@
     <material>Gazebo/Grey</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
-
 
  <!--gazebo reference="back_left_wheel">
     <mu1 value="10.0"/>
@@ -109,56 +108,7 @@
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
   
-  <!-- camera -->
-  <!-- gazebo reference="camera_link" -->
-  <!-- gazebo reference="camera_tilt_link">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <material>Gazebo/Red</material>
-
-    <sensor type="camera" name="camera1">
-      <update_rate>30.0</update_rate>
-      <camera name="head">
-        <horizontal_fov>1.3962634</horizontal_fov>
-        <image>
-          <width>800</width>
-          <height>800</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.02</near>
-          <far>300</far>
-        </clip>
-        <noise>
-          <type>gaussian</type-->
-          <!-- Noise is sampled independently per pixel on each frame.  
-               That pixel's noise value is added to each of its color
-               channels, which at that point lie in the range [0,1]. -->
-          <!-- mean>0.0</mean>
-          <stddev>0.007</stddev>
-        </noise>
-      </camera>
-      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-        <alwaysOn>true</alwaysOn>
-        <updateRate>0.0</updateRate>
-        <cameraName>/guardian/camera1</cameraName>
-        <imageTopicName>image_raw</imageTopicName>
-        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-        <frameName>camera_tilt_link</frameName>
-        <hackBaseline>0.07</hackBaseline>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-      </plugin>
-    </sensor>
-  </gazebo--> 
-
-  <!--gazebo reference="hokuyo_tilt_laser_joint">
-    <material>Gazebo/Red</material>
-  </gazebo-->
-
+<!-- ################# SENSORS ################# -->
   <gazebo reference="hokuyo_tilt_laser_link">
     <material>Gazebo/Grey</material>
     <sensor type="ray" name="tilt_hokuyo_sensor">
@@ -193,9 +143,7 @@
       </plugin>
     </sensor>
   </gazebo>
-
-  
-
+ 
   <!-- hokuyo -->
   <gazebo reference="hokuyo_base_laser_link">
     <material>Gazebo/FlatBlack</material>
@@ -231,8 +179,6 @@
       </plugin>
     </sensor>
   </gazebo>
-
-
   
   <gazebo>
     <plugin name="ros_imu" filename="libgazebo_ros_imu.so">

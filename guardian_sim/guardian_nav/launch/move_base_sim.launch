@@ -14,8 +14,8 @@
   <include file="$(find guardian_nav)/launch/set_initial_pose.launch" />	
   
  <!--- Run AMCL -->
-  <include file="$(find amcl)/examples/amcl_diff.launch" />
-  <!--  include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" /-->	
+<!--   include file="$(find amcl)/examples/amcl_diff.launch" /> -->
+  <include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" />	
   <!-- substituir por node amcl com parametros (copiar o que tá no diff e mudar params)-->
 
 
