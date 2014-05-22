@@ -212,7 +212,7 @@ public:
  * 	\brief Public constructor
 */
 GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
-  node_handle_(h), private_node_handle_("~"), 
+  node_handle_(h), private_node_handle_("~"),
   desired_freq_(100),
   freq_diag_(diagnostic_updater::FrequencyStatusParam(&desired_freq_, &desired_freq_, 0.05)   ),
   command_freq_("Command frequency check", boost::bind(&GuardianControllerClass::check_command_subscriber, this, _1))
@@ -457,22 +457,26 @@ void UpdateControl()
 }
 
 // Update robot odometry depending on kinematic configuration
-void UpdateOdometry()
-{
-  // Depending on the robot configuration 
-  if (active_kinematic_mode_ == SKID_STEERING) {
-	  
-      // Compute Velocity (linearSpeedXMps_ computed in control
-   	  robot_pose_vx_ = linearSpeedXMps_ *  cos(robot_pose_pa_);
-      robot_pose_vy_ = linearSpeedXMps_ *  sin(robot_pose_pa_);
-      }
-		      
-      // Compute Position
-      double fSamplePeriod = 1.0 / desired_freq_;
-	  robot_pose_pa_ += ang_vel_z_ * fSamplePeriod;  // this velocity comes from IMU callback
-      robot_pose_px_ += robot_pose_vx_ * fSamplePeriod;
-      robot_pose_py_ += robot_pose_vy_ * fSamplePeriod;
-      // ROS_INFO("Odom estimated x=%5.2f  y=%5.2f a=%5.2f", robot_pose_px_, robot_pose_py_, robot_pose_pa_);
+void UpdateOdometry() {
+	// Depending on the robot configuration
+	if (active_kinematic_mode_ == SKID_STEERING) {
+		// Compute Velocity (linearSpeedXMps_ computed in control
+		robot_pose_vx_ = linearSpeedXMps_ * cos(robot_pose_pa_);
+		robot_pose_vy_ = linearSpeedXMps_ * sin(robot_pose_pa_);
+	}
+
+	// Compute Position
+	double fSamplePeriod = 1.0 / desired_freq_;
+	robot_pose_pa_ += ang_vel_z_ * fSamplePeriod;  // this velocity comes from IMU callback
+	robot_pose_px_ += robot_pose_vx_ * fSamplePeriod;
+	robot_pose_py_ += robot_pose_vy_ * fSamplePeriod;
+
+	tf::Quaternion orientation = tf::createQuaternionFromYaw(robot_pose_pa_);
+	orientation_x_ = orientation.x();
+	orientation_y_ = orientation.y();
+	orientation_z_ = orientation.z();
+	orientation_w_ = orientation.w();
+	// ROS_INFO("Odom estimated x=%5.2f  y=%5.2f a=%5.2f", robot_pose_px_, robot_pose_py_, robot_pose_pa_);
 }
 
 // Publish robot odometry tf and topic depending 
@@ -489,6 +493,7 @@ void PublishOdometry()
     odom_trans.transform.translation.x = robot_pose_px_;
     odom_trans.transform.translation.y = robot_pose_py_;
     odom_trans.transform.translation.z = 0.0;
+
     odom_trans.transform.rotation.x = orientation_x_;
 	odom_trans.transform.rotation.y = orientation_y_;
 	odom_trans.transform.rotation.z = orientation_z_;
@@ -656,11 +661,11 @@ void command_ptzCallback(const robotnik_msgs::ptzConstPtr& msg)
 
 // Imu callback
 void imuCallback( const sensor_msgs::Imu& imu_msg){
+//	orientation_x_ = imu_msg.orientation.x;
+//	orientation_y_ = imu_msg.orientation.y;
+//	orientation_z_ = imu_msg.orientation.z;
+//	orientation_w_ = imu_msg.orientation.w;
 
-	orientation_x_ = imu_msg.orientation.x;
-	orientation_y_ = imu_msg.orientation.y;
-	orientation_z_ = imu_msg.orientation.z;
-	orientation_w_ = imu_msg.orientation.w;
 
 	ang_vel_x_ = imu_msg.angular_velocity.x;
 	ang_vel_y_ = imu_msg.angular_velocity.y;

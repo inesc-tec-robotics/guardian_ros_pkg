@@ -20,8 +20,8 @@
 	<!-- <include file="$(find guardian_navigation)/navigation_local/move_base_local.launch" /> -->
 
 	<!-- global navigation -->
-	<!-- <include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" /> -->
-	<node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="-3.2 -3.75 0 0 0 0 /map /odom 100" />
+	<include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" />
+<!-- 	<node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="-3.2 -3.75 0 1.57079632679 0 0 /map /odom 100" /> -->
 
 	<!-- ICP corrections -->
 	<!-- <include file="$(find dynamic_robot_localization)/launch/2d_localization.launch" /> -->
