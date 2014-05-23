@@ -6,4 +6,4 @@ guardian_robot_control:
      guardian_wheel_diameter: 0.40 
      guardian_xl_d_tracks_m: 1.00 #0.505
 
-     publish_odom_tf: true 
+     # publish_odom_tf: true 

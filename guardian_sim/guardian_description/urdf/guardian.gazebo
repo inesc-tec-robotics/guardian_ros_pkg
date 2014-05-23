@@ -129,11 +129,11 @@
           <max>5.0</max>
           <resolution>0.01</resolution>
         </range>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.01</stddev>
-        </noise>
+<!--         <noise> -->
+<!--           <type>gaussian</type> -->
+<!--           <mean>0.0</mean> -->
+<!--           <stddev>0.01</stddev> -->
+<!--         </noise> -->
       </ray>
       <plugin name="tilt_scan_plugin" filename="libgazebo_ros_laser_2D.so">
         <topicName>/tilt_scan</topicName>
@@ -165,11 +165,11 @@
           <max>5.0</max>
           <resolution>0.01</resolution>
         </range>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.03</stddev>
-        </noise>
+<!--         <noise> -->
+<!--           <type>gaussian</type> -->
+<!--           <mean>0.0</mean> -->
+<!--           <stddev>0.03</stddev> -->
+<!--         </noise> -->
       </ray>
       <plugin name="base_scan_plugin" filename="libgazebo_ros_laser_2D.so">  
         <topicName>/base_scan</topicName>
