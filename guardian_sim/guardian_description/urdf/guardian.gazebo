@@ -10,6 +10,16 @@
   </gazebo>
   
   <gazebo>
+     <plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
+	   <frameName>map</frameName>
+       <bodyName>base_footprint</bodyName>
+       <topicName>base_pose_ground_trut﻿﻿h</topicName> ﻿﻿ <!-- odom_ground_truth; base_pose_ground_trut﻿﻿h to be used with fake_localization -->
+       <updateRate>30.0</updateRate>
+    </plugin>
+  </gazebo>
+  
+  
+  <gazebo>
     <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
     <updateRate>100.0</updateRate>
     <robotNamespace>/guardian</robotNamespace>
