@@ -26,7 +26,9 @@
 
 	<!-- ======================================================================================================================== -->
 	<!-- localization -->
-	<include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" />
+	<!-- substitutes amcl - perfect localization from ground truth -->
+	<include file="$(find guardian_navigation)/navigation_amcl/guardian_fake_localization.launch" />
+<!-- 	<include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" /> -->
 
 	<!-- ICP pose corrections -->
 	<!-- <include file="$(find dynamic_robot_localization)/launch/2d_localization.launch" /> -->
