@@ -25,20 +25,21 @@
 
 
 	<!-- ======================================================================================================================== -->
-	<!-- localization -->
-	<!-- substitutes amcl - perfect localization from ground truth -->
+	<!-- simulated localization -->
 	<include file="$(find guardian_navigation)/navigation_amcl/guardian_fake_localization.launch" />
-<!-- 	<include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" /> -->
 
-	<!-- ICP pose corrections -->
-	<!-- <include file="$(find dynamic_robot_localization)/launch/2d_localization.launch" /> -->
+	<!-- amcl localization -->
+	<!-- <include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" /> -->
 
 	<!--- EFK Filter | to run ekf, switch the arg publish_tf_on_guardian_robot_control to false in the include of guardian.launch -->
 	<!-- <include file="$(find guardian_navigation)/navigation_ekf/ekf.launch" /> -->
 
+	<!-- ICP pose corrections -->
+	<!-- <include file="$(find dynamic_robot_localization)/launch/planar_localization.launch" /> -->
+
 
 	<!-- ======================================================================================================================== -->
 	<!-- trajectory planner -->
-	<include file="$(find guardian_navigation)/launch/move_base.launch" />
+	<!-- <include file="$(find guardian_navigation)/launch/move_base.launch" /> -->
 	<!-- <include file="$(find guardian_navigation)/navigation_local/move_base_local.launch" /> -->
 </launch>
