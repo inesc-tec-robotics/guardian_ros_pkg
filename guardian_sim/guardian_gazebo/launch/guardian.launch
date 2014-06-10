@@ -4,8 +4,8 @@
 	<arg name="debug" default="false" />
 	<arg name="gui" default="true" />
 	<arg name="rviz_config" default="-d $(find guardian_gazebo)/rviz/gazebo.rviz" />
-    <arg name="world_model" default="-d $(find guardian_gazebo)/worlds/guardian.world" />
-    <arg name="publish_odom_tf_on_guardian_robot_control" default="true" />
+        <arg name="world_model" default="-d $(find guardian_gazebo)/worlds/guardian.world" />
+    <!--<arg name="publish_odom_tf_on_guardian_robot_control" default="false" />-->
 
 	<!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -27,14 +27,14 @@
 
 	<!-- ros_control guardian launch file -->
 	<include file="$(find guardian_control)/launch/guardian_control.launch" />
-	<include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch">
+	<!--<include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch">
 		<arg name="publish_odom_tf" value="$(arg publish_odom_tf_on_guardian_robot_control)" />
-	</include>
+	</include>-->
 	<include file="$(find guardian_joystick)/launch/guardian_keyboard.launch" />
-    <include file="$(find guardian_joystick)/launch/guardian_joystick.launch" />
+        <include file="$(find guardian_joystick)/launch/guardian_joystick.launch" />
 	<!-- <include file="$(find guardian_control)/launch/guardian_tilt_laser.launch" /> -->
 
-	<node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config)" />
+	<!--<node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config)" />-->
 
 	<!-- parameters that give you reasonable physics as well as good speed -->
 	<!-- needed so that gripper joint stops on objects instead of oscillating forever -->

@@ -30,13 +30,13 @@
     <rightRearJoint>joint_back_right_wheel</rightRearJoint>
     <wheelSeparation>0.6</wheelSeparation>
     <wheelDiameter>0.300</wheelDiameter>
-    <robotBaseFrame>base_link</robotBaseFrame>
+    <robotBaseFrame>base_footprint</robotBaseFrame>
     <torque>20</torque>
     <topicName>cmd_vel</topicName> <!-- there is no TopicName element in gazebo_ros_skid_steer_drive plugin -->  
     <commandTopic>cmd_vel</commandTopic>
-    <odometryTopic>odomGazebo</odometryTopic> <!-- publishes OdomGazebo because odom is already being published by guardian_robot_pose -->
+    <odometryTopic>odom</odometryTopic> <!-- publishes OdomGazebo because odom is already being published by guardian_robot_pose -->
     <odometryFrame>odom</odometryFrame>
-    <!-- broadcastTF>false</broadcastTF --> <!-- defaults to false -->
+    <broadcastTF>1</broadcastTF> <!-- defaults to false -->
   </plugin>
 </gazebo>
   
@@ -143,7 +143,7 @@
         <noise>
           <type>gaussian</type>
           <mean>0.0</mean>
-          <stddev>0.0033</stddev>
+          <stddev>0.00</stddev>
         </noise>
       </ray>
       <plugin name="tilt_scan_plugin" filename="libgazebo_ros_laser_2D.so">
@@ -183,7 +183,7 @@
                stddev of 0.01m will put 99.7% of samples within 0.03m of the true
                reading. -->
           <mean>0.0</mean>
-          <stddev>0.01</stddev>
+          <stddev>0.0</stddev>
         </noise>
       </ray>
       <plugin name="base_scan_plugin" filename="libgazebo_ros_laser_2D.so">  
