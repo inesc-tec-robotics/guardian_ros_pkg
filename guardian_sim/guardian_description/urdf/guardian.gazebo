@@ -4,7 +4,7 @@
   <gazebo>
     <plugin name="ros_control" filename="libgazebo_ros_control.so">
        <robotNamespace>/guardian</robotNamespace>
-       <controlPeriod>0.001</controlPeriod>
+       <controlPeriod>0.004</controlPeriod>
 	   <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
     </plugin>
   </gazebo>
