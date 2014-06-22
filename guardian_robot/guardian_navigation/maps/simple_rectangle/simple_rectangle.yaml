@@ -1,0 +1,6 @@
+image: simple_rectangle.pgm
+resolution: 0.02
+origin: [0.0, 0.0, 0.00]
+negate: 0
+occupied_thresh: 0.3
+free_thresh: 0.1

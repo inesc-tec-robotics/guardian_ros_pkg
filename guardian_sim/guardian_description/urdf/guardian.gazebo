@@ -131,8 +131,8 @@
           <horizontal>
            <samples>684</samples> <!-- 683 steps + 1 -->
            <resolution>1</resolution>
-           <min_angle>-2.0943951</min_angle>   <!-- 240 deg (total) in the front -->
-           <max_angle>2.0943951</max_angle>
+           <min_angle>-1.87622894589</min_angle>   <!-- 215 deg (total) in the front -->
+           <max_angle>1.87622894589</max_angle>
           </horizontal>
         </scan>
         <range>

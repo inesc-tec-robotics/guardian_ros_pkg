@@ -6,16 +6,6 @@
 	<arg name="rviz_config" default="-d $(find guardian_navigation)/rviz/guardian_localization.rviz" />
 	<arg name="map_file" default="$(find guardian_navigation)/maps/ship_interior/ship_interior.yaml" />
 
-
-	<!-- ======================================================================================================================== -->
-	<!-- gazebo simulator -->
-	<include file="$(find guardian_gazebo)/launch/guardian.launch">
-		<arg name="world_model" default="$(arg world_model)" />
-		<arg name="rviz_config" default="$(arg rviz_config)" />
-		<arg name="publish_odom_tf_on_guardian_robot_control" default="true" /> <!-- false if using ekf, true otherwise -->
-	</include>
-
-
 	<!-- ======================================================================================================================== -->
 	<!-- 2D costmap | only activate static tf when using only odometry or ekf -->
 	<!-- <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="-3.2 -3.75 0 1.57079632679 0 0 /map /odom 100" /> -->
@@ -26,10 +16,10 @@
 
 	<!-- ======================================================================================================================== -->
 	<!-- simulated localization -->
-	<include file="$(find guardian_navigation)/navigation_amcl/guardian_fake_localization.launch" />
+	<!--<include file="$(find guardian_navigation)/navigation_amcl/guardian_fake_localization.launch" /> -->
 
 	<!-- amcl localization -->
-	<!-- <include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" /> -->
+	<include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" />
 
 	<!--- EFK Filter | to run ekf, switch the arg publish_tf_on_guardian_robot_control to false in the include of guardian.launch -->
 	<!-- <include file="$(find guardian_navigation)/navigation_ekf/ekf.launch" /> -->
