@@ -42,6 +42,7 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  ${GAZEBO_INCLUDE_DIRS}
 )
 
 ## Declare a cpp library
@@ -66,5 +67,8 @@ include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE
 
 add_library(gazebo_ros_laser_2D SHARED src/laser_2D.cpp)
 target_link_libraries(gazebo_ros_laser_2D ${catkin_LIBRARIES} ${GAZEBO_libraries} RayPlugin)
+
+add_library(guardian_husky_gazebo_plugins SHARED src/husky_plugin_adapted.cpp)
+target_link_libraries(guardian_husky_gazebo_plugins ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 

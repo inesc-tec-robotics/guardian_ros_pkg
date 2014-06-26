@@ -4,7 +4,7 @@
   <gazebo>
     <plugin name="ros_control" filename="libgazebo_ros_control.so">
        <robotNamespace>/guardian</robotNamespace>
-       <controlPeriod>0.004</controlPeriod>
+       <controlPeriod>0.001</controlPeriod>
 	   <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
     </plugin>
   </gazebo>
@@ -20,25 +20,41 @@
   </gazebo>
   
   
-  <gazebo>
-    <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
-    <updateRate>100.0</updateRate>
-    <robotNamespace>/guardian</robotNamespace>
-    <leftFrontJoint>joint_front_left_wheel</leftFrontJoint>  
-    <rightFrontJoint>joint_front_right_wheel</rightFrontJoint>
-    <leftRearJoint>joint_back_left_wheel</leftRearJoint>
-    <rightRearJoint>joint_back_right_wheel</rightRearJoint>
-    <wheelSeparation>0.6</wheelSeparation>
-    <wheelDiameter>0.300</wheelDiameter>
-    <robotBaseFrame>base_footprint</robotBaseFrame>
-    <torque>20</torque>
-    <topicName>cmd_vel</topicName> <!-- there is no TopicName element in gazebo_ros_skid_steer_drive plugin -->  
-    <commandTopic>cmd_vel</commandTopic>
-    <odometryTopic>odom</odometryTopic> <!-- publishes OdomGazebo because odom is already being published by guardian_robot_pose -->
-    <odometryFrame>odom</odometryFrame>
-    <broadcastTF>1</broadcastTF> <!-- defaults to false -->
-  </plugin>
-</gazebo>
+<!--   <gazebo> -->
+<!--     <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so"> -->
+<!--     <updateRate>100.0</updateRate> -->
+<!--     <robotNamespace>/guardian</robotNamespace> -->
+<!--     <leftFrontJoint>joint_front_left_wheel</leftFrontJoint>   -->
+<!--     <rightFrontJoint>joint_front_right_wheel</rightFrontJoint> -->
+<!--     <leftRearJoint>joint_back_left_wheel</leftRearJoint> -->
+<!--     <rightRearJoint>joint_back_right_wheel</rightRearJoint> -->
+<!--     <wheelSeparation>0.612</wheelSeparation> 0.6 -->
+<!--     <wheelDiameter>0.37</wheelDiameter> 0.300 -->
+<!--     <robotBaseFrame>base_link</robotBaseFrame> -->
+<!--     <torque>20</torque> -->
+<!--     <topicName>cmd_vel</topicName> there is no TopicName element in gazebo_ros_skid_steer_drive plugin    -->
+<!--     <commandTopic>cmd_vel</commandTopic> -->
+<!--     <odometryTopic>odomGazebo</odometryTopic> publishes OdomGazebo because odom is already being published by guardian_robot_pose  -->
+<!--     <odometryFrame>odom</odometryFrame> -->
+<!--     <broadcastTF>0</broadcastTF> defaults to false -->
+<!--   </plugin> -->
+<!-- </gazebo> -->
+
+doesn't publish TF odom -> base_footprint
+    <gazebo>
+	    <plugin name="husky_diff_controller" filename="libguardian_husky_gazebo_plugins.so">
+		    <alwaysOn>true</alwaysOn>
+            <updateRate>100.0</updateRate>
+            <robotNamespace>/guardian</robotNamespace>
+            <backLeftJoint>joint_back_left_wheel</backLeftJoint>
+            <backRightJoint>joint_back_right_wheel</backRightJoint>
+            <frontLeftJoint>joint_front_left_wheel</frontLeftJoint>
+            <frontRightJoint>joint_front_right_wheel</frontRightJoint>
+            <wheelSeparation>0.612</wheelSeparation>
+            <wheelDiameter>0.37</wheelDiameter>
+            <torque>20</torque>	
+        </plugin>
+    </gazebo>
   
   <gazebo reference="base_footprint">
     <material>Gazebo/Green</material>
@@ -71,7 +87,7 @@
 	  <kd>100.0</kd>
     <maxVel>2.0</maxVel>
 
-    <material>Gazebo/Grey</material>
+    <material>Gazebo/Black</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
 
@@ -91,7 +107,7 @@
    	<kp>10000.0</kp>
 	  <kd>100.0</kd>
 
-    <material>Gazebo/Grey</material>
+    <material>Gazebo/Black</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
 
@@ -131,8 +147,8 @@
           <horizontal>
            <samples>684</samples> <!-- 683 steps + 1 -->
            <resolution>1</resolution>
-           <min_angle>-1.87622894589</min_angle>   <!-- 215 deg (total) in the front -->
-           <max_angle>1.87622894589</max_angle>
+           <min_angle>-2.0943951</min_angle>   <!-- 240 deg (total) in the front -->
+           <max_angle>2.0943951</max_angle>
           </horizontal>
         </scan>
         <range>
@@ -143,7 +159,7 @@
         <noise>
           <type>gaussian</type>
           <mean>0.0</mean>
-          <stddev>0.00</stddev>
+          <stddev>0.0033</stddev>
         </noise>
       </ray>
       <plugin name="tilt_scan_plugin" filename="libgazebo_ros_laser_2D.so">
@@ -183,7 +199,7 @@
                stddev of 0.01m will put 99.7% of samples within 0.03m of the true
                reading. -->
           <mean>0.0</mean>
-          <stddev>0.0</stddev>
+          <stddev>0.01</stddev>
         </noise>
       </ray>
       <plugin name="base_scan_plugin" filename="libgazebo_ros_laser_2D.so">  
