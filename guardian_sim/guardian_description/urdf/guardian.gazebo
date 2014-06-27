@@ -40,7 +40,6 @@
 <!--   </plugin> -->
 <!-- </gazebo> -->
 
-doesn't publish TF odom -> base_footprint
     <gazebo>
 	    <plugin name="husky_diff_controller" filename="libguardian_husky_gazebo_plugins.so">
 		    <alwaysOn>true</alwaysOn>
