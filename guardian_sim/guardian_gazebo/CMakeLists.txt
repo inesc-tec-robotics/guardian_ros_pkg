@@ -71,4 +71,7 @@ target_link_libraries(gazebo_ros_laser_2D ${catkin_LIBRARIES} ${GAZEBO_libraries
 add_library(guardian_husky_gazebo_plugins SHARED src/husky_plugin_adapted.cpp)
 target_link_libraries(guardian_husky_gazebo_plugins ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 
+add_library(skid_steer_plugin SHARED src/skid_steer_plugin.cpp)
+target_link_libraries(skid_steer_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+
 

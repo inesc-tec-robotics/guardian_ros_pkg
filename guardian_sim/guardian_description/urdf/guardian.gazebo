@@ -19,41 +19,26 @@
     </plugin>
   </gazebo>
   
-  
-<!--   <gazebo> -->
-<!--     <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so"> -->
-<!--     <updateRate>100.0</updateRate> -->
-<!--     <robotNamespace>/guardian</robotNamespace> -->
-<!--     <leftFrontJoint>joint_front_left_wheel</leftFrontJoint>   -->
-<!--     <rightFrontJoint>joint_front_right_wheel</rightFrontJoint> -->
-<!--     <leftRearJoint>joint_back_left_wheel</leftRearJoint> -->
-<!--     <rightRearJoint>joint_back_right_wheel</rightRearJoint> -->
-<!--     <wheelSeparation>0.612</wheelSeparation> 0.6 -->
-<!--     <wheelDiameter>0.37</wheelDiameter> 0.300 -->
-<!--     <robotBaseFrame>base_link</robotBaseFrame> -->
-<!--     <torque>20</torque> -->
-<!--     <topicName>cmd_vel</topicName> there is no TopicName element in gazebo_ros_skid_steer_drive plugin    -->
-<!--     <commandTopic>cmd_vel</commandTopic> -->
-<!--     <odometryTopic>odomGazebo</odometryTopic> publishes OdomGazebo because odom is already being published by guardian_robot_pose  -->
-<!--     <odometryFrame>odom</odometryFrame> -->
-<!--     <broadcastTF>0</broadcastTF> defaults to false -->
-<!--   </plugin> -->
-<!-- </gazebo> -->
+  <gazebo>
+    <plugin name="skid_steer_drive_controller" filename="libskid_steer_plugin.so"> <!-- adapted from gazebo_ros_skid_steer_drive -->
+	    <updateRate>100.0</updateRate>
+	    <robotNamespace>/guardian</robotNamespace>
+	    <leftFrontJoint>joint_front_left_wheel</leftFrontJoint>  
+	    <rightFrontJoint>joint_front_right_wheel</rightFrontJoint>
+	    <leftRearJoint>joint_back_left_wheel</leftRearJoint>
+	    <rightRearJoint>joint_back_right_wheel</rightRearJoint>
+	    <wheelSeparation>0.612</wheelSeparation> 0.6
+	    <wheelDiameter>0.37</wheelDiameter> 0.300
+	    <robotBaseFrame>base_link</robotBaseFrame>
+	    <torque>20</torque>
+	    <topicName>cmd_vel</topicName> <!-- there is no TopicName element in gazebo_ros_skid_steer_drive plugin   -->
+	    <commandTopic>cmd_vel</commandTopic>
+	    <odometryTopic>odomGazebo</odometryTopic> <!-- publishes OdomGazebo because odom is already being published by guardian_robot_pose --> 
+	    <odometryFrame>odom</odometryFrame>
+	    <broadcastTF>0</broadcastTF> <!-- defaults to false -->
+    </plugin>
+  </gazebo>
 
-    <gazebo>
-	    <plugin name="husky_diff_controller" filename="libguardian_husky_gazebo_plugins.so">
-		    <alwaysOn>true</alwaysOn>
-            <updateRate>100.0</updateRate>
-            <robotNamespace>/guardian</robotNamespace>
-            <backLeftJoint>joint_back_left_wheel</backLeftJoint>
-            <backRightJoint>joint_back_right_wheel</backRightJoint>
-            <frontLeftJoint>joint_front_left_wheel</frontLeftJoint>
-            <frontRightJoint>joint_front_right_wheel</frontRightJoint>
-            <wheelSeparation>0.612</wheelSeparation>
-            <wheelDiameter>0.37</wheelDiameter>
-            <torque>20</torque>	
-        </plugin>
-    </gazebo>
   
   <gazebo reference="base_footprint">
     <material>Gazebo/Green</material>
