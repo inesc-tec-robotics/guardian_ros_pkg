@@ -200,6 +200,8 @@ Visualization Manager:
           Value: true
         left_track:
           Value: true
+        odom:
+          Value: true
         right_track:
           Value: true
       Marker Scale: 1
@@ -208,7 +210,27 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        {}
+        odom:
+          base_footprint:
+            base_link:
+              back_left_wheel:
+                {}
+              back_right_wheel:
+                {}
+              front_left_wheel:
+                {}
+              front_right_wheel:
+                {}
+              hokuyo_base_laser_link:
+                {}
+              hokuyo_tilt_laser_link:
+                {}
+              imu_link:
+                {}
+              left_track:
+                {}
+              right_track:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 0.7
@@ -251,7 +273,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: base_footprint
+    Fixed Frame: odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -280,7 +302,7 @@ Visualization Manager:
         Value: false
       Name: Current View
       Near Clip Distance: 0.01
-      Scale: 260.621
+      Scale: 201.825
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
       X: 0.0241311

@@ -59,10 +59,10 @@
 #define SKID_STEERING                1
 #define MECANUM_STEERING             2
 
-#define GUARDIAN_WHEEL_DIAMETER	0.25      // Default wheel diameter
-#define GUARDIAN_D_TRACKS_M    	1.0       // default equivalent W distance (difference is due to slippage of skid steering)
-#define GUARDIAN_WHEELBASE         0.446     // default real L distance forward to rear axis
-#define GUARDIAN_TRACKWIDTH        0.408     // default real W distance from left wheels to right wheels
+#define GUARDIAN_WHEEL_DIAMETER	0.37      // Default wheel diameter
+#define GUARDIAN_D_TRACKS_M    	0.612 // 1.0       // default equivalent W distance (difference is due to slippage of skid steering)
+#define GUARDIAN_WHEELBASE         0.6 //0.446     // default real L distance forward to rear axis
+#define GUARDIAN_TRACKWIDTH        0.612 //0.408     // default real W distance from left wheels to right wheels
     
 using namespace std;
 
@@ -388,11 +388,14 @@ void UpdateControl()
       v_right_mps = ((joint_state_.velocity[brw_vel_] + joint_state_.velocity[frw_vel_]) / 2.0) * (guardian_wheel_diameter_ / 2.0);
 	  // sign according to urdf (if wheel model is not symetric, should be inverted)
 
-	  linearSpeedXMps_ = (v_right_mps + v_left_mps) / 2.0;                       // m/s
-	  angularSpeedRads_ = (v_right_mps - v_left_mps) / guardian_d_tracks_m_;    // rad/s
+	  linearSpeedXMps_ = (v_right_mps + v_left_mps) / 2.0;                   // m/s
+	  angularSpeedRads_ = (v_right_mps - v_left_mps) / guardian_d_tracks_m_; // rad/s
 
-	  //ROS_INFO("vleft=%5.2f   vright=%5.2f    linearSpeedXMps=%5.2f, linearSpeedYMps=%5.2f, angularSpeedRads=%5.4f", v_left_mps, v_right_mps,
-		//	linearSpeedXMps_, linearSpeedYMps_, angularSpeedRads_); 
+	  /*ROS_INFO("BL: %5.3f , FL: %5.3f ", joint_state_.velocity[blw_vel_], joint_state_.velocity[flw_vel_]);
+	  ROS_INFO("BR: %5.3f , FR: %5.3f ", joint_state_.velocity[brw_vel_], joint_state_.velocity[frw_vel_]);
+
+	  ROS_INFO("vleft=%5.2f   vright=%5.2f    linearSpeedXMps=%5.2f, linearSpeedYMps=%5.2f, angularSpeedRads=%5.4f", v_left_mps, v_right_mps,
+			linearSpeedXMps_, linearSpeedYMps_, angularSpeedRads_);*/
 
 	  // Current controllers close this loop allowing (v,w) references.
 	  /*double epv=0.0;
@@ -526,13 +529,13 @@ void PublishOdometry()
     //set the velocity
     odom.child_frame_id = "base_footprint";
 	// Linear velocities
-    odom.twist.twist.linear.x = robot_pose_vx_;
-    odom.twist.twist.linear.y = robot_pose_vy_;
+    odom.twist.twist.linear.x = robot_pose_vx_; //linearSpeedXMps_
+    odom.twist.twist.linear.y = robot_pose_vy_; //0.0; ////deveria ser 0 no ref base_footprint...
 	odom.twist.twist.linear.z = 0.0;
     // Angular velocities
     odom.twist.twist.angular.x = ang_vel_x_;
     odom.twist.twist.angular.y = ang_vel_y_;
-    odom.twist.twist.angular.z = ang_vel_z_;
+    odom.twist.twist.angular.z = ang_vel_z_ ;
 	// Twist covariance
 	for(int i = 0; i < 6; i++)
      		odom.twist.covariance[6*i+i] = 0.1;  // test 0.001

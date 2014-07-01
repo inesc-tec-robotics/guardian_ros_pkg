@@ -68,9 +68,6 @@ include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE
 add_library(gazebo_ros_laser_2D SHARED src/laser_2D.cpp)
 target_link_libraries(gazebo_ros_laser_2D ${catkin_LIBRARIES} ${GAZEBO_libraries} RayPlugin)
 
-add_library(guardian_husky_gazebo_plugins SHARED src/husky_plugin_adapted.cpp)
-target_link_libraries(guardian_husky_gazebo_plugins ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
-
 add_library(skid_steer_plugin SHARED src/skid_steer_plugin.cpp)
 target_link_libraries(skid_steer_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 

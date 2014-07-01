@@ -23,14 +23,14 @@
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_simple_collision.urdf.xacro'" />
 
 	<!-- Call a python script to the run a service call to gazebo_ros to spawn a URDF robot -->
-<!-- 	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model guardian -param robot_description -x -3.2 -y -3.75 -Y 1.57079632679" /> -->
-	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model guardian -param robot_description -x -3.2 -y -3.75" />
+	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model guardian -param robot_description -x -3.2 -y -3.75 -Y 1.57079632679" />
+<!-- 	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model guardian -param robot_description -x 0 -y 0 -Y 0" /> -->
 
 	<!-- ros_control guardian launch file -->
 	<include file="$(find guardian_control)/launch/guardian_control.launch" />
-	<include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch">
+<!-- 	<include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch"> -->
 <!-- 		<arg name="publish_odom_tf" value="$(arg publish_odom_tf_on_guardian_robot_control)" /> -->
-	</include>
+<!-- 	</include> -->
 	<include file="$(find guardian_joystick)/launch/guardian_keyboard.launch" />
         <include file="$(find guardian_joystick)/launch/guardian_joystick.launch" />
 	<!-- <include file="$(find guardian_control)/launch/guardian_tilt_laser.launch" /> -->

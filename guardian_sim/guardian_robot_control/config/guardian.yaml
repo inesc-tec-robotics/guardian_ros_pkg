@@ -4,6 +4,7 @@ guardian_robot_control:
       
       # kinematic parameters 
      guardian_wheel_diameter: 0.370 
-     guardian_xl_d_tracks_m: 0.612 #0.505
+     guardian_d_tracks_m: 0.612 #0.505
+    # guardian_xl_d_tracks_m: 0.612 #0.505
 
      # publish_odom_tf: true 

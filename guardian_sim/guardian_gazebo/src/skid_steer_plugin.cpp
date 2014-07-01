@@ -54,19 +54,15 @@
 #include <boost/bind.hpp>
 #include <boost/thread/mutex.hpp>
 
+//#include <physics/physics.hh>
+
 namespace gazebo {
 
   enum {
-      RIGHT_FRONT=3,
-      LEFT_FRONT=2,
-      RIGHT_REAR=1,
-      LEFT_REAR=0,
-      /*
     RIGHT_FRONT=0,
     LEFT_FRONT=1,
     RIGHT_REAR=2,
     LEFT_REAR=3,
-    */
   };
 
   GazeboRosSkidSteerDrive::GazeboRosSkidSteerDrive() {}
@@ -103,7 +99,7 @@ namespace gazebo {
     }
 
     // TODO write error if joint doesn't exist!
-    this->left_front_joint_name_ = "left_front_joint";
+    this->left_front_joint_name_ = "joint_front_left_wheel";
     if (!_sdf->HasElement("leftFrontJoint")) {
       ROS_WARN("GazeboRosSkidSteerDrive Plugin (ns = %s) missing <leftFrontJoint>, defaults to \"%s\"",
           this->robot_namespace_.c_str(), this->left_front_joint_name_.c_str());
@@ -111,23 +107,23 @@ namespace gazebo {
       this->left_front_joint_name_ = _sdf->GetElement("leftFrontJoint")->Get<std::string>();
     }
 
-    this->right_front_joint_name_ = "right_front_joint";
-        if (!_sdf->HasElement("rightFrontJoint")) {
-          ROS_WARN("GazeboRosSkidSteerDrive Plugin (ns = %s) missing <rightFrontJoint>, defaults to \"%s\"",
-              this->robot_namespace_.c_str(), this->right_front_joint_name_.c_str());
-        } else {
-          this->right_front_joint_name_ = _sdf->GetElement("rightFrontJoint")->Get<std::string>();
-        }
+    this->right_front_joint_name_ = "joint_front_right_wheel";
+    if (!_sdf->HasElement("rightFrontJoint")) {
+       ROS_WARN("GazeboRosSkidSteerDrive Plugin (ns = %s) missing <rightFrontJoint>, defaults to \"%s\"",
+          this->robot_namespace_.c_str(), this->right_front_joint_name_.c_str());
+    } else {
+      this->right_front_joint_name_ = _sdf->GetElement("rightFrontJoint")->Get<std::string>();
+    }
 
-this->left_rear_joint_name_ = "left_rear_joint";
-if (!_sdf->HasElement("leftRearJoint")) {
-ROS_WARN("GazeboRosSkidSteerDrive Plugin (ns = %s) missing <leftRearJoint>, defaults to \"%s\"",
-this->robot_namespace_.c_str(), this->left_rear_joint_name_.c_str());
-} else {
-this->left_rear_joint_name_ = _sdf->GetElement("leftRearJoint")->Get<std::string>();
-}
+    this->left_rear_joint_name_ = "joint_back_left_wheel";
+    if (!_sdf->HasElement("leftRearJoint")) {
+    	ROS_WARN("GazeboRosSkidSteerDrive Plugin (ns = %s) missing <leftRearJoint>, defaults to \"%s\"",
+    	  this->robot_namespace_.c_str(), this->left_rear_joint_name_.c_str());
+    } else {
+  	 this->left_rear_joint_name_ = _sdf->GetElement("leftRearJoint")->Get<std::string>();
+    }
 
-    this->right_rear_joint_name_ = "right_rear_joint";
+    this->right_rear_joint_name_ = "joint_back_right_wheel";
     if (!_sdf->HasElement("rightRearJoint")) {
       ROS_WARN("GazeboRosSkidSteerDrive Plugin (ns = %s) missing <rightRearJoint>, defaults to \"%s\"",
           this->robot_namespace_.c_str(), this->right_rear_joint_name_.c_str());
@@ -230,25 +226,6 @@ this->parent->GetJoint(right_front_joint_name_)->GetAnchor(0));*/
     joints[LEFT_REAR] = this->parent->GetJoint(left_rear_joint_name_);
     joints[RIGHT_REAR] = this->parent->GetJoint(right_rear_joint_name_);
 
-/*
-
-    std::cout<<"*********************************************" <<  std::endl;
-    std::cout<<"LEFT_FRONT: " <<  joints[LEFT_FRONT] << std::endl;
-    std::cout<<"RIGHT_FRONT: " <<  joints[RIGHT_FRONT] << std::endl;
-    std::cout<<"LEFT_REAR: " <<  joints[LEFT_REAR] << std::endl;
-    std::cout<<"RIGHT_REAR: " <<  joints[RIGHT_REAR] << std::endl;
-    std::cout<<"*********************************************" <<  std::endl;
-
-    joints[LEFT_FRONT] = this->parent->GetJoint(3);
-    joints[RIGHT_FRONT] = this->parent->GetJoint(4);
-    joints[LEFT_REAR] = this->parent->GetJoint(1);
-    joints[RIGHT_REAR] = this->parent->GetJoint(2);
-
-*/
-
-
-
-
     if (!joints[LEFT_FRONT]) {
       char error[200];
       snprintf(error, 200,
@@ -266,19 +243,19 @@ this->parent->GetJoint(right_front_joint_name_)->GetAnchor(0));*/
     }
 
     if (!joints[LEFT_REAR]) {
-char error[200];
-snprintf(error, 200,
-"GazeboRosSkidSteerDrive Plugin (ns = %s) couldn't get left rear hinge joint named \"%s\"",
-this->robot_namespace_.c_str(), this->left_rear_joint_name_.c_str());
-gzthrow(error);
-   }
+	  char error[200];
+	  snprintf(error, 200,
+		  "GazeboRosSkidSteerDrive Plugin (ns = %s) couldn't get left rear hinge joint named \"%s\"",
+		  this->robot_namespace_.c_str(), this->left_rear_joint_name_.c_str());
+	  gzthrow(error);
+    }
 
    if (!joints[RIGHT_REAR]) {
-char error[200];
-snprintf(error, 200,
-"GazeboRosSkidSteerDrive Plugin (ns = %s) couldn't get right rear hinge joint named \"%s\"",
-this->robot_namespace_.c_str(), this->right_rear_joint_name_.c_str());
-gzthrow(error);
+    char error[200];
+    snprintf(error, 200,
+    	"GazeboRosSkidSteerDrive Plugin (ns = %s) couldn't get right rear hinge joint named \"%s\"",
+    	this->robot_namespace_.c_str(), this->right_rear_joint_name_.c_str());
+     gzthrow(error);
    }
 
     joints[LEFT_FRONT]->SetMaxForce(0, torque);
@@ -296,7 +273,7 @@ gzthrow(error);
 
     rosnode_ = new ros::NodeHandle(this->robot_namespace_);
 
-    ROS_INFO("Starting GazeboRosSkidSteerDrive Plugin (ns = %s)!", this->robot_namespace_.c_str());
+    ROS_INFO("Starting SkidSteerDrive Plugin (ns = %s)!", this->robot_namespace_.c_str());
 
     tf_prefix_ = tf::getPrefixParam(*rosnode_);
     transform_broadcaster_ = new tf::TransformBroadcaster();
@@ -325,8 +302,7 @@ gzthrow(error);
   // Update the controller
   void GazeboRosSkidSteerDrive::UpdateChild() {
     common::Time current_time = this->world->GetSimTime();
-    double seconds_since_last_update =
-      (current_time - last_update_time_).Double();
+    double seconds_since_last_update = (current_time - last_update_time_).Double();
     if (seconds_since_last_update > update_period_) {
 
       publishOdometry(seconds_since_last_update);
@@ -392,7 +368,7 @@ gzthrow(error);
 
     // TODO create some non-perfect odometry!
     // getting data for base_footprint to odom transform
-    math::Pose pose = this->parent->GetWorldPose();
+    math::Pose pose = this->parent->GetWorldPose(); //Get the absolute pose of the entity (guardian in this case).
 
     tf::Quaternion qt(pose.rot.x, pose.rot.y, pose.rot.z, pose.rot.w);
     tf::Vector3 vt(pose.pos.x, pose.pos.y, pose.pos.z);
