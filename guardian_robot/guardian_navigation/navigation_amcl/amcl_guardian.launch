@@ -12,7 +12,7 @@
 		<param name="update_min_d" value="0.05" />						<!-- default: 0.2 meters -->
 		<param name="update_min_a" value="0.09" />						<!-- default: π/6.0 radians -->
 		<param name="resample_interval" value="1" />					<!-- default: 2 -->
-		<param name="transform_tolerance" value="0.1" />				<!-- default: 0.1 seconds -->
+		<param name="transform_tolerance" value="0.5" />				<!-- default: 0.1 seconds -->
 		<param name="recovery_alpha_slow" value="0.0" />				<!-- default: 0.0 (disabled) -->
 		<param name="recovery_alpha_fast" value="0.0" />				<!-- default: 0.0 (disabled) -->
 		<param name="initial_pose_x" value="0.0" />					<!-- default: 0.0 meters -->

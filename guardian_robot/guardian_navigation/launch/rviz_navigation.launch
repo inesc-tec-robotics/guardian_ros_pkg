@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="rviz_config" default="-d $(find guardian_navigation)/rviz/guardian_navigation.rviz" />
+	
+	<node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config)" />
+
+</launch>

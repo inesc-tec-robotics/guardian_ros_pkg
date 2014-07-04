@@ -8,5 +8,7 @@
 		<param name="delta_yaw" value="0.0" />
 		<param name="global_frame_id" value="map" />
 		<param name="base_frame_id" value="base_footprint" />
+		<param name="transform_tolerance" value="0.2" />
 	</node>
 </launch>
+ 

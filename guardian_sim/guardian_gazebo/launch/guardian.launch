@@ -5,7 +5,7 @@
 	<arg name="gui" default="true" />
 	<arg name="rviz_config" default="-d $(find guardian_gazebo)/rviz/gazebo.rviz" />
         <arg name="world_model" default="-d $(find guardian_gazebo)/worlds/guardian.world" />
-<!--     <arg name="publish_odom_tf_on_guardian_robot_control" default="false" /> -->
+    <arg name="publish_odom_tf_on_guardian_robot_control" default="false" />
 
 	<!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
