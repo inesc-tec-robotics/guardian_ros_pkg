@@ -33,9 +33,9 @@
 	    <torque>20</torque>
 	    <topicName>cmd_vel</topicName> <!-- there is no TopicName element in gazebo_ros_skid_steer_drive plugin   -->
 	    <commandTopic>cmd_vel</commandTopic>
-	    <odometryTopic>odom</odometryTopic> <!-- publishes OdomGazebo because odom is already being published by guardian_robot_pose --> 
-	    <odometryFrame>odom</odometryFrame>
-	    <broadcastTF>1</broadcastTF> <!-- defaults to false -->
+	    <odometryTopic>odom_gazebo</odometryTopic> <!-- publishes OdomGazebo because odom is already being published by guardian_robot_pose --> 
+	    <odometryFrame>odom_gazebo</odometryFrame>
+	    <broadcastTF>0</broadcastTF> <!-- defaults to false -->
     </plugin>
   </gazebo>
   
@@ -124,7 +124,7 @@
     <sensor type="ray" name="tilt_hokuyo_sensor">
       <pose>0 0 0 0 0 0</pose>
       <visualize>true</visualize>
-      <update_rate>10</update_rate> <!-- for scan time ~ 100 ms  -->
+      <update_rate>10</update_rate> <!-- rate of 10 for scan time ~ 100 ms  -->
       <ray>
         <scan>
           <horizontal>
@@ -136,13 +136,13 @@
         </scan>
         <range>
           <min>0.10</min>
-          <max>5.0</max>
-          <resolution>0.001</resolution>
+          <max>5.0</max> <!-- 5.0 -->
+          <resolution>0.001</resolution> <!-- 0.001 -->
         </range>
         <noise>
           <type>gaussian</type>
           <mean>0.0</mean>
-          <stddev>0.0033</stddev>
+          <stddev>0.0033</stddev> <!-- 0.0033 -->
         </noise>
       </ray>
       <plugin name="tilt_scan_plugin" filename="libgazebo_ros_laser_2D.so">
@@ -160,7 +160,7 @@
     <sensor type="ray" name="base_hokuyo_sensor">
       <pose>0 0 0 0 0 0</pose>
       <visualize>true</visualize>
-      <update_rate>10</update_rate> <!-- for scan time ~ 100 ms  -->
+      <update_rate>10</update_rate> <!-- rate of 10 for scan time ~ 100 ms  -->
       <ray>
         <scan>
           <horizontal>
@@ -172,8 +172,8 @@
         </scan>
         <range>
           <min>0.10</min>
-          <max>5.0</max>
-          <resolution>0.001</resolution>
+          <max>5.0</max> <!-- 5.0 -->
+          <resolution>0.001</resolution> <!-- 0.001 -->
         </range>
         <noise>
           <type>gaussian</type>
@@ -182,7 +182,7 @@
                stddev of 0.01m will put 99.7% of samples within 0.03m of the true
                reading. -->
           <mean>0.0</mean>
-          <stddev>0.01</stddev>
+          <stddev>0.01</stddev> <!-- 0.01 -->
         </noise>
       </ray>
       <plugin name="base_scan_plugin" filename="libgazebo_ros_laser_2D.so">  

@@ -1,7 +1,7 @@
 ptz_relative: true
 cmd_topic_ptz: /guardian_robot_control/command_ptz
-tilt_increment_degrees: 1 #in degrees
-laser_upper_limit_degrees: 80
-laser_lower_limit_degrees: -70
-epsilon: 0.5
-period: 5 # seconds for moving from lower limit to upper limit
+tilt_increment_degrees: 0.35 #in degrees
+laser_upper_limit_degrees: 20    #floor (50)
+laser_lower_limit_degrees: -15 #ceiling (-80)
+epsilon: 0.05
+period: 10.0 # seconds for moving from lower limit to upper limit

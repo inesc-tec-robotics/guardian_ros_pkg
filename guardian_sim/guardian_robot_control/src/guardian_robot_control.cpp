@@ -196,6 +196,9 @@ public:
   double orientation_z_;
   double orientation_w_;
 
+  // Parameter that defines if odom is published or not
+  bool publish_odom_;
+
   // Parameter that defines if odom tf is published or not
   bool publish_odom_tf_;
 
@@ -269,6 +272,7 @@ GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
   ROS_INFO("guardian_wheel_diameter_ = %5.2f", guardian_wheel_diameter_);
   ROS_INFO("guardian_d_tracks_m_ = %5.2f", guardian_d_tracks_m_);
 
+  private_node_handle_.param("publish_odom", publish_odom_, true);
   private_node_handle_.param("publish_odom_tf", publish_odom_tf_, true);
   if (publish_odom_tf_) ROS_INFO("PUBLISHING odom->base_footprin tf");
   else ROS_INFO("NOT PUBLISHING odom->base_footprint tf");
@@ -711,8 +715,11 @@ bool spin()
       {
 	    while(ros::ok() && node_handle_.ok()) {
           UpdateControl();
-          UpdateOdometry();
-          PublishOdometry();
+
+          if (publish_odom_) {
+        	  UpdateOdometry();
+          	  PublishOdometry();
+          }
           diagnostic_.update();
           ros::spinOnce();
 	      r.sleep();

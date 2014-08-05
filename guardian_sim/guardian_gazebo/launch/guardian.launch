@@ -4,13 +4,19 @@
 	<arg name="debug" default="false" />
 	<arg name="gui" default="true" />
 	<arg name="rviz_config" default="-d $(find guardian_gazebo)/rviz/gazebo.rviz" />
-        <arg name="world_model" default="-d $(find guardian_gazebo)/worlds/guardian.world" />
-    <arg name="publish_odom_tf_on_guardian_robot_control" default="false" />
+	<arg name="world_model" default="-d $(find guardian_gazebo)/worlds/guardian.world" />
+	<arg name="use_tilt_on_front_laser" default="true" />
+	<arg name="publish_odom_on_guardian_robot_control" default="true" />
+	<arg name="publish_odom_tf_on_guardian_robot_control" default="true" />
+	<arg name="robot_initial_x" default="0.0" />
+	<arg name="robot_initial_y" default="0.0" />
+	<arg name="robot_initial_yaw" default="0.0" />	
+	
 
 	<!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
-		<!--arg name="world_name" value="$(find guardian_navigation)/worlds/guardian_navigation.world" /-->
-		<arg name="world_name" value="$(arg world_model)"/>
+		<!--arg name="world_name" value="$(find guardian_navigation)/worlds/guardian_navigation.world" / -->
+		<arg name="world_name" value="$(arg world_model)" />
 		<arg name="debug" value="$(arg debug)" />
 		<arg name="gui" value="$(arg gui)" />
 		<arg name="paused" value="false" />
@@ -18,24 +24,33 @@
 		<arg name="headless" value="false" />
 	</include>
 
+
 	<!-- Load the URDF into the ROS Parameter Server -->
-<!-- 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian.urdf.xacro'" /> -->
+	<!-- <param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian.urdf.xacro'" /> -->
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_simple_collision.urdf.xacro'" />
 
-	<!-- Call a python script to the run a service call to gazebo_ros to spawn a URDF robot -->
-	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model guardian -param robot_description -x -3.2 -y -3.75 -Y 1.57079632679" />
-<!-- 	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model guardian -param robot_description -x 0 -y 0 -Y 0" /> -->
+
+	<!-- Call a python script to the run a service call to gazebo_ros to spawn a URDF robot -->	
+	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model guardian -param robot_description -x $(arg robot_initial_x) -y $(arg robot_initial_y) -Y $(arg robot_initial_yaw)" />
+
 
 	<!-- ros_control guardian launch file -->
 	<include file="$(find guardian_control)/launch/guardian_control.launch" />
-<!-- 	<include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch"> -->
-<!-- 		<arg name="publish_odom_tf" value="$(arg publish_odom_tf_on_guardian_robot_control)" /> -->
-<!-- 	</include> -->
+	<include file="$(find guardian_robot_control)/launch/guardian_robot_control.launch">
+		<arg name="publish_odom" value="$(arg publish_odom_on_guardian_robot_control)" />
+		<arg name="publish_odom_tf" value="$(arg publish_odom_tf_on_guardian_robot_control)" />
+	</include>
 	<include file="$(find guardian_joystick)/launch/guardian_keyboard.launch" />
-        <include file="$(find guardian_joystick)/launch/guardian_joystick.launch" />
-	<!-- <include file="$(find guardian_control)/launch/guardian_tilt_laser.launch" /> -->
+	<include file="$(find guardian_joystick)/launch/guardian_joystick.launch" />
 
-	<node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config)" />
+	<group if="$(arg use_tilt_on_front_laser)">
+		<include file="$(find guardian_control)/launch/guardian_tilt_laser.launch" />
+	</group>
+
+
+	<!-- <node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config)" /> -->
+
+
 
 	<!-- parameters that give you reasonable physics as well as good speed -->
 	<!-- needed so that gripper joint stops on objects instead of oscillating forever -->

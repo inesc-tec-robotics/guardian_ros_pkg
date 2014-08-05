@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <launch>
-	<!--<arg name="publish_odom_tf" default="true" />-->
+	<arg name="publish_odom" default="false" />
+	<arg name="publish_odom_tf" default="false" />
 	<rosparam command="load" file="$(find guardian_robot_control)/config/guardian_robot_control.yaml" />
 	<rosparam command="load" file="$(find guardian_robot_control)/config/guardian.yaml" />
 	
 	<node name="guardian_robot_control" pkg="guardian_robot_control" type="guardian_robot_control" output="screen" >
-		<!--<param name="publish_odom_tf" value="$(arg publish_odom_tf)" />-->
+		<param name="publish_odom" value="$(arg publish_odom)" />
+		<param name="publish_odom_tf" value="$(arg publish_odom_tf)" />
 	</node>	
 </launch>
 

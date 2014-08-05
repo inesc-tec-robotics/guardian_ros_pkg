@@ -58,12 +58,10 @@ int main(int argc, char **argv)
   ros::Publisher pub_cmd = n.advertise<robotnik_msgs::ptz>(cmd_topic_ptz, 1); //Advertise tilt topic
   ros::Subscriber joint_state_sub = n.subscribe<sensor_msgs::JointState>("/guardian/joint_states", 1, jointStateCallback); //subscribes to joint_states to read laser position
 
-  double p, num_increments;
+  double num_increments = (laser_upper_limit_degrees - laser_lower_limit_degrees) / tilt_increment_degrees; //number of tilt increments
+  double rate = num_increments / period; //period for each increment
 
-  num_increments= (laser_upper_limit_degrees - laser_lower_limit_degrees)/tilt_increment_degrees; //number of tilt increments
-
-  p = (period*tilt_increment_degrees)/num_increments; //period for each increment
-  ros::Rate loop_rate(1/p);
+  ros::Rate loop_rate(rate);
 
   robotnik_msgs::ptz ptz;
 
