@@ -224,7 +224,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.01
       Style: Points
-      Topic: /assembled_pointcloud
+      Topic: /ambient_pointcloud
       Use Fixed Frame: true
       Use rainbow: true
       Value: false

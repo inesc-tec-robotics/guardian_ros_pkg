@@ -10,7 +10,7 @@
 	<arg name="publish_odom_tf_on_guardian_robot_control" default="true" />
 	<arg name="robot_initial_x" default="0.0" />
 	<arg name="robot_initial_y" default="0.0" />
-	<arg name="robot_initial_yaw" default="0.0" />	
+	<arg name="robot_initial_yaw" default="0.0" />
 	
 
 	<!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->

@@ -201,7 +201,7 @@
        <geometry>
          <mesh filename="package://guardian_description/meshes/wheel.dae"/>
        </geometry>
-	<material name="gray">
+	<material name="grey">
 		<color rgba="0.3 0.3 0.3 1"/>
       	</material>
     </visual>

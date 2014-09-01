@@ -82,7 +82,8 @@
        <origin xyz="0 0 0.08" rpy="0 0 0 " />
        <geometry>
 <!--          <mesh filename="package://guardian_description/meshes/chassis/two_lasers/guardian2lasers.dae"/> -->
-		  <box size = "1.127 0.497 0.28"/> <!-- includes tracks, making it just tall enough not to hit the laser beams -->
+		  <!-- <box size = "1.127 0.497 0.28"/> --> <!-- includes tracks, making it just tall enough not to hit the laser beams -->
+		  <box size = "1.127 0.497 0.25"/>
        </geometry>
     </collision>     
   </link>
@@ -332,6 +333,7 @@
      <axis xyz="0 1 0" />
      <!--origin xyz="0.180 0.0 0.270"/-->
      <origin xyz="0.48856 0 0.24" rpy="0 0 0" /> <!-- 0.1885 --><!--   <origin xyz="0.5 0 0.31" rpy="0 0 0" /> -->
+     <!-- <origin xyz="0.505 0 0.24" rpy="0 0 0" /> -->
      <parent link="base_link"/>
      <child link="hokuyo_tilt_laser_link"/>
      <limit effort="${ptz_joint_effort_limit}" velocity="${ptz_joint_velocity_limit}" lower="-1.5708" upper="1.5708"/>

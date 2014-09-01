@@ -5,6 +5,11 @@
 	<arg name="world_model" value="$(find guardian_gazebo)/worlds/guardian_ship_interior.world" />
 	<arg name="rviz_config" default="-d $(find guardian_navigation)/rviz/guardian_navigation.rviz" />
 	<arg name="map_file" default="$(find guardian_navigation)/maps/ship_interior/ship_interior.yaml" />
+	<arg name="use_tilt_on_front_laser" default="true" />
+	<arg name="robot_initial_x" default="-4.5" />
+	<arg name="robot_initial_y" default="2.25" />
+	<arg name="robot_initial_yaw" default="-1.57079633" />
+
 
 
 	<!-- ======================================================================================================================== -->
@@ -13,6 +18,10 @@
 		<arg name="world_model" default="$(arg world_model)" />
 		<arg name="rviz_config" default="$(arg rviz_config)" />
 		<arg name="publish_odom_tf_on_guardian_robot_control" default="true" /> <!-- false if using ekf, true otherwise -->
+		<arg name="use_tilt_on_front_laser" default="$(arg use_tilt_on_front_laser)" />
+		<arg name="robot_initial_x" default="$(arg robot_initial_x)" />
+		<arg name="robot_initial_y" default="$(arg robot_initial_y)" />
+		<arg name="robot_initial_yaw" default="$(arg robot_initial_yaw)" />
 	</include>
 
 
@@ -26,18 +35,16 @@
 
 	<!-- ======================================================================================================================== -->
 	<!-- simulated localization -->
-	<!-- <include file="$(find guardian_navigation)/navigation_amcl/guardian_fake_localization.launch" /> -->
+	<include file="$(find guardian_navigation)/navigation_amcl/guardian_fake_localization.launch" />
 
 	<!-- amcl localization -->
-<!-- 	<include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" /> -->
+	<!-- <include file="$(find guardian_navigation)/navigation_amcl/amcl_guardian.launch" /> -->
 
 	<!--- EFK Filter | to run ekf, switch the arg publish_tf_on_guardian_robot_control to false in the include of guardian.launch -->
 	<!-- <include file="$(find guardian_navigation)/navigation_ekf/ekf.launch" /> -->
 
 	<!-- ICP pose corrections -->
-	<!-- <include file="$(find dynamic_robot_localization)/launch/dynamic_robot_localization.launch" /> -->	
-	<include file="$(find dynamic_robot_localization)/launch/laserscan_to_pointcloud_assembler.launch" />
-	<include file="$(find dynamic_robot_localization)/launch/pose_to_tf_publisher.launch" />
+	<!-- <include file="$(find dynamic_robot_localization)/launch/dynamic_robot_localization_system.launch" /> -->
 
 
 	<!-- ======================================================================================================================== -->
