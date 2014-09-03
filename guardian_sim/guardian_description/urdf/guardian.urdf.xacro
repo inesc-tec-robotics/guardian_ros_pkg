@@ -3,6 +3,7 @@
 
   <!-- Import all Gazebo-customization elements, including Gazebo colors -->
   <xacro:include filename="$(find guardian_description)/urdf/guardian.gazebo" />
+  <xacro:include filename="$(find guardian_description)/urdf/sensors/kinect.urdf.xacro"/>
 
 
   <!-- Robot mechanical and motor parameters -->
@@ -326,6 +327,8 @@
 
 
 <!-- ################# SENSORS ################# -->
+  <sensor_kinect  parent="base_link"/>
+
   <!-- FRONT - TILT LASER - URG-04LX -->
   <joint name="hokuyo_tilt_laser_joint" type="revolute">
      <axis xyz="0 1 0" />
