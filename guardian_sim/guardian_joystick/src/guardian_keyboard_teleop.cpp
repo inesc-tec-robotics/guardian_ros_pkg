@@ -46,10 +46,16 @@
 #define KEYCODE_S 0x73
 #define KEYCODE_D 0x64
 
-#define KEYCODE_A_CAP 0x41
-#define KEYCODE_D_CAP 0x44
-#define KEYCODE_S_CAP 0x53
 #define KEYCODE_W_CAP 0x57
+#define KEYCODE_A_CAP 0x41
+#define KEYCODE_S_CAP 0x53
+#define KEYCODE_D_CAP 0x44
+
+#define WALK_ROTATION_INCREMENT 0.01
+#define WALK_TRANSLATION_INCREMENT 0.005
+#define RUN_ROTATION_INCREMENT 0.1
+#define RUN_TRANSLATION_INCREMENT 0.05
+
 
 class GuardianKeyboardTeleopNode
 {
@@ -238,7 +244,54 @@ void GuardianKeyboardTeleopNode::keyboardLoop()
                 dirty = true;
                //puts("\r\rturn anti-clock");
                 break;
-                
+            case 't':
+            	walk_vel_ -= WALK_TRANSLATION_INCREMENT;
+            	speed = 0;
+            	turn = 0;
+            	dirty = false;
+            	break;
+            case 'T':
+            	walk_vel_ += WALK_TRANSLATION_INCREMENT;
+            	speed = 0;
+            	turn = 0;
+            	dirty = false;
+            	break;
+            case 'g':
+            	run_vel_-= RUN_TRANSLATION_INCREMENT;
+            	speed = 0;
+            	turn = 0;
+            	dirty = false;
+            	break;
+            case 'G':
+            	run_vel_+= RUN_TRANSLATION_INCREMENT;
+            	speed = 0;
+            	turn = 0;
+            	dirty = false;
+            	break;
+            case 'r':
+            	yaw_rate_-= WALK_ROTATION_INCREMENT;
+            	speed = 0;
+            	turn = 0;
+            	dirty = false;
+            	break;
+            case 'R':
+            	yaw_rate_+= WALK_ROTATION_INCREMENT;
+            	dirty = false;
+            	speed = 0;
+            	turn = 0;
+            	break;
+            case 'f':
+            	yaw_rate_run_-= RUN_ROTATION_INCREMENT;
+            	speed = 0;
+            	turn = 0;
+            	dirty = false;
+            	break;
+            case 'F':
+            	yaw_rate_run_+= RUN_ROTATION_INCREMENT;
+            	speed = 0;
+            	turn = 0;
+            	dirty = false;
+            	break;
             default:
                 max_tv = walk_vel_;
                 max_rv = yaw_rate_;

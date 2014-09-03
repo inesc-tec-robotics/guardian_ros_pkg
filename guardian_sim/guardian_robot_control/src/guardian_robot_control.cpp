@@ -486,34 +486,35 @@ void UpdateOdometry() {
 	// ROS_INFO("Odom estimated x=%5.2f  y=%5.2f a=%5.2f", robot_pose_px_, robot_pose_py_, robot_pose_pa_);
 }
 
-// Publish robot odometry tf and topic depending 
-void PublishOdometry()
+void PublishOdometryTF()
 {
-	ros::Time current_time = ros::Time::now();
-	
-    //first, we'll publish the transform over tf
-    geometry_msgs::TransformStamped odom_trans;
-    odom_trans.header.stamp = current_time;
-    odom_trans.header.frame_id = "odom";
-    odom_trans.child_frame_id = "base_footprint";
+	// send the transform over /tf
+	// activate / deactivate with param
+	// this tf in needed when not using robot_pose_ekf
+	geometry_msgs::TransformStamped odom_trans;
+	odom_trans.header.stamp = ros::Time::now();
+	odom_trans.header.frame_id = "odom";
+	odom_trans.child_frame_id = "base_footprint";
 
-    odom_trans.transform.translation.x = robot_pose_px_;
-    odom_trans.transform.translation.y = robot_pose_py_;
-    odom_trans.transform.translation.z = 0.0;
+	odom_trans.transform.translation.x = robot_pose_px_;
+	odom_trans.transform.translation.y = robot_pose_py_;
+	odom_trans.transform.translation.z = 0.0;
 
-    odom_trans.transform.rotation.x = orientation_x_;
+	odom_trans.transform.rotation.x = orientation_x_;
 	odom_trans.transform.rotation.y = orientation_y_;
 	odom_trans.transform.rotation.z = orientation_z_;
 	odom_trans.transform.rotation.w = orientation_w_;
-	
-    // send the transform over /tf
-	// activate / deactivate with param
-	// this tf in needed when not using robot_pose_ekf
-    if (publish_odom_tf_) odom_broadcaster.sendTransform(odom_trans);  
-        
+
+	odom_broadcaster.sendTransform(odom_trans);
+}
+
+
+// Publish robot odometry tf and topic depending 
+void PublishOdometry()
+{
     //next, we'll publish the odometry message over ROS
     nav_msgs::Odometry odom;
-    odom.header.stamp = current_time;
+    odom.header.stamp = ros::Time::now();
     odom.header.frame_id = "odom";
 
     //set the position
@@ -720,6 +721,11 @@ bool spin()
         	  UpdateOdometry();
           	  PublishOdometry();
           }
+
+          if (publish_odom_tf_) {
+        	  PublishOdometryTF();
+          }
+
           diagnostic_.update();
           ros::spinOnce();
 	      r.sleep();
