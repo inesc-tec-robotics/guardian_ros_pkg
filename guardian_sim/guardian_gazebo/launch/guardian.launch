@@ -5,7 +5,7 @@
 	<arg name="gui" default="true" />
 	<arg name="rviz_config" default="-d $(find guardian_gazebo)/rviz/gazebo.rviz" />
 	<arg name="world_model" default="-d $(find guardian_gazebo)/worlds/guardian.world" />
-	<arg name="use_tilt_on_front_laser" default="true" />
+	<arg name="use_tilt_on_front_laser" default="false" />
 	<arg name="publish_odom_on_guardian_robot_control" default="true" />
 	<arg name="publish_odom_tf_on_guardian_robot_control" default="true" />
 	<arg name="robot_initial_x" default="0.0" />

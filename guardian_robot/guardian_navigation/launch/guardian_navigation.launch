@@ -5,7 +5,7 @@
 	<arg name="world_model" value="$(find guardian_gazebo)/worlds/guardian_ship_interior.world" />
 	<arg name="rviz_config" default="-d $(find guardian_navigation)/rviz/guardian_navigation.rviz" />
 	<arg name="map_file" default="$(find guardian_navigation)/maps/ship_interior/ship_interior.yaml" />
-	<arg name="use_tilt_on_front_laser" default="true" />
+	<arg name="use_tilt_on_front_laser" default="false" />
 	<arg name="robot_initial_x" default="-4.5" />
 	<arg name="robot_initial_y" default="2.25" />
 	<arg name="robot_initial_yaw" default="-1.57079633" />
@@ -44,7 +44,11 @@
 	<!-- <include file="$(find guardian_navigation)/navigation_ekf/ekf.launch" /> -->
 
 	<!-- ICP pose corrections -->
-	<!-- <include file="$(find dynamic_robot_localization)/launch/dynamic_robot_localization_system.launch" /> -->
+	<!-- <include file="$(find dynamic_robot_localization)/launch/dynamic_robot_localization_system.launch" >
+		<arg name="robot_initial_x" default="$(arg robot_initial_x)" />
+		<arg name="robot_initial_y" default="$(arg robot_initial_y)" />
+		<arg name="robot_initial_yaw" default="$(arg robot_initial_yaw)" />
+	</include> -->
 
 
 	<!-- ======================================================================================================================== -->
