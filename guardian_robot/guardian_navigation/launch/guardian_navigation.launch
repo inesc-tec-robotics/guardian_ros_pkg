@@ -4,17 +4,19 @@
 	<!-- arguments -->
 	<arg name="world_model" value="$(find guardian_gazebo)/worlds/guardian_ship_interior.world" />
 	<arg name="rviz_config" default="-d $(find guardian_navigation)/rviz/guardian_navigation.rviz" />
-	<arg name="map_file" default="$(find guardian_navigation)/maps/ship_interior/ship_interior.yaml" />
+	<!-- <arg name="map_file" default="$(find guardian_navigation)/maps/ship_interior/ship_interior.yaml" /> -->
+	<arg name="map_file" default="$(find guardian_navigation)/maps/FEUP/lab_corridor_machines3.yaml" />
 	<arg name="use_tilt_on_front_laser" default="false" />
 	<arg name="robot_initial_x" default="-4.5" />
 	<arg name="robot_initial_y" default="2.25" />
 	<arg name="robot_initial_yaw" default="-1.57079633" />
+	<arg name="start_gazebo" default="0" />
 
 
 
 	<!-- ======================================================================================================================== -->
 	<!-- gazebo simulator -->
-	<include file="$(find guardian_gazebo)/launch/guardian.launch">
+	<include file="$(find guardian_gazebo)/launch/guardian.launch" if="$(arg start_gazebo)" >
 		<arg name="world_model" default="$(arg world_model)" />
 		<arg name="rviz_config" default="$(arg rviz_config)" />
 		<arg name="publish_odom_tf_on_guardian_robot_control" default="true" /> <!-- false if using ekf, true otherwise -->
@@ -44,11 +46,17 @@
 	<!-- <include file="$(find guardian_navigation)/navigation_ekf/ekf.launch" /> -->
 
 	<!-- ICP pose corrections -->
-	<!-- <include file="$(find dynamic_robot_localization)/launch/dynamic_robot_localization_system.launch" >
+	<include file="$(find dynamic_robot_localization)/launch/dynamic_robot_localization_system.launch" >
 		<arg name="robot_initial_x" default="$(arg robot_initial_x)" />
 		<arg name="robot_initial_y" default="$(arg robot_initial_y)" />
 		<arg name="robot_initial_yaw" default="$(arg robot_initial_yaw)" />
-	</include> -->
+		<arg name="yaml_configuration_filters_filename" default="$(find dynamic_robot_localization)/yaml/configs/filters_2d.yaml" />
+		<!-- <arg name="yaml_configuration_filename" default="$(find dynamic_robot_localization)/yaml/configs/pose_tracking/static_2d.yaml" /> -->
+		<!-- <arg name="yaml_configuration_filename" default="$(find dynamic_robot_localization)/yaml/configs/pose_tracking/unstable_ground_2d.yaml" /> -->
+		<!-- <arg name="yaml_configuration_filename" default="$(find dynamic_robot_localization)/yaml/configs/pose_tracking/cluttered_environments_2d.yaml" /> -->
+		<arg name="yaml_configuration_filename" default="$(find dynamic_robot_localization)/yaml/configs/pose_tracking/cluttered_environments_dynamic_2d.yaml" />
+		<arg name="laser_scan_topics" default="/scan+/hokuyo_back_scan" />
+	</include>
 
 
 	<!-- ======================================================================================================================== -->
