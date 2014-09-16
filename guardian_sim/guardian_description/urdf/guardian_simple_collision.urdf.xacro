@@ -66,7 +66,7 @@
      <child link="base_link" />
   </joint>
 
-  <!-- BASE_LINK (RED) -->
+  <!-- BASE_LINK (DarkGrey) -->
   <link name="base_link">
     <inertial>
       <mass value="33.50" /> <!-- 95.0 -->
@@ -78,6 +78,9 @@
        <geometry>
 	     <mesh filename="package://guardian_description/meshes/chassis/two_lasers/guardian2lasers.stl"/>
        </geometry>
+		<material name="DarkGrey">
+			<color rgba="0.4 0.4 0.4 1.0" />
+		</material>
     </visual>
     <collision>
        <origin xyz="0 0 0.08" rpy="0 0 0 " />
@@ -356,7 +359,7 @@
           <!--mesh filename="package://guardian_description/meshes/hokuyo-utm30-lx.dae"/>
         </geometry>
         
-        <material name="Red" />
+        <material name="DarkGrey" />
       </visual-->
 
       <!-- collision>

@@ -15,7 +15,7 @@
        xmlns:physics="http://playerstage.sourceforge.net/gazebo/xmlschema/#physics">
 
 
-  <!-- BASE_LINK (RED) -->
+  <!-- BASE_LINK (DarkGrey) -->
   <link name="base_link">
     <inertial>
       <mass value="95.0" />
@@ -36,7 +36,7 @@
     </collision>     
   </link>
   <gazebo reference="base_link">
-    <material>Gazebo/Red</material>
+    <material>Gazebo/DarkGrey</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
 
@@ -394,7 +394,7 @@
   </link>
 
   <gazebo reference="powerball_base_link">
-    <material>Gazebo/FlatBlack</material>
+    <material>Gazebo/DarkGrey</material>
     <turnGravityOff>false</turnGravityOff>
   </gazebo>
   

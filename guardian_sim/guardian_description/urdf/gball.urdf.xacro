@@ -59,7 +59,7 @@
   </joint>
 
 
-  <!-- BASE_LINK (RED) -->
+  <!-- BASE_LINK (DarkGrey) -->
   <link name="base_link">
     <inertial>
       <mass value="95.0" />
