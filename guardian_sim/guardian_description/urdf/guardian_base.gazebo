@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot>
+	  <!--   ros_control plugin -->
+	  <gazebo>
+	    <plugin name="ros_control" filename="libgazebo_ros_control.so">
+	       <robotNamespace>/guardian</robotNamespace>
+	       <controlPeriod>0.001</controlPeriod>
+		   <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+	    </plugin>
+	  </gazebo>
+	   
+	  <!-- ground truth from gazebo --> 
+	  <gazebo>
+	    <plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
+	  		<bodyName>base_footprint</bodyName>
+	  		<topicName>base_pose_ground_truth</topicName>
+	  		<frameName>map</frameName>
+	    	<updateRate>0.0</updateRate> <!-- max possible rate -->
+	    </plugin>
+	  </gazebo>
+	  
+	  
+	  <gazebo reference="base_footprint">
+	      <material>Gazebo/Green</material>
+	  </gazebo>
+	
+	  <!-- 	chassis -->
+	  <gazebo reference="base_link">
+	      <material>Gazebo/Grey</material>
+	      <turnGravityOff>false</turnGravityOff>
+	  </gazebo>
+  
+</robot>

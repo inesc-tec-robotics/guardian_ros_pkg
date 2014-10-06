@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot name="guardian" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+
+	<xacro:include filename="$(find guardian_description)/urdf/guardian_base.urdf.xacro" />
+	<xacro:include filename="$(find guardian_description)/urdf/track.urdf.xacro" /> 
+	<xacro:include filename="$(find guardian_description)/urdf/track_wheel.urdf.xacro" /> 
+	
+	
+	<!-- ###### BASE ###### -->
+	<guardian_base  base_footprint_z="0.069" />
+	
+	<!-- ###### TRACKS ###### -->
+	<!-- visual -->
+	<track parent="base_link" prefix="left_track" joint_yaw="${PI}" />
+	<track parent="base_link" prefix="right_track" joint_yaw="0"/>	
+	
+	<!-- right track collision -->
+	<track_wheel parent="right_track" prefix="right_tw_1" origin_yaw="0" wheel_offset_x="0.3" reflect_y="-1" joint_yaw="0" />
+	<track_wheel parent="right_track" prefix="right_tw_2" origin_yaw="0" wheel_offset_x="0.15" reflect_y="-1" joint_yaw="0" />
+	<track_wheel parent="right_track" prefix="right_tw_3" origin_yaw="0" wheel_offset_x="0" reflect_y="-1" joint_yaw="0" />
+	<track_wheel parent="right_track" prefix="right_tw_4" origin_yaw="0" wheel_offset_x="-0.15" reflect_y="-1" joint_yaw="0" />
+	<track_wheel parent="right_track" prefix="right_tw_5" origin_yaw="0" wheel_offset_x="-0.3" reflect_y="-1" joint_yaw="0" /> 
+	
+	<!-- left track collision -->
+	<track_wheel parent="left_track" prefix="left_tw_1" origin_yaw="${PI}" wheel_offset_x="0.3" reflect_y="-1" joint_yaw="${PI}" />
+	<track_wheel parent="left_track" prefix="left_tw_2" origin_yaw="0" wheel_offset_x="0.15" reflect_y="-1" joint_yaw="${PI}" />
+	<track_wheel parent="left_track" prefix="left_tw_3" origin_yaw="0" wheel_offset_x="0" reflect_y="-1" joint_yaw="${PI}" />
+	<track_wheel parent="left_track" prefix="left_tw_4" origin_yaw="0" wheel_offset_x="-0.15" reflect_y="-1" joint_yaw="${PI}" />
+	<track_wheel parent="left_track" prefix="left_tw_5" origin_yaw="0" wheel_offset_x="-0.3" reflect_y="-1" joint_yaw="${PI}" /> 
+	
+
+	<!-- ###### PLUGIN ###### -->
+	<gazebo> <!-- from hector_gazebo -->
+       <plugin name="diffdrive_plugin_multiwheel" filename="libdiffdrive_plugin_multi_wheel.so">                
+          <alwaysOn>true</alwaysOn>
+          <updateRate>10.0</updateRate>
+          <leftJoints>joint_left_tw_1 joint_left_tw_2 joint_left_tw_3 joint_left_tw_4 joint_left_tw_5 </leftJoints> 
+          <rightJoints>joint_right_tw_1 joint_right_tw_2 joint_right_tw_3 joint_right_tw_4 joint_right_tw_5 </rightJoints>
+          <wheelSeparation>0.448</wheelSeparation>
+          <wheelDiameter>0.3</wheelDiameter>
+          <torque>20</torque>
+          <robotNamespace>/guardian</robotNamespace>
+          <robotBaseFrame>base_footprint</robotBaseFrame>
+          <commandTopic>cmd_vel</commandTopic>
+          <publishOdometryTf>true</publishOdometryTf>
+          <publishOdometryMsg>true</publishOdometryMsg>
+        </plugin>
+    </gazebo>
+    
+
+</robot>
+

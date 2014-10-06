@@ -6,9 +6,9 @@
 	<arg name="rviz_config" default="-d $(find guardian_gazebo)/rviz/gazebo.rviz" />
 	<arg name="world_model" default="-d $(find guardian_gazebo)/worlds/guardian.world" />
 	<arg name="use_tilt_on_front_laser" default="false" />
-	<arg name="publish_odom_on_guardian_robot_control" default="true" />
-	<arg name="publish_odom_tf_on_guardian_robot_control" default="true" />
-	<arg name="robot_initial_x" default="0.0" />
+	<arg name="publish_odom_on_guardian_robot_control" default="false" />
+	<arg name="publish_odom_tf_on_guardian_robot_control" default="false" />
+	<arg name="robot_initial_x" default="-3.0" />
 	<arg name="robot_initial_y" default="0.0" />
 	<arg name="robot_initial_yaw" default="0.0" />
 	
@@ -27,11 +27,14 @@
 
 	<!-- Load the URDF into the ROS Parameter Server -->
 	<!-- <param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian.urdf.xacro'" /> -->
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_simple_collision.urdf.xacro'" />
+<!-- 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_simple_collision.urdf.xacro'" /> -->
+<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_wheels.urdf.xacro'" />
+<!-- <param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_tracks.urdf.xacro'" /> -->
 
 
 	<!-- Call a python script to the run a service call to gazebo_ros to spawn a URDF robot -->	
-	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model guardian -param robot_description -x $(arg robot_initial_x) -y $(arg robot_initial_y) -Y $(arg robot_initial_yaw)" />
+	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
+		args="-urdf -model guardian -param robot_description -x $(arg robot_initial_x) -y $(arg robot_initial_y) -Y $(arg robot_initial_yaw)" />
 
 
 	<!-- ros_control guardian launch file -->
@@ -43,9 +46,9 @@
 	<include file="$(find guardian_joystick)/launch/guardian_keyboard.launch" />
 	<include file="$(find guardian_joystick)/launch/guardian_joystick.launch" />
 
-	<group if="$(arg use_tilt_on_front_laser)">
-		<include file="$(find guardian_control)/launch/guardian_tilt_laser.launch" />
-	</group>
+<!-- 	<group if="$(arg use_tilt_on_front_laser)"> -->
+<!-- 		<include file="$(find guardian_control)/launch/guardian_tilt_laser.launch" /> -->
+<!-- 	</group> -->
 
 
 	<!-- <node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config)" /> -->

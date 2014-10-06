@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+
+  <xacro:include filename="$(find guardian_description)/urdf/guardian_base.gazebo" />
+  <xacro:include filename="$(find guardian_description)/urdf/sensors/kinect.urdf.xacro"/>
+  <xacro:include filename="$(find guardian_description)/urdf/sensors/imu.urdf.xacro"/>
+  <xacro:include filename="$(find guardian_description)/urdf/sensors/hokuyo_front.urdf.xacro"/>
+  <xacro:include filename="$(find guardian_description)/urdf/sensors/hokuyo_back.urdf.xacro"/>
+    
+  <xacro:macro name="guardian_base" params="base_footprint_z">
+  
+	  <!-- BASE FOOTPRINT -->
+	  <!-- base_footprint is a fictitious link(frame) that is on the ground right below base_link origin,
+	             navigation stack depends on this frame -->
+	  <link name="base_footprint">
+	      <visual>
+	          <origin xyz="0 0 0" rpy="0 0 0" />
+	          <geometry>
+	             <box size="0.001 0.001 0.001" />
+	          </geometry>
+	      </visual>
+	  </link>
+
+	  <joint name="base_footprint_joint" type="fixed">
+	     <!--NB: While you would think this would make it go up, it is oddly reversed.
+	      This moves the joint to 0,0,0 where we want it for rviz, etc. -->
+	<!--      <origin xyz="0 0 0.130" rpy="0 0 0" /> -->
+	<!--      <origin xyz="0 0 0.18" rpy="0 0 0" /> -->
+	     <origin xyz="0 0 ${base_footprint_z}" rpy="0 0 0" />
+	     <parent link="base_footprint"/>
+	     <child link="base_link" />
+	  </joint>
+
+	  <!-- BASE_LINK (Grey) -->
+	  <link name="base_link">
+	    <inertial>
+	      <mass value="95.0" /> <!-- 95.0 -->
+	      <origin xyz="0 0 0" />
+	      <inertia  ixx="3.737" ixy="0.008"  ixz="-0.144"  iyy="8.311"  iyz="-0.004"  izz="8.893" />
+	    </inertial>
+	    
+	    <visual>
+	       <origin xyz="0 0 0" rpy="0 0 0" />
+	       <geometry>
+		     	<mesh filename="package://guardian_description/meshes/chassis/two_lasers/guardian2lasers.stl"/>
+	       </geometry>
+		   <material name="DarkGrey">
+				<color rgba="0.4 0.4 0.4 1.0" />
+			</material>
+	    </visual>
+	    
+	    <collision>
+	       <origin xyz="0 0 0.08" rpy="0 0 0 " />
+	       <geometry>
+			  <!-- <box size = "1.127 0.497 0.28"/> --> <!-- includes tracks, making it just tall enough not to hit the laser beams -->
+			  <box size = "1.127 0.497 0.25"/> <!-- this is not enough -->
+	       </geometry>
+	    </collision>     
+	  </link>
+
+	  <!-- ################# SENSORS ################# -->
+  	  <sensor_kinect  parent="base_link"/>
+<!--   	  <sensor_imu  parent="base_link"/> --> <!-- no imu on the platform, so no imu on the simulator -->
+  	  
+  	  <sensor_hokuyo_front  parent="base_link" prefix="tilt_laser" visualize="false" origin_x="0.48856" origin_z="0.24" origin_yaw="0"/>
+  	  <sensor_hokuyo_back  parent="base_link" prefix="base_laser" visualize="false" origin_x="-0.4323" origin_z="0.3" origin_yaw="${PI}"/>
+
+  </xacro:macro>
+
+</robot>
+
