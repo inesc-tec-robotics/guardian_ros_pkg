@@ -1,207 +1,195 @@
 <?xml version="1.0"?>
 <robot>
-  <!-- ros_control plugin -->
-  <gazebo>
-    <plugin name="ros_control" filename="libgazebo_ros_control.so">
-       <robotNamespace>/guardian</robotNamespace>
-       <controlPeriod>0.001</controlPeriod>
-	   <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-    </plugin>
-  </gazebo>
-  
-  
-  <gazebo>
-    <plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
-  		<bodyName>base_footprint</bodyName>
-  		<topicName>base_pose_ground_truth</topicName>
-  		<frameName>map</frameName>
-    	<updateRate>0.0</updateRate> <!-- max possible rate -->
-    </plugin>
-  </gazebo>
-  
-  <gazebo>
-    <plugin name="skid_steer_drive_controller" filename="libskid_steer_plugin.so"> <!-- adapted from gazebo_ros_skid_steer_drive -->
-	    <updateRate>100.0</updateRate>
-	    <robotNamespace>/guardian</robotNamespace>
-	    <leftFrontJoint>joint_front_left_wheel</leftFrontJoint>  
-	    <rightFrontJoint>joint_front_right_wheel</rightFrontJoint>
-	    <leftRearJoint>joint_back_left_wheel</leftRearJoint>
-	    <rightRearJoint>joint_back_right_wheel</rightRearJoint>
-	    <wheelSeparation>0.612</wheelSeparation> 
-	    <wheelDiameter>0.37</wheelDiameter> 
-	    <robotBaseFrame>base_footprint</robotBaseFrame>
-	    <torque>20</torque>
-	    <topicName>cmd_vel</topicName> <!-- there is no TopicName element in gazebo_ros_skid_steer_drive plugin   -->
-	    <commandTopic>cmd_vel</commandTopic>
-	    <odometryTopic>odom_gazebo</odometryTopic> <!-- publishes OdomGazebo because odom is already being published by guardian_robot_pose --> 
-	    <odometryFrame>odom_gazebo</odometryFrame>
-	    <broadcastTF>0</broadcastTF> <!-- defaults to false -->
-    </plugin>
-  </gazebo>
-  
-  <gazebo reference="base_footprint">
-    <material>Gazebo/Green</material>
-  </gazebo>
-  
-  <gazebo reference="base_link">
-    <material>Gazebo/DarkGrey</material>
-    <turnGravityOff>false</turnGravityOff>
-  </gazebo>
+	<!-- ros_control plugin -->
+	<gazebo>
+		<plugin name="ros_control" filename="libgazebo_ros_control.so">
+			<robotNamespace>/guardian</robotNamespace>
+			<controlPeriod>0.001</controlPeriod>
+			<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+		</plugin>
+	</gazebo>
 
-<!-- ################# TRACKS ################# -->
-  <gazebo reference="left_track">
-    <material>Gazebo/FlatBlack</material>
-    <turnGravityOff>false</turnGravityOff>
-  </gazebo>
+	<gazebo>
+		<plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
+			<bodyName>base_footprint</bodyName>
+			<topicName>base_pose_ground_truth</topicName>
+			<frameName>map</frameName>
+			<updateRate>0.0</updateRate> <!-- max possible rate -->
+		</plugin>
+	</gazebo>
 
-  <gazebo reference="right_track">
-    <material>Gazebo/FlatBlack</material>
-    <turnGravityOff>false</turnGravityOff>
-  </gazebo>
+	<gazebo>
+		<plugin name="skid_steer_drive_controller" filename="libskid_steer_plugin.so"> <!-- adapted from gazebo_ros_skid_steer_drive -->
+			<updateRate>100.0</updateRate>
+			<robotNamespace>/guardian</robotNamespace>
+			<leftFrontJoint>joint_front_left_wheel</leftFrontJoint>
+			<rightFrontJoint>joint_front_right_wheel</rightFrontJoint>
+			<leftRearJoint>joint_back_left_wheel</leftRearJoint>
+			<rightRearJoint>joint_back_right_wheel</rightRearJoint>
+			<wheelSeparation>0.612</wheelSeparation>
+			<wheelDiameter>0.37</wheelDiameter>
+			<robotBaseFrame>base_footprint</robotBaseFrame>
+			<torque>20</torque>
+			<topicName>cmd_vel</topicName> <!-- there is no TopicName element in gazebo_ros_skid_steer_drive plugin -->
+			<commandTopic>cmd_vel</commandTopic>
+			<odometryTopic>odom_gazebo</odometryTopic> <!-- publishes OdomGazebo because odom is already being published by guardian_robot_pose -->
+			<odometryFrame>odom_gazebo</odometryFrame>
+			<broadcastTF>0</broadcastTF> <!-- defaults to false -->
+		</plugin>
+	</gazebo>
 
-<!-- ################# WHEELS ################# -->
-  <gazebo reference="back_left_wheel">
-    <mu1 value="2.5"/>
-    <mu2 value="0.9"/>
-    <fdir1 value="1 0 0"/>
-   	<!-- kp>100000000.0</kp>
-	<kd>100.0</kd-->
-   	<kp>10000.0</kp>
-	  <kd>100.0</kd>
-    <maxVel>2.0</maxVel>
+	<gazebo reference="base_footprint">
+		<material>Gazebo/Green</material>
+	</gazebo>
 
-    <material>Gazebo/DarkGrey</material>
-    <turnGravityOff>false</turnGravityOff>
-  </gazebo>
+	<gazebo reference="base_link">
+		<material>Gazebo/DarkGrey</material>
+		<turnGravityOff>false</turnGravityOff>
+	</gazebo>
 
- <!--gazebo reference="back_left_wheel">
-    <mu1 value="10.0"/>
-    <mu2 value="0.5"/> 
-    <fdir1 value="1 0 0"/>
-    <material>Gazebo/DarkGrey</material>
-    <turnGravityOff>false</turnGravityOff>
-  </gazebo-->
+	<!-- ################# TRACKS ################# -->
+	<gazebo reference="left_track">
+		<material>Gazebo/FlatBlack</material>
+		<turnGravityOff>false</turnGravityOff>
+	</gazebo>
 
-  <gazebo reference="back_right_wheel">
-    <mu1 value="2.5"/>
-    <mu2 value="0.9"/>
-    <fdir1 value="1 0 0"/>
-    <maxVel>2.0</maxVel>
-   	<kp>10000.0</kp>
-	  <kd>100.0</kd>
+	<gazebo reference="right_track">
+		<material>Gazebo/FlatBlack</material>
+		<turnGravityOff>false</turnGravityOff>
+	</gazebo>
 
-    <material>Gazebo/DarkGrey</material>
-    <turnGravityOff>false</turnGravityOff>
-  </gazebo>
+	<!-- ################# WHEELS ################# -->
+	<gazebo reference="back_left_wheel">
+		<mu1 value="2.5" />
+		<mu2 value="0.9" />
+		<fdir1 value="1 0 0" />
+		<!-- kp>100000000.0</kp> <kd>100.0</kd -->
+		<kp>10000.0</kp>
+		<kd>100.0</kd>
+		<maxVel>2.0</maxVel>
 
-  <gazebo reference="front_left_wheel">
-    <mu1 value="2.5"/>
-    <mu2 value="0.9"/>
-    <fdir1 value="1 0 0"/>
-    <maxVel>2.0</maxVel>
-   	<kp>10000.0</kp>
-	<kd>100.0</kd>
+		<material>Gazebo/DarkGrey</material>
+		<turnGravityOff>false</turnGravityOff>
+	</gazebo>
 
-    <material>Gazebo/Grey</material>
-    <turnGravityOff>false</turnGravityOff>
-  </gazebo>
+	<!--gazebo reference="back_left_wheel"> <mu1 value="10.0"/> <mu2 value="0.5"/> <fdir1 value="1 0 0"/> <material>Gazebo/DarkGrey</material> <turnGravityOff>false</turnGravityOff> </gazebo -->
 
-  <gazebo reference="front_right_wheel">
-    <mu1 value="2.5"/>
-    <mu2 value="0.9"/>
-    <fdir1 value="1 0 0"/>
-    <maxVel>2.0</maxVel>
-   	<kp>10000.0</kp>
-	<kd>100.0</kd>
+	<gazebo reference="back_right_wheel">
+		<mu1 value="2.5" />
+		<mu2 value="0.9" />
+		<fdir1 value="1 0 0" />
+		<maxVel>2.0</maxVel>
+		<kp>10000.0</kp>
+		<kd>100.0</kd>
 
-    <material>Gazebo/Grey</material>
-    <turnGravityOff>false</turnGravityOff>
-  </gazebo>
-  
-<!-- ################# SENSORS ################# -->
-  <gazebo reference="hokuyo_tilt_laser_link">
-    <material>Gazebo/Grey</material>
-    <sensor type="ray" name="tilt_hokuyo_sensor">
-      <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
-      <update_rate>10</update_rate> <!-- rate of 10 for scan time ~ 100 ms  -->
-      <ray>
-        <scan>
-          <horizontal>
-           <samples>684</samples> <!-- 683 steps + 1 -->
-           <resolution>1</resolution>
-           <min_angle>-2.0943951</min_angle>   <!-- 240 deg (total) in the front -->
-           <max_angle>2.0943951</max_angle>
-          </horizontal>
-        </scan>
-        <range>
-          <min>0.10</min>
-          <max>5.0</max> <!-- 5.0 -->
-          <resolution>0.001</resolution> <!-- 0.001 -->
-        </range>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.0033</stddev> <!-- 0.0033 -->
-        </noise>
-      </ray>
-      <plugin name="tilt_scan_plugin" filename="libgazebo_ros_laser_2D.so">
-        <topicName>/tilt_scan</topicName>
-        <frameName>hokuyo_tilt_laser_link</frameName>
-        <time_increment>0.00009765739</time_increment> <!-- time between measurements --> <!-- 0.0667 sec /683 steps -->
-        <intensities>0</intensities> <!-- Whether or not the hokuyo laser returns intensity values. 0 means no intensities[] -->
-      </plugin>
-    </sensor>
-  </gazebo>
- 
-  <!-- hokuyo -->
-  <gazebo reference="hokuyo_base_laser_link">
-    <material>Gazebo/FlatBlack</material>
-    <sensor type="ray" name="base_hokuyo_sensor">
-      <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
-      <update_rate>10</update_rate> <!-- rate of 10 for scan time ~ 100 ms  -->
-      <ray>
-        <scan>
-          <horizontal>
-           <samples>684</samples> <!-- 683 steps + 1 -->
-           <resolution>1</resolution>
-           <min_angle>-2.0943951</min_angle>  <!-- 120+120 deg in the back-->
-           <max_angle>2.0943951</max_angle>
-          </horizontal>
-        </scan>
-        <range>
-          <min>0.10</min>
-          <max>5.0</max> <!-- 5.0 -->
-          <resolution>0.001</resolution> <!-- 0.001 -->
-        </range>
-        <noise>
-          <type>gaussian</type>
-          <!-- Noise parameters based on published spec for Hokuyo laser
-               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
-               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
-               reading. -->
-          <mean>0.0</mean>
-          <stddev>0.01</stddev> <!-- 0.01 -->
-        </noise>
-      </ray>
-      <plugin name="base_scan_plugin" filename="libgazebo_ros_laser_2D.so">  
-        <topicName>/base_scan</topicName>
-        <frameName>hokuyo_base_laser_link</frameName>
-        <time_increment>0.00009765739</time_increment> <!-- time between measurements --> <!-- 0.0667 sec /683 steps -->
-        <intensities>0</intensities> <!-- Whether or not the hokuyo laser returns intensity values. 0 means no intensities[] -->
-      </plugin>
-    </sensor>
-  </gazebo>
-  
-  <gazebo>
-    <plugin name="ros_imu" filename="libgazebo_ros_imu.so">
-       <robotNamespace>/guardian</robotNamespace>
-       <topicName>imu_data</topicName>
-		<bodyName>imu_link </bodyName>
-		<serviceName>/imu_service</serviceName>
-        <gaussianNoise>0.005</gaussianNoise>		
-    </plugin>
-  </gazebo>
-  
+		<material>Gazebo/DarkGrey</material>
+		<turnGravityOff>false</turnGravityOff>
+	</gazebo>
+
+	<gazebo reference="front_left_wheel">
+		<mu1 value="2.5" />
+		<mu2 value="0.9" />
+		<fdir1 value="1 0 0" />
+		<maxVel>2.0</maxVel>
+		<kp>10000.0</kp>
+		<kd>100.0</kd>
+
+		<material>Gazebo/Grey</material>
+		<turnGravityOff>false</turnGravityOff>
+	</gazebo>
+
+	<gazebo reference="front_right_wheel">
+		<mu1 value="2.5" />
+		<mu2 value="0.9" />
+		<fdir1 value="1 0 0" />
+		<maxVel>2.0</maxVel>
+		<kp>10000.0</kp>
+		<kd>100.0</kd>
+
+		<material>Gazebo/Grey</material>
+		<turnGravityOff>false</turnGravityOff>
+	</gazebo>
+
+	<!-- ################# SENSORS ################# -->
+	<gazebo reference="hokuyo_tilt_laser_link">
+		<material>Gazebo/Grey</material>
+		<sensor type="ray" name="tilt_hokuyo_sensor">
+			<pose>0 0 0 0 0 0</pose>
+			<visualize>true</visualize>
+			<update_rate>10</update_rate> <!-- rate of 10 for scan time ~ 100 ms -->
+			<ray>
+				<scan>
+					<horizontal>
+						<samples>684</samples> <!-- 683 steps + 1 -->
+						<resolution>1</resolution>
+						<min_angle>-2.0943951</min_angle>   <!-- 240 deg (total) in the front -->
+						<max_angle>2.0943951</max_angle>
+					</horizontal>
+				</scan>
+				<range>
+					<min>0.10</min>
+					<max>5.0</max> <!-- 5.0 -->
+					<resolution>0.001</resolution> <!-- 0.001 -->
+				</range>
+				<noise>
+					<type>gaussian</type>
+					<mean>0.0</mean>
+					<stddev>0.0033</stddev> <!-- 0.0033 -->
+				</noise>
+			</ray>
+			<plugin name="tilt_scan_plugin" filename="libgazebo_ros_laser_2D.so">
+				<topicName>/tilt_scan</topicName>
+				<frameName>hokuyo_tilt_laser_link</frameName>
+				<time_increment>0.00009765739</time_increment> <!-- time between measurements --> <!-- 0.0667 sec /683 steps -->
+				<intensities>0</intensities> <!-- Whether or not the hokuyo laser returns intensity values. 0 means no intensities[] -->
+			</plugin>
+		</sensor>
+	</gazebo>
+
+	<!-- hokuyo -->
+	<gazebo reference="hokuyo_base_laser_link">
+		<material>Gazebo/FlatBlack</material>
+		<sensor type="ray" name="base_hokuyo_sensor">
+			<pose>0 0 0 0 0 0</pose>
+			<visualize>true</visualize>
+			<update_rate>10</update_rate> <!-- rate of 10 for scan time ~ 100 ms -->
+			<ray>
+				<scan>
+					<horizontal>
+						<samples>684</samples> <!-- 683 steps + 1 -->
+						<resolution>1</resolution>
+						<min_angle>-2.0943951</min_angle>  <!-- 120+120 deg in the back -->
+						<max_angle>2.0943951</max_angle>
+					</horizontal>
+				</scan>
+				<range>
+					<min>0.10</min>
+					<max>5.0</max> <!-- 5.0 -->
+					<resolution>0.001</resolution> <!-- 0.001 -->
+				</range>
+				<noise>
+					<type>gaussian</type>
+					<!-- Noise parameters based on published spec for Hokuyo laser achieving "+-30mm" accuracy at range < 10m. A mean of 0.0m and stddev of 0.01m will put 99.7% of samples within 0.03m of the true reading. -->
+					<mean>0.0</mean>
+					<stddev>0.01</stddev> <!-- 0.01 -->
+				</noise>
+			</ray>
+			<plugin name="base_scan_plugin" filename="libgazebo_ros_laser_2D.so">
+				<topicName>/base_scan</topicName>
+				<frameName>hokuyo_base_laser_link</frameName>
+				<time_increment>0.00009765739</time_increment> <!-- time between measurements --> <!-- 0.0667 sec /683 steps -->
+				<intensities>0</intensities> <!-- Whether or not the hokuyo laser returns intensity values. 0 means no intensities[] -->
+			</plugin>
+		</sensor>
+	</gazebo>
+
+	<gazebo>
+		<plugin name="ros_imu" filename="libgazebo_ros_imu.so">
+			<robotNamespace>/guardian</robotNamespace>
+			<topicName>imu_data</topicName>
+			<bodyName>imu_link </bodyName>
+			<serviceName>/imu_service</serviceName>
+			<gaussianNoise>0.005</gaussianNoise>
+		</plugin>
+	</gazebo>
 </robot>

@@ -1,88 +1,85 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:property name="PI" value="3.1415926535897931"/>  
-  <xacro:property name="mass" value="0.25" />
-  
-   <xacro:property name="simple_wheel_length" value="0.05" />
-  <xacro:property name="simple_wheel_radius" value="0.15" />
+	<xacro:property name="PI" value="3.1415926535897931" />
+	<xacro:property name="mass" value="0.25" />
 
-<!--   <xacro:property name="wheel_origin_y" value="0.0" /> -->
-  <xacro:property name="wheel_offset_y" value="0.224" />
-  <xacro:property name="wheel_offset_z" value="0.081" /> <!-- 0.15-0.069 -->
-   
-  
-  <xacro:property name="wheel_joint_damping" value="0.0" />
-  <xacro:property name="wheel_joint_friction" value="0.0" />
+	<xacro:property name="simple_wheel_length" value="0.05" />
+	<xacro:property name="simple_wheel_radius" value="0.15" />
 
-  <xacro:property name="wheel_joint_effort_limit" value="200.0" />
-  <xacro:property name="wheel_joint_velocity_limit" value="200.0" />
-  <xacro:property name="wheel_mechanical_reduction" value="1.0" />
-  
-  <xacro:macro name="track_wheel" params="parent prefix origin_yaw wheel_offset_x reflect_y joint_yaw">
+	<!-- <xacro:property name="wheel_origin_y" value="0.0" /> -->
+	<xacro:property name="wheel_offset_y" value="0.224" />
+	<xacro:property name="wheel_offset_z" value="0.081" /> <!-- 0.15-0.069 -->
 
-	  <link name="${prefix}">
-		<inertial>
-		    <mass value="${mass}" /> <!-- 4.5 -->
-		    <origin xyz="0 0 0" rpy="0 0 ${origin_yaw}" /> 
-		    <inertia  ixx="0.059" ixy="0.0"  ixz="0.0"  iyy="0.055"  iyz="0.0"  izz="0.059" />
-<!-- 			  <inertia  ixx="0.00012411765597" ixy="0.0" ixz="0.0" -->
-<!--                         iyy="0.00015218160428" iyz="0.0" -->
-<!--                         izz="0.00011763977943" /> -->
-<!-- 				  <inertia  ixx="${(1/12)*mass*(3*simple_wheel_radius * simple_wheel_radius + simple_wheel_length*simple_wheel_length)}" ixy="0.0"  ixz="0.0"   -->
-<!-- 		      			    iyy="${(1/12)*mass*(3*simple_wheel_radius * simple_wheel_radius + simple_wheel_length*simple_wheel_length)}" iyz="0.0"   -->
-<!-- 		      			    izz="${0.5*mass*(simple_wheel_radius * simple_wheel_radius)}" />   wikipedia formula -->
-		</inertial>    
-<!-- 	    <visual> -->
-<!-- 	        <origin xyz="0 ${reflect_y * wheel_origin_y} 0" rpy="${PI/2} 0 ${origin_yaw}" /> -->
-<!-- 	        <geometry> -->
-<!-- 		 		 <cylinder length="${simple_wheel_length}" radius="${simple_wheel_radius}"/> -->
-<!-- 	        </geometry> -->
-<!-- 			<material name="black"> -->
-<!-- 	  			<color rgba="0.1 0.1 0.1 1"/> -->
-<!-- 	      	</material> -->
-<!-- 	    </visual>	     -->
-		<collision>
-	       <origin xyz="0 0 0" rpy="${PI/2} 0 ${origin_yaw}" />
-	       <geometry>
-	          <cylinder length="${simple_wheel_length}" radius="${simple_wheel_radius}"/>
-	       </geometry>
-<!-- 	       <material name="black"/> -->
-	    </collision> 	    
-	  </link>
 
-	  <joint name="joint_${prefix}" type="continuous">
-	    	<parent link="${parent}"/>
-		    <child link="${prefix}"/>
-		 	<origin xyz="${wheel_offset_x} ${reflect_y * wheel_offset_y} ${wheel_offset_z}" rpy="0 0 ${joint_yaw}" /> 
-		    <axis xyz="0 1 0" rpy="0 0 0" />
-		    <limit effort="${wheel_joint_effort_limit}" velocity="${wheel_joint_velocity_limit}"/>
-		    <joint_properties damping="${wheel_joint_damping}" friction="{wheel_joint_friction}"/>
-	  </joint>
-	  
-	 <transmission name="joint_${prefix}_trans">
-		 <type>transmission_interface/SimpleTransmission</type>
-	     <joint name="joint_${prefix}" />
-	     <actuator name="joint_${prefix}_motor">
-		    <hardwareInterface>EffortJointInterface</hardwareInterface>
-			<!-- hardwareInterface>VelocityJointInterface</hardwareInterface -->
-	        <mechanicalReduction>${wheel_mechanical_reduction}</mechanicalReduction>
-	     	<!-- motorTorqueConstant>1</motorTorqueConstant -->
-	     </actuator>
-  	 </transmission>
+	<xacro:property name="wheel_joint_damping" value="0.0" />
+	<xacro:property name="wheel_joint_friction" value="0.0" />
 
-	 <gazebo reference="${prefix}">
-<!-- 	    <material>Gazebo/Grey</material> -->
-	    <turnGravityOff>false</turnGravityOff>	    
-		<mu1 value="3"/>
-	    <mu2 value="0.9"/>
-	    <fdir1 value="1 0 0"/>
-	   	<kp value="10000000.0" />
-		<kd value="10.0"/>
-		
-	 </gazebo>	
+	<xacro:property name="wheel_joint_effort_limit" value="200.0" />
+	<xacro:property name="wheel_joint_velocity_limit" value="200.0" />
+	<xacro:property name="wheel_mechanical_reduction" value="1.0" />
 
-  </xacro:macro>
+	<xacro:macro name="track_wheel" params="parent prefix origin_yaw wheel_offset_x reflect_y joint_yaw">
 
+		<link name="${prefix}">
+			<inertial>
+				<mass value="${mass}" /> <!-- 4.5 -->
+				<origin xyz="0 0 0" rpy="0 0 ${origin_yaw}" />
+				<inertia ixx="0.059" ixy="0.0" ixz="0.0" iyy="0.055" iyz="0.0" izz="0.059" />
+				<!-- <inertia ixx="0.00012411765597" ixy="0.0" ixz="0.0" -->
+				<!-- iyy="0.00015218160428" iyz="0.0" -->
+				<!-- izz="0.00011763977943" /> -->
+				<!-- <inertia ixx="${(1/12)*mass*(3*simple_wheel_radius * simple_wheel_radius + simple_wheel_length*simple_wheel_length)}" ixy="0.0" ixz="0.0" -->
+				<!-- iyy="${(1/12)*mass*(3*simple_wheel_radius * simple_wheel_radius + simple_wheel_length*simple_wheel_length)}" iyz="0.0" -->
+				<!-- izz="${0.5*mass*(simple_wheel_radius * simple_wheel_radius)}" /> wikipedia formula -->
+			</inertial>
+			<!-- <visual> -->
+			<!-- <origin xyz="0 ${reflect_y * wheel_origin_y} 0" rpy="${PI/2} 0 ${origin_yaw}" /> -->
+			<!-- <geometry> -->
+			<!-- <cylinder length="${simple_wheel_length}" radius="${simple_wheel_radius}"/> -->
+			<!-- </geometry> -->
+			<!-- <material name="black"> -->
+			<!-- <color rgba="0.1 0.1 0.1 1"/> -->
+			<!-- </material> -->
+			<!-- </visual> -->
+			<collision>
+				<origin xyz="0 0 0" rpy="${PI/2} 0 ${origin_yaw}" />
+				<geometry>
+					<cylinder length="${simple_wheel_length}" radius="${simple_wheel_radius}" />
+				</geometry>
+				<!-- <material name="black"/> -->
+			</collision>
+		</link>
+
+		<joint name="joint_${prefix}" type="continuous">
+			<parent link="${parent}" />
+			<child link="${prefix}" />
+			<origin xyz="${wheel_offset_x} ${reflect_y * wheel_offset_y} ${wheel_offset_z}" rpy="0 0 ${joint_yaw}" />
+			<axis xyz="0 1 0" rpy="0 0 0" />
+			<limit effort="${wheel_joint_effort_limit}" velocity="${wheel_joint_velocity_limit}" />
+			<joint_properties damping="${wheel_joint_damping}" friction="{wheel_joint_friction}" />
+		</joint>
+
+		<transmission name="joint_${prefix}_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="joint_${prefix}" />
+			<actuator name="joint_${prefix}_motor">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<!-- hardwareInterface>VelocityJointInterface</hardwareInterface -->
+				<mechanicalReduction>${wheel_mechanical_reduction}</mechanicalReduction>
+				<!-- motorTorqueConstant>1</motorTorqueConstant -->
+			</actuator>
+		</transmission>
+
+		<gazebo reference="${prefix}">
+			<!-- <material>Gazebo/Grey</material> -->
+			<turnGravityOff>false</turnGravityOff>
+			<mu1 value="3" />
+			<mu2 value="0.9" />
+			<fdir1 value="1 0 0" />
+			<kp value="10000000.0" />
+			<kd value="10.0" />
+		</gazebo>
+	</xacro:macro>
 </robot>
 

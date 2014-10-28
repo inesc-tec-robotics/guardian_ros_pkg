@@ -1,86 +1,84 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="PI" value="3.1415926535897931" />
 
-  <xacro:property name="PI" value="3.1415926535897931"/>  
-  
-  <xacro:property name="mass" value="4.3"/>  
-  <xacro:property name="simple_wheel_length" value="0.115" />
-  <xacro:property name="simple_wheel_radius" value="0.185" />
+	<xacro:property name="mass" value="4.3" />
+	<xacro:property name="simple_wheel_length" value="0.1143" />
+	<xacro:property name="simple_wheel_radius" value="0.1850" />
 
-  <xacro:property name="wheel_origin_y" value="0.03" />
-  <xacro:property name="wheel_offset_x" value="0.300" />    
-  <xacro:property name="wheel_offset_y" value="0.306" /> 
-  
-  <xacro:property name="wheel_joint_damping" value="0.0" />
-  <xacro:property name="wheel_joint_friction" value="0.0" />
+	<xacro:property name="wheel_origin_y" value="0.03" />
+	<xacro:property name="wheel_offset_x" value="0.300" />
+	<xacro:property name="wheel_offset_y" value="0.306" />
 
-  <xacro:property name="wheel_joint_effort_limit" value="200.0" />
-  <xacro:property name="wheel_joint_velocity_limit" value="200.0" />
-  <xacro:property name="wheel_mechanical_reduction" value="1.0" />
-  
-  <xacro:macro name="wheel" params="parent prefix origin_yaw reflect_link_y reflect_joint_x reflect_joint_y">
+	<xacro:property name="wheel_joint_damping" value="0.0" />
+	<xacro:property name="wheel_joint_friction" value="0.0" />
 
-	  <link name="${prefix}_wheel">
-		    <inertial>
-		       <mass value="${mass}" />
-		       <origin xyz="0 0 0" rpy="0 0 ${origin_yaw}" /> 
-<!-- 		      <inertia  ixx="0.059" ixy="0.0"  ixz="0.0"  iyy="0.055"  iyz="0.0"  izz="0.059" />  original (robotnik)    -->
-		       <inertia  ixx="${(1/12)*mass*(3*simple_wheel_radius * simple_wheel_radius + simple_wheel_length*simple_wheel_length)}" ixy="0.0"  ixz="0.0"  
-		      			 iyy="${(1/12)*mass*(3*simple_wheel_radius * simple_wheel_radius + simple_wheel_length*simple_wheel_length)}" iyz="0.0"  
-		      			 izz="${0.5*mass*(simple_wheel_radius * simple_wheel_radius)}" /> 
-		    </inertial>
-		    
-	    <visual> <!-- visual wheels need offset because their origin is not in the center of the wheel -->
-	        <origin xyz="0 ${reflect_link_y * wheel_origin_y} 0" rpy="0 0 ${origin_yaw}" />
-	        <geometry>
-		 		<mesh filename="package://guardian_description/meshes/wheel.stl"/>
-	        </geometry>
-			<material name="black">
-	  			<color rgba="0.1 0.1 0.1 1"/>
-	      	</material>
-	    </visual>
-	    
-		<collision>
-	       <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
-	       <geometry>
-	          <cylinder length="${simple_wheel_length}" radius="${simple_wheel_radius}"/>
-	       </geometry>
-	       <material name="black"/>
-	    </collision>
-    
-	    
-	  </link>
+	<xacro:property name="wheel_joint_effort_limit" value="200.0" />
+	<xacro:property name="wheel_joint_velocity_limit" value="200.0" />
+	<xacro:property name="wheel_mechanical_reduction" value="1.0" />
 
-	  <joint name="joint_${prefix}_wheel" type="continuous">
-	    	<parent link="${parent}"/>
-		    <child link="${prefix}_wheel"/>
-		 	  <origin xyz="${reflect_joint_x * wheel_offset_x} ${reflect_joint_y * wheel_offset_y} 0" rpy="0 0 0" /> 
-		    <axis xyz="0 1 0" rpy="0 0 0" />
-		    <limit effort="${wheel_joint_effort_limit}" velocity="${wheel_joint_velocity_limit}"/>
-		    <joint_properties damping="${wheel_joint_damping}" friction="{wheel_joint_friction}"/>
-	  </joint>
-	  
-	 <transmission name="joint_${prefix}_trans">
-		 <type>transmission_interface/SimpleTransmission</type>
-	     <joint name="joint_${prefix}_wheel" />
-	     <actuator name="joint_${prefix}_motor">
-		    <hardwareInterface>EffortJointInterface</hardwareInterface>
-			<!-- hardwareInterface>VelocityJointInterface</hardwareInterface -->
-	        <mechanicalReduction>${wheel_mechanical_reduction}</mechanicalReduction>
-	     	<!-- motorTorqueConstant>1</motorTorqueConstant -->
-	     </actuator>
-  	 </transmission>
+	<xacro:macro name="wheel" params="parent prefix origin_yaw reflect_link_y reflect_joint_x reflect_joint_y material">
+		<link name="${prefix}_wheel">
+			<inertial>
+				<mass value="${mass}" />
+				<origin xyz="0 0 0" rpy="0 0 ${origin_yaw}" />
+				<!-- <inertia ixx="0.059" ixy="0.0" ixz="0.0" iyy="0.055" iyz="0.0" izz="0.059" /> original (robotnik) -->
+				<inertia ixx="${(1/12)*mass*(3*simple_wheel_radius * simple_wheel_radius + simple_wheel_length*simple_wheel_length)}" ixy="0.0" ixz="0.0"
+					iyy="${(1/12)*mass*(3*simple_wheel_radius * simple_wheel_radius + simple_wheel_length*simple_wheel_length)}" iyz="0.0" izz="${0.5*mass*(simple_wheel_radius * simple_wheel_radius)}" />
+			</inertial>
 
-	 <gazebo reference="${prefix}_wheel">
-	    <material>Gazebo/DarkGrey</material>
-	    <turnGravityOff>false</turnGravityOff>	 
-		<mu1 value="3"/>
-	    <mu2 value="0.9"/>
-	    <fdir1 value="1 0 0"/>
-	   	<kp value="10000000.0" />
-		<kd value="10.0"/>
-	 </gazebo>	
-	 
-  </xacro:macro>
+			<visual> <!-- visual wheels need offset because their origin is not in the center of the wheel -->
+				<origin xyz="0 ${reflect_link_y * wheel_origin_y} 0" rpy="0 0 ${origin_yaw}" />
+				<geometry>
+					<mesh filename="package://guardian_description/meshes/wheel.stl" />
+				</geometry>
+			</visual>
+
+			<collision>
+				<origin xyz="0 ${reflect_link_y * -0.012} 0" rpy="${PI/2} 0 0" /> <geometry> <cylinder length="${simple_wheel_length}" radius="${simple_wheel_radius}"/> </geometry>
+<!-- 				<origin xyz="0 ${reflect_link_y * wheel_origin_y} 0" rpy="0 0 ${origin_yaw}" /> <geometry> <mesh filename="package://guardian_description/meshes/wheel.stl" /> </geometry> -->
+			</collision>
+		</link>
+
+		<joint name="joint_${prefix}_wheel" type="continuous">
+			<parent link="${parent}" />
+			<child link="${prefix}_wheel" />
+			<origin xyz="${reflect_joint_x * wheel_offset_x} ${reflect_joint_y * wheel_offset_y} 0" rpy="0 0 0" />
+			<axis xyz="0 1 0" rpy="0 0 0" />
+			<limit effort="${wheel_joint_effort_limit}" velocity="${wheel_joint_velocity_limit}" />
+			<joint_properties damping="${wheel_joint_damping}" friction="{wheel_joint_friction}" />
+		</joint>
+
+		<transmission name="joint_${prefix}_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="joint_${prefix}_wheel" />
+			<actuator name="joint_${prefix}_motor">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<!-- hardwareInterface>VelocityJointInterface</hardwareInterface -->
+				<mechanicalReduction>${wheel_mechanical_reduction}</mechanicalReduction>
+				<!-- motorTorqueConstant>1</motorTorqueConstant -->
+			</actuator>
+		</transmission>
+
+		<gazebo reference="${prefix}_wheel">
+			<material>${material}</material>
+			<turnGravityOff>false</turnGravityOff>
+			<fdir1 value="1 0 0" /> <!-- direction of mu1 -->
+			
+			<maxVel>2.0</maxVel>
+			<maxContacts>3</maxContacts>
+			<minDepth>0.0025</minDepth>
+			<mu1 value="0.55" /> <!-- [0..1] | friction coefficient x -->
+			<mu2 value="0.35" /> <!-- [0..1] | friction coefficient y -->
+			<kp value="95000" /> <!-- stiffness -->
+			<kd value="300" /> <!-- damping -->
+			
+			<!-- <mu1 value="0.55" />
+			<mu2 value="0.35" />
+			<kp value="95000.0" />
+			<kd value="300.0" /> -->
+			<maxVel>2.0</maxVel>
+		</gazebo>
+	</xacro:macro>
 </robot>
 

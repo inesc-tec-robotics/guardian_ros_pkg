@@ -1,47 +1,46 @@
 <?xml version="1.0"?>
-<robot name="guardian" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
-
+<robot name="guardian" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:property name="wheelSeparation" value="0.612" />
 	<xacro:property name="wheelDiameter" value="0.37" />
 
 	<xacro:include filename="$(find guardian_description)/urdf/guardian_base.urdf.xacro" />
-	<xacro:include filename="$(find guardian_description)/urdf/track.urdf.xacro" /> 
-	<xacro:include filename="$(find guardian_description)/urdf/wheel.urdf.xacro" /> 
+	<xacro:include filename="$(find guardian_description)/urdf/track.urdf.xacro" />
+	<xacro:include filename="$(find guardian_description)/urdf/wheel.urdf.xacro" />
 
-	<!-- ###### BASE ######-->
-	<guardian_base  base_footprint_z="0.18" />
-	
-	<!-- ###### TRACKS ######-->
+	<!-- ###### BASE ###### -->
+	<guardian_base base_footprint_z="0.18" />
+
+	<!-- ###### TRACKS ###### -->
 	<track parent="base_link" prefix="left_track" joint_yaw="${PI}" />
-	<track parent="base_link" prefix="right_track" joint_yaw="0"/>
+	<track parent="base_link" prefix="right_track" joint_yaw="0" />
 	<!-- track doesn't have collision, but the chassis has a collision bounding box -->
-	
-	<!-- ###### WHEELS ######-->
-	<wheel parent="base_link" prefix="back_left" origin_yaw="${PI}" reflect_link_y="-1" reflect_joint_x="-1" reflect_joint_y="1" />
-	<wheel parent="base_link" prefix="back_right" origin_yaw="0" reflect_link_y="1" reflect_joint_x="-1" reflect_joint_y="-1" />
-	<wheel parent="base_link" prefix="front_left" origin_yaw="${PI}" reflect_link_y="-1" reflect_joint_x="1" reflect_joint_y="1" />
-	<wheel parent="base_link" prefix="front_right" origin_yaw="0" reflect_link_y="1" reflect_joint_x="1" reflect_joint_y="-1" />
 
-    <!-- ###### WHEELS PLUGINS ######-->  
-    <gazebo>
-	    <plugin name="skid_steer_drive_controller" filename="libskid_steer_plugin.so"> <!-- adapted from gazebo_ros_skid_steer_drive -->
-		    <updateRate>100.0</updateRate>
-		    <robotNamespace>/guardian</robotNamespace>
-		    <leftFrontJoint>joint_front_left_wheel</leftFrontJoint>  
-		    <rightFrontJoint>joint_front_right_wheel</rightFrontJoint>
-		    <leftRearJoint>joint_back_left_wheel</leftRearJoint>
-		    <rightRearJoint>joint_back_right_wheel</rightRearJoint>
-		    <wheelSeparation>${wheelSeparation}</wheelSeparation> 
-		    <wheelDiameter>${wheelDiameter}</wheelDiameter> 
-		    <robotBaseFrame>base_footprint</robotBaseFrame>
-		    <torque>70</torque>
-		    <topicName>cmd_vel</topicName> <!-- there is no TopicName element in gazebo_ros_skid_steer_drive plugin   -->
-		    <commandTopic>cmd_vel</commandTopic>
-		    <odometryTopic>odom</odometryTopic> <!-- publishes OdomGazebo because odom is already being published by guardian_robot_pose --> 
-		    <odometryFrame>odom</odometryFrame>
-		    <broadcastTF>1</broadcastTF> <!-- defaults to false -->
-	    </plugin>
-  	</gazebo>
-  
+	<!-- ###### WHEELS ###### -->
+	<wheel parent="base_link" prefix="back_left" origin_yaw="${PI}" reflect_link_y="-1" reflect_joint_x="-1" reflect_joint_y="1" material="Gazebo/FlatBlack" />
+	<wheel parent="base_link" prefix="back_right" origin_yaw="0" reflect_link_y="1" reflect_joint_x="-1" reflect_joint_y="-1" material="Gazebo/FlatBlack" />
+	<wheel parent="base_link" prefix="front_left" origin_yaw="${PI}" reflect_link_y="-1" reflect_joint_x="1" reflect_joint_y="1" material="Gazebo/DarkGrey" />
+	<wheel parent="base_link" prefix="front_right" origin_yaw="0" reflect_link_y="1" reflect_joint_x="1" reflect_joint_y="-1" material="Gazebo/DarkGrey" />
+
+	<!-- ###### WHEELS PLUGINS ###### -->
+	<gazebo>
+		<plugin name="skid_steer_drive_controller" filename="libskid_steer_plugin.so"> <!-- adapted from gazebo_ros_skid_steer_drive -->
+			<updateRate>100.0</updateRate>
+			<robotNamespace>/guardian</robotNamespace>
+			<leftFrontJoint>joint_front_left_wheel</leftFrontJoint>
+			<rightFrontJoint>joint_front_right_wheel</rightFrontJoint>
+			<leftRearJoint>joint_back_left_wheel</leftRearJoint>
+			<rightRearJoint>joint_back_right_wheel</rightRearJoint>
+			<wheelSeparation>${wheelSeparation}</wheelSeparation>
+			<wheelDiameter>${wheelDiameter}</wheelDiameter>
+			<robotBaseFrame>base_footprint</robotBaseFrame>
+			<torque>70</torque> <!-- 20 -->
+			<topicName>cmd_vel</topicName> <!-- there is no TopicName element in gazebo_ros_skid_steer_drive plugin -->
+			<commandTopic>cmd_vel</commandTopic>
+			<odometryTopic>odom_gazebo</odometryTopic> <!-- publishes OdomGazebo because odom is already being published by guardian_robot_pose -->
+			<odometryFrame>odom_gazebo</odometryFrame>
+			<broadcastTF>0</broadcastTF> <!-- defaults to false -->
+			<publishOdometryMsg>0</publishOdometryMsg>
+		</plugin>
+	</gazebo>
 </robot>
 

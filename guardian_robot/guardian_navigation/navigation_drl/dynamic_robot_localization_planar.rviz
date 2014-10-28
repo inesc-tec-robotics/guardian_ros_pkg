@@ -448,7 +448,7 @@ Visualization Manager:
           Size (Pixels): 3
           Size (m): 0.01
           Style: Points
-          Topic: /dynamic_robot_localization/aligned_pointcloud
+          Topic: /dynamic_robot_localization/aligned_pointcloud_inliers
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -591,7 +591,7 @@ Visualization Manager:
           Color: 0; 158; 0
           Enabled: true
           Name: Simulation PoseArray
-          Topic: /dynamic_robot_localization/simulation_poses
+          Topic: /dynamic_robot_localization/ground_truth_poses
           Value: true
         - Arrow Length: 0.012
           Class: rviz/PoseArray
