@@ -68,7 +68,7 @@
 	        </noise>
 	      </ray>
 	      <plugin name="${prefix}_plugin" filename="libgazebo_ros_laser_2D.so">  
-	        <topicName>/base_scan</topicName>
+	        <topicName>/hokuyo_back_scan</topicName>
 	        <frameName>hokuyo_${prefix}_link</frameName>
 	        <time_increment>0.00009765739</time_increment> <!-- time between measurements --> <!-- 0.0667 sec /683 steps -->
 	        <intensities>0</intensities> <!-- Whether or not the hokuyo laser returns intensity values. 0 means no intensities[] -->

@@ -43,8 +43,8 @@
 			<commandTopic>cmd_vel</commandTopic>
 			<odometryTopic>odom</odometryTopic>
 			<odometryFrame>odom</odometryFrame>
-			<publishOdometryTf>1</publishOdometryTf>
-			<publishOdometryMsg>1</publishOdometryMsg>
+			<publishOdometryTf>0</publishOdometryTf>
+			<publishOdometryMsg>0</publishOdometryMsg>
 		</plugin>
 	</gazebo>
 </robot>

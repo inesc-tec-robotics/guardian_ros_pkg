@@ -4,6 +4,15 @@
 	<arg name="robot_initial_y" default="0.0" />
 	<arg name="robot_initial_yaw" default="0.0" />
 
+		<arg name="map_file" default="$(find guardian_navigation)/maps/ship_interior/ship_interior.yaml" />
+<!-- 	<arg name="map_file" default="$(find guardian_navigation)/maps/astar/astar_10cm.yaml" /> -->
+<!-- 	<arg name="map_file" default="$(find guardian_navigation)/maps/astar/lab_slam.yaml" /> -->
+
+	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+		<param name="frame_id" value="map" />
+	</node>
+	
+	
 	<node pkg="fake_localization" type="fake_localization" name="fake_localization" output="screen">
 		<!-- <remap from="base_pose_ground_truth" to="odom_ground_truth" /> -->
 		<param name="odom_frame_id" value="odom" />
