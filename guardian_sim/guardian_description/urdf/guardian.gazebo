@@ -138,7 +138,7 @@
 				</noise>
 			</ray>
 			<plugin name="tilt_scan_plugin" filename="libgazebo_ros_laser_2D.so">
-				<topicName>/scan</topicName>
+				<topicName>/front_tilt_scan</topicName>
 				<frameName>hokuyo_tilt_laser_link</frameName>
 				<time_increment>0.00009765739</time_increment> <!-- time between measurements --> <!-- 0.0667 sec /683 steps -->
 				<intensities>0</intensities> <!-- Whether or not the hokuyo laser returns intensity values. 0 means no intensities[] -->
@@ -175,7 +175,7 @@
 				</noise>
 			</ray>
 			<plugin name="base_scan_plugin" filename="libgazebo_ros_laser_2D.so">
-				<topicName>/hokuyo_back_scan</topicName>
+				<topicName>/back_horizontal_scan</topicName>
 				<frameName>hokuyo_base_laser_link</frameName>
 				<time_increment>0.00009765739</time_increment> <!-- time between measurements --> <!-- 0.0667 sec /683 steps -->
 				<intensities>0</intensities> <!-- Whether or not the hokuyo laser returns intensity values. 0 means no intensities[] -->

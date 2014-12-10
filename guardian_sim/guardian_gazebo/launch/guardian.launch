@@ -7,8 +7,16 @@
 	<arg name="world_model" default="-d $(find guardian_gazebo)/worlds/guardian.world" />
 	<!-- <arg name="world_model" default="-d $(find guardian_gazebo)/worlds/wheel_calibration.world" /> -->
 	<arg name="use_tilt_on_front_laser" default="false" />
-	<arg name="publish_odom_on_guardian_robot_control" default="true" />
-	<arg name="publish_odom_tf_on_guardian_robot_control" default="true" />
+	<arg name="use_wheels" default="1" />
+	
+	<arg name="publish_odom_on_guardian_robot_control" default="true" if="$(arg use_wheels)" />
+	<arg name="publish_odom_on_guardian_robot_control" default="false" unless="$(arg use_wheels)" />
+	<arg name="publish_odom_tf_on_guardian_robot_control" default="true" if="$(arg use_wheels)" />
+	<arg name="publish_odom_tf_on_guardian_robot_control" default="false" unless="$(arg use_wheels)" />
+	<arg name="publish_odom_on_multi_wheel_plugin" value="0" if="$(arg publish_odom_on_guardian_robot_control)" />
+	<arg name="publish_odom_on_multi_wheel_plugin" value="1" unless="$(arg publish_odom_on_guardian_robot_control)" />
+	<arg name="publish_odom_tf_on_multi_wheel_plugin" value="0" if="$(arg publish_odom_tf_on_guardian_robot_control)" />
+	<arg name="publish_odom_tf_on_multi_wheel_plugin" value="1" unless="$(arg publish_odom_tf_on_guardian_robot_control)" />
 	<arg name="robot_initial_x" default="-3.0" />
 	<arg name="robot_initial_y" default="0.0" />
 	<arg name="robot_initial_yaw" default="0.0" />
@@ -29,8 +37,8 @@
 	<!-- Load the URDF into the ROS Parameter Server -->
 <!-- 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian.urdf.xacro'" /> -->
 <!-- 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_simple_collision.urdf.xacro'" /> -->
-<!-- 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_wheels.urdf.xacro'" /> -->
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_tracks.urdf.xacro'" />
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_wheels.urdf.xacro'" if="$(arg use_wheels)" />
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_tracks.urdf.xacro' publishOdometryMsg:=$(arg publish_odom_on_multi_wheel_plugin) publishOdometryTf:=$(arg publish_odom_tf_on_multi_wheel_plugin)" unless="$(arg use_wheels)" />
 
 
 	<!-- Call a python script to the run a service call to gazebo_ros to spawn a URDF robot -->	

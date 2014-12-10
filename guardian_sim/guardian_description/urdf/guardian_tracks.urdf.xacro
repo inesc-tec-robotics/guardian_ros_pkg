@@ -38,13 +38,12 @@
 			<wheelSeparation>0.448</wheelSeparation>
 			<wheelDiameter>0.3</wheelDiameter>
 			<torque>20</torque>
-			<robotNamespace>/guardian</robotNamespace>
 			<robotBaseFrame>base_footprint</robotBaseFrame>
-			<commandTopic>cmd_vel</commandTopic>
-			<odometryTopic>odom</odometryTopic>
+			<commandTopic>/guardian/cmd_vel</commandTopic>
+			<odometryTopic>/guardian/odom</odometryTopic>
 			<odometryFrame>odom</odometryFrame>
-			<publishOdometryTf>0</publishOdometryTf>
-			<publishOdometryMsg>0</publishOdometryMsg>
+			<publishOdometryTf>$(arg publishOdometryTf)</publishOdometryTf>
+			<publishOdometryMsg>$(arg publishOdometryMsg)</publishOdometryMsg>
 		</plugin>
 	</gazebo>
 </robot>

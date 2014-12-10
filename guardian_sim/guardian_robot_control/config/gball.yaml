@@ -10,7 +10,4 @@ guardian_robot_control:
       # Length 
      guardian_wheelbase: 0.570
       # Width 
-     guardian_trackwidth: 0.570 
-
-
-     publish_odom_tf: true 
+     guardian_trackwidth: 0.570

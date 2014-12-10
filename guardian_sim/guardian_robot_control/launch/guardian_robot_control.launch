@@ -6,8 +6,8 @@
 	<rosparam command="load" file="$(find guardian_robot_control)/config/guardian.yaml" />
 	
 	<node name="guardian_robot_control" pkg="guardian_robot_control" type="guardian_robot_control" output="screen" >
-		<param name="publish_odom" value="$(arg publish_odom)" />
-		<param name="publish_odom_tf" value="$(arg publish_odom_tf)" />
+		<param name="publish_odom" type="bool" value="$(arg publish_odom)" />
+		<param name="publish_odom_tf" type="bool" value="$(arg publish_odom_tf)" />
 	</node>	
 </launch>
 

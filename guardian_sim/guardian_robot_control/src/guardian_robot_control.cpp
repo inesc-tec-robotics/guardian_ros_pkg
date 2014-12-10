@@ -218,7 +218,8 @@ GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
   node_handle_(h), private_node_handle_("~"),
   desired_freq_(100),
   freq_diag_(diagnostic_updater::FrequencyStatusParam(&desired_freq_, &desired_freq_, 0.05)   ),
-  command_freq_("Command frequency check", boost::bind(&GuardianControllerClass::check_command_subscriber, this, _1))
+  command_freq_("Command frequency check", boost::bind(&GuardianControllerClass::check_command_subscriber, this, _1)),
+  publish_odom_tf_(false)
   {
 
   // /guardian/joint_blw_velocity_controller/joint
@@ -300,7 +301,7 @@ GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
   // Imu variables
   ang_vel_x_ = 0.0; ang_vel_y_ = 0.0; ang_vel_z_ = 0.0;
   lin_acc_x_ = 0.0; lin_acc_y_ = 0.0; lin_acc_z_ = 0.0;
-  orientation_x_ = 0.0; orientation_y_ = 0.0; orientation_z_ = 0.0; orientation_w_ = 0.0;
+  orientation_x_ = 0.0; orientation_y_ = 0.0; orientation_z_ = 0.0; orientation_w_ = 1.0;
 
   // Active kinematic mode
   active_kinematic_mode_ = SKID_STEERING;
