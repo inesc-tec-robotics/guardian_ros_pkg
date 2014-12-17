@@ -13,7 +13,7 @@
 	<gazebo>
 		<plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
 			<bodyName>base_footprint</bodyName>
-			<topicName>base_pose_ground_truth</topicName>
+			<topicName>/guardian/base_pose_ground_truth</topicName>
 			<frameName>map</frameName>
 			<updateRate>0.0</updateRate> <!-- max possible rate -->
 		</plugin>

@@ -5,9 +5,9 @@
     <gazebo reference="camera_link">  
       <sensor type="depth" name="camera">
         <always_on>true</always_on>
-        <update_rate>30.0</update_rate>
+        <update_rate>30.0</update_rate> <!-- specs -> 30 -->
         <camera>
-          <horizontal_fov>${57.0*M_PI/180.0}</horizontal_fov>
+          <horizontal_fov>${43*M_PI/180.0}</horizontal_fov> <!-- specs: 43.0*M_PI/180.0 -->
           <!-- <vertical_fov>${43.0*M_PI/180.0}</vertical_fov> -->
           <image>
             <format>R8G8B8</format>
@@ -15,14 +15,14 @@
             <height>480</height>
           </image>
           <clip>
-            <near>0.8</near>
-            <far>4.0</far>
+            <near>0.8</near> <!-- specs -> 0.8 -->
+            <far>4.0</far> <!-- specs -> 4.0 -->
           </clip>
         </camera>
         <plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
           <cameraName>camera</cameraName>
           <alwaysOn>true</alwaysOn>
-          <updateRate>30</updateRate>
+          <updateRate>30.0</updateRate> <!-- specs -> 30 -->
           <imageTopicName>rgb/image_raw</imageTopicName>
           <depthImageTopicName>depth/image_raw</depthImageTopicName>
           <pointCloudTopicName>depth/points</pointCloudTopicName>
@@ -35,7 +35,7 @@
           <distortion_k3>0.0</distortion_k3>
           <distortion_t1>0.0</distortion_t1>
           <distortion_t2>0.0</distortion_t2>
-          <pointCloudCutoff>0.8</pointCloudCutoff>
+          <pointCloudCutoff>0.8</pointCloudCutoff> <!-- specs -> 0.8 -->
         </plugin>
       </sensor>
     </gazebo>

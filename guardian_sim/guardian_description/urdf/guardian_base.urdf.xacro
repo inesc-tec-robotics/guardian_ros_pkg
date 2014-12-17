@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:include filename="$(find guardian_description)/urdf/guardian_base.gazebo" />
-	<!-- <xacro:include filename="$(find guardian_description)/urdf/sensors/kinect.urdf.xacro"/> -->
+	<xacro:include filename="$(find guardian_description)/urdf/sensors/kinect.urdf.xacro"/>
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/imu.urdf.xacro" />
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/hokuyo_front.urdf.xacro" />
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/hokuyo_back.urdf.xacro" />
@@ -56,7 +56,7 @@
 		</link>
 
 		<!-- ################# SENSORS ################# -->
-		<!-- <sensor_kinect parent="base_link"/> -->
+		<sensor_kinect parent="base_link"/>
 		<sensor_imu parent="base_link" /> <!-- guardian_robot_control uses imu to update odometry -->
 
 		<sensor_hokuyo_front parent="base_link" prefix="tilt_laser" visualize="true" origin_x="0.48856" origin_z="0.24" origin_yaw="0" />

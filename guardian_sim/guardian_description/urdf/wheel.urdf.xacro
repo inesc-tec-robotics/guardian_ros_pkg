@@ -63,21 +63,20 @@
 		<gazebo reference="${prefix}_wheel">
 			<material>${material}</material>
 			<turnGravityOff>false</turnGravityOff>
-			<fdir1 value="1 0 0" /> <!-- direction of mu1 -->
-			
-			<maxVel>2.0</maxVel>
-			<maxContacts>3</maxContacts>
+			<!-- <fdir1 value="1 0 0" /> --> <!-- direction of mu1 -->
+
+			<maxContacts>6</maxContacts>
 			<minDepth>0.0025</minDepth>
-			<mu1 value="0.55" /> <!-- [0..1] | friction coefficient x -->
-			<mu2 value="0.35" /> <!-- [0..1] | friction coefficient y -->
-			<kp value="95000" /> <!-- stiffness -->
-			<kd value="300" /> <!-- damping -->
-			
+			<mu1 value="0.85" /> <!-- [0..1] | friction coefficient x -->
+			<mu2 value="0.75" /> <!-- [0..1] | friction coefficient y -->
+			<kp value="55000" /> <!-- stiffness -->
+			<kd value="350" /> <!-- damping -->
+
 			<!-- <mu1 value="0.55" />
 			<mu2 value="0.35" />
 			<kp value="95000.0" />
 			<kd value="300.0" /> -->
-			<maxVel>2.0</maxVel>
+			<!-- <maxVel>2.0</maxVel> -->
 		</gazebo>
 	</xacro:macro>
 </robot>

@@ -33,7 +33,7 @@
 			<wheelSeparation>${wheelSeparation}</wheelSeparation>
 			<wheelDiameter>${wheelDiameter}</wheelDiameter>
 			<robotBaseFrame>base_footprint</robotBaseFrame>
-			<torque>70</torque> <!-- 20 -->
+			<torque>200</torque> <!-- 20 -->
 			<topicName>cmd_vel</topicName> <!-- there is no TopicName element in gazebo_ros_skid_steer_drive plugin -->
 			<commandTopic>cmd_vel</commandTopic>
 			<odometryTopic>odom_gazebo</odometryTopic> <!-- publishes OdomGazebo because odom is already being published by guardian_robot_pose -->

@@ -1,82 +1,73 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- Robot parameters -->
-  <xacro:property name="PI" value="3.1415926535897931"/>
-  <xacro:property name="ptz_joint_effort_limit" value="100.0" /> 
-  <xacro:property name="ptz_joint_velocity_limit" value="100.0"/>  
-  <xacro:property name="ptz_joint_friction" value="0.1" />
-  <xacro:property name="ptz_joint_damping" value="0.1" />
-  <xacro:property name="ptz_mechanical_reduction" value="1.0" />
-
-
-  <xacro:macro name="sensor_hokuyo_back" params="parent prefix visualize origin_x origin_z origin_yaw">
-
- 	<!-- joint -->
-	  <joint name="hokuyo_${prefix}_joint" type="fixed">
-	     <axis xyz="0 1 0" />
-	     <origin xyz="${origin_x} 0 ${origin_z}" rpy="0 0 ${origin_yaw}" /> 
-	     <parent link="${parent}"/>
-	     <child link="hokuyo_${prefix}_link"/>
-	  </joint>
-
- 	<!-- link -->
-	  <link name="hokuyo_${prefix}_link">
-	     <inertial>
-	       <mass value="0.1" />
-	       <origin xyz="0 0 0" rpy="0 0 0" />
-	       <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
-	    </inertial>
-<!--	    
-		<inertial>
-	       <mass value="1e-5" />
-     	   <origin xyz="0 0 0" rpy="0 0 0"/>
-      	   <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-    	</inertial> 
--->
-	  </link>
-
-	<!-- gazebo -->
-	  <gazebo reference="hokuyo_${prefix}_link">
-	    <material>Gazebo/FlatBlack</material>
-	    <sensor type="ray" name="${prefix}_sensor">
-	      <pose>0 0 0 0 0 0</pose>
-	      <visualize>${visualize}</visualize>
-	      <update_rate>10</update_rate> <!-- rate of 10 for scan time ~ 100 ms  -->
-	      <ray>
-	        <scan>
-	          <horizontal>
-	           <samples>684</samples> <!-- 683 steps + 1 -->
-	           <resolution>1</resolution>
-	           <min_angle>-2.0943951</min_angle>  <!-- 120+120 deg in the back-->
-	           <max_angle>2.0943951</max_angle>
-	          </horizontal>
-	        </scan>
-	        <range>
-	          <min>0.10</min>
-	          <max>5.0</max> <!-- 5.0 -->
-	          <resolution>0.001</resolution> <!-- 0.001 -->
-	        </range>
-	        <noise>
-	          <type>gaussian</type>
-	          <!-- Noise parameters based on published spec for Hokuyo laser
-	               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
-	               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
-	               reading. -->
-	          <mean>0.0</mean>
-	          <stddev>0.01</stddev> <!-- 0.01 -->
-	        </noise>
-	      </ray>
-	      <plugin name="${prefix}_plugin" filename="libgazebo_ros_laser_2D.so">  
-	        <topicName>/back_horizontal_scan</topicName>
-	        <frameName>hokuyo_${prefix}_link</frameName>
-	        <time_increment>0.00009765739</time_increment> <!-- time between measurements --> <!-- 0.0667 sec /683 steps -->
-	        <intensities>0</intensities> <!-- Whether or not the hokuyo laser returns intensity values. 0 means no intensities[] -->
-	      </plugin>
-	    </sensor>
-	  </gazebo>
+	<!-- Robot parameters -->
+	<xacro:property name="PI" value="3.1415926535897931" />
+	<xacro:property name="ptz_joint_effort_limit" value="100.0" />
+	<xacro:property name="ptz_joint_velocity_limit" value="100.0" />
+	<xacro:property name="ptz_joint_friction" value="0.1" />
+	<xacro:property name="ptz_joint_damping" value="0.1" />
+	<xacro:property name="ptz_mechanical_reduction" value="1.0" />
 
 
-  </xacro:macro>
+	<xacro:macro name="sensor_hokuyo_back" params="parent prefix visualize origin_x origin_z origin_yaw">
+
+		<!-- joint -->
+		<joint name="hokuyo_${prefix}_joint" type="fixed">
+			<axis xyz="0 1 0" />
+			<origin xyz="${origin_x} 0 ${origin_z}" rpy="0 0 ${origin_yaw}" />
+			<parent link="${parent}" />
+			<child link="hokuyo_${prefix}_link" />
+		</joint>
+
+		<!-- link -->
+		<link name="hokuyo_${prefix}_link">
+			<inertial>
+				<mass value="0.1" />
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+			</inertial>
+			<!-- <inertial> <mass value="1e-5" /> <origin xyz="0 0 0" rpy="0 0 0"/> <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" /> </inertial> -->
+		</link>
+
+		<!-- gazebo -->
+		<gazebo reference="hokuyo_${prefix}_link">
+			<material>Gazebo/FlatBlack</material>
+			<sensor type="ray" name="${prefix}_sensor">
+				<pose>0 0 0 0 0 0</pose>
+				<visualize>${visualize}</visualize>
+				<update_rate>10</update_rate> <!-- rate of 10 for scan time ~ 100 ms -->
+				<ray>
+					<scan>
+						<horizontal>
+							<samples>684</samples> <!-- 683 steps + 1 -->
+							<resolution>1</resolution>
+							<min_angle>-2.0943951</min_angle>  <!-- 120+120 deg in the back -->
+							<max_angle>2.0943951</max_angle>
+						</horizontal>
+					</scan>
+					<range>
+						<min>0.10</min>
+						<max>5.0</max> <!-- 5.0 -->
+						<resolution>0.001</resolution> <!-- 0.001 -->
+					</range>
+					<noise>
+						<type>gaussian</type>
+						<!-- Noise parameters based on published spec for Hokuyo laser achieving "+-30mm" accuracy at range < 10m. A mean of 0.0m and stddev of 0.01m will put 99.7% of samples within 0.03m of the true reading. -->
+						<mean>0.0</mean>
+						<stddev>0.01</stddev> <!-- 0.01 -->
+					</noise>
+				</ray>
+				<plugin name="${prefix}_plugin" filename="libgazebo_ros_laser_2D.so">
+					<topicName>/guardian/laser_horizontal_back</topicName>
+					<frameName>hokuyo_${prefix}_link</frameName>
+					<time_increment>0.00009765739</time_increment> <!-- time between measurements --> <!-- 0.0667 sec /683 steps -->
+					<intensities>0</intensities> <!-- Whether or not the hokuyo laser returns intensity values. 0 means no intensities[] -->
+				</plugin>
+			</sensor>
+		</gazebo>
+
+
+	</xacro:macro>
 </robot>
 

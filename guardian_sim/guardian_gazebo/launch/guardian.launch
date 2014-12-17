@@ -22,7 +22,6 @@
 	<arg name="robot_initial_yaw" default="0.0" />
 	
 
-	<!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
 		<!--arg name="world_name" value="$(find guardian_navigation)/worlds/guardian_navigation.world" / -->
 		<arg name="world_name" value="$(arg world_model)" />
@@ -33,15 +32,19 @@
 		<arg name="headless" value="false" />
 	</include>
 
+	<!-- parameters that give you reasonable physics as well as good speed -->
+	<!-- needed so that gripper joint stops on objects instead of oscillating forever -->
+	<!-- <node name="sor_pgs_iters" pkg="dynamic_reconfigure" type="dynparam" args="set gazebo sor_pgs_iters 50" /> -->
+	<!-- <node name="sor_pgs_w" pkg="dynamic_reconfigure" type="dynparam" args="set gazebo sor_pgs_w 1.0" /> -->
+	<!-- <node name="time_step" pkg="dynamic_reconfigure" type="dynparam" args="set gazebo time_step 0.001" /> -->
+
 
 	<!-- Load the URDF into the ROS Parameter Server -->
-<!-- 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian.urdf.xacro'" /> -->
-<!-- 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_simple_collision.urdf.xacro'" /> -->
+	<!-- <param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian.urdf.xacro'" /> -->
+	<!-- <param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_simple_collision.urdf.xacro'" /> -->
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_wheels.urdf.xacro'" if="$(arg use_wheels)" />
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_tracks.urdf.xacro' publishOdometryMsg:=$(arg publish_odom_on_multi_wheel_plugin) publishOdometryTf:=$(arg publish_odom_tf_on_multi_wheel_plugin)" unless="$(arg use_wheels)" />
 
-
-	<!-- Call a python script to the run a service call to gazebo_ros to spawn a URDF robot -->	
 	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
 		args="-urdf -model guardian -param robot_description -x $(arg robot_initial_x) -y $(arg robot_initial_y) -Y $(arg robot_initial_yaw)" />
 
@@ -55,18 +58,9 @@
 	<include file="$(find guardian_joystick)/launch/guardian_keyboard.launch" />
 	<include file="$(find guardian_joystick)/launch/guardian_joystick.launch" />
 
-	<group if="$(arg use_tilt_on_front_laser)">
-		<include file="$(find guardian_control)/launch/guardian_tilt_laser.launch" />
-	</group>
+	<include file="$(find guardian_control)/launch/guardian_tilt_laser.launch" if="$(arg use_tilt_on_front_laser)" />
 
 
 	<!-- <node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config)" /> -->
 
-
-
-	<!-- parameters that give you reasonable physics as well as good speed -->
-	<!-- needed so that gripper joint stops on objects instead of oscillating forever -->
-	<!-- <node name="sor_pgs_iters" pkg="dynamic_reconfigure" type="dynparam" args="set gazebo sor_pgs_iters 50" /> -->
-	<!-- <node name="sor_pgs_w" pkg="dynamic_reconfigure" type="dynparam" args="set gazebo sor_pgs_w 1.0" /> -->
-	<!-- <node name="time_step" pkg="dynamic_reconfigure" type="dynparam" args="set gazebo time_step 0.001" /> -->
 </launch>

@@ -17,7 +17,7 @@ guardian_robot_control:
     # joint_brw_steer: joint_back_right_steer
      tilt_pos_topic: /guardian/joint_tilt_laser_position_controller/command
      odom_topic: /guardian/odom
-     cmd_ptz_topic: /guardian_robot_control/command_ptz
+     cmd_ptz_topic: /guardian/command_ptz
      jointstates_topic_: /guardian/joint_states
      imu_topic: /guardian/imu_data
     # cmd_topic: /guardian/cmd_vel

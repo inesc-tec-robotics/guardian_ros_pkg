@@ -258,7 +258,7 @@ GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
 
   private_node_handle_.param<std::string>("tilt_pos_topic", tilt_pos_topic_, "/guardian/joint_tilt_position_controller/command");
   private_node_handle_.param<std::string>("odom_topic",odom_topic_, "/guardian/odom");
-  private_node_handle_.param<std::string>("cmd_ptz_topic", cmd_ptz_topic_, "/guardian_robot_control/command_ptz");
+  private_node_handle_.param<std::string>("cmd_ptz_topic", cmd_ptz_topic_, "/guardian/command_ptz");
   private_node_handle_.param<std::string>("jointstates_topic", jointstates_topic_, "/guardian/joint_states");
   private_node_handle_.param<std::string>("imu_topic", imu_topic_ , "/guardian/imu");
 
@@ -331,7 +331,7 @@ GuardianControllerClass(ros::NodeHandle h) : diagnostic_(),
 
   // Subscribe to ptz command topic
   ptz_sub_ = guardian_robot_control_node_handle.subscribe<robotnik_msgs::ptz>(cmd_ptz_topic_, 1, &GuardianControllerClass::command_ptzCallback, this);
-  // /guardian_robot_control/command_ptz
+  // /guardian/command_ptz
   
   // TODO odom topic as parameter
   // Publish odometry 

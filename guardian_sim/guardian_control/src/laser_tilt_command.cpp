@@ -34,7 +34,7 @@ int main(int argc, char **argv)
   std::string cmd_topic_ptz;
   double tilt_increment_degrees,laser_upper_limit_degrees,laser_lower_limit_degrees, epsilon, period;
 
-  n.param<std::string>("cmd_topic_ptz", cmd_topic_ptz, "/guardian_robot_control/command_ptz");
+  n.param<std::string>("cmd_topic_ptz", cmd_topic_ptz, "/guardian/command_ptz");
   n.param("ptz_relative", ptz_relative, true);
   n.param("tilt_increment_degrees", tilt_increment_degrees, 1.0);
   n.param("epsilon", epsilon, 0.5);
