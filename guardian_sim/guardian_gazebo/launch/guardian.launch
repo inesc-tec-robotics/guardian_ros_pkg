@@ -7,7 +7,7 @@
 	<arg name="world_model" default="-d $(find guardian_gazebo)/worlds/guardian.world" />
 	<!-- <arg name="world_model" default="-d $(find guardian_gazebo)/worlds/wheel_calibration.world" /> -->
 	<arg name="use_tilt_on_front_laser" default="false" />
-	<arg name="use_wheels" default="1" />
+	<arg name="use_wheels" default="0" />
 	
 	<arg name="publish_odom_on_guardian_robot_control" default="true" if="$(arg use_wheels)" />
 	<arg name="publish_odom_on_guardian_robot_control" default="false" unless="$(arg use_wheels)" />

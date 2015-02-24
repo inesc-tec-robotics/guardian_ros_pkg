@@ -8,8 +8,8 @@
 					<!--type>quick</type> <dt>0.001</dt> <iters>40</iters> <sor>1.0</sor -->
 					<!-- type>quick</type> <dt>0.01</dt> <iters>20</iters> <sor>1.0</sor -->
 					<type>quick</type>
-					<dt>0.003</dt>
-					<iters>20</iters>
+<!-- 					<dt>0.003</dt> -->
+					<iters>10</iters>
 					<sor>1.0</sor>
 				</solver>
 				<constraints>
@@ -19,6 +19,10 @@
 					<contact_surface_layer>0.0</contact_surface_layer>
 				</constraints>
 			</ode>
+			<max_step_size>0.001</max_step_size>
+			<real_time_factor>1</real_time_factor>
+			<real_time_update_rate>1000</real_time_update_rate>
+			
 		</physics>
 		<!-- A global light source -->
 		<include>
