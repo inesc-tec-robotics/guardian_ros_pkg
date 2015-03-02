@@ -1,58 +1,26 @@
 <?xml version="1.0"?>
 <launch>
 
-
   <!-- Launches openni kinect  node -->
   <!-- include file="$(find openni_launch)/launch/openni.launch" / -->
-  
 
-  <!-- Launches logitech usb webcam  node -->
-  <!-- include file="$(find sphere_camera)/launch/camera_and_pantilt.launch" / -->
-  
-  <!-- Launches sphereptz node
-
-  <param name="dev_video" value="/dev/video0" type="string"/>
-  <node pkg="sphereptz" type="sphereptz" name="sphereptz_node" output="screen" /> -->
-  
   <!-- Launches modbus_io node -->
   <!--param name="modbus_io_node/ip_address" value="192.168.2.185" />
   <node pkg="modbus_io" type="modbus_io_node" name="modbus_io_node" output="screen"/-->    
  
   <!-- Launches the camera AXIS -->
-  <include file="$(find axis_camera)/axis_ptz.launch" />
- 
-  <!-- imu MICROSTRAIN_3DMGX2 -->
-  <!-- node pkg="microstrain_3dmgx2_imu" type="imu_node" name="microstrain_3dmgx2_node" output="screen">
-    <param name="time_offset" value="-0.040" />    
-    <param name="port" type="string" value="/dev/ttyACM1" />
-    <param name="autostart" type="bool" value="true" />
-    <param name="frameid"  type="string" value="imu" />
-    <param name="autocalibrate" type="bool" value="true" />
-    <param name="angular_velocity_stdev" type="double" value="0.00017" />   
-  </node-->
+  <!--include file="$(find axis_camera)/axis_ptz.launch" /-->
 
   <!-- HOKUYO -->
-  <node name="hokuyo" pkg="hokuyo_node" type="hokuyo_node" respawn="false" output="screen">
-  
-
-    <!-- Starts up faster, but timestamps will be inaccurate. --> 
-   <param name="calibrate_time" type="bool" value="false"/> 
-    
-    <!-- Set the port to connect to here -->
-  <param name="port" type="string" value="/dev/ttyACM0"/> 
-  
-  <param name="intensity" type="bool" value="false"/>
-	<!-- Starts up faster, but timestamps will be inaccurate. --> 
+  <!--node name="hokuyo" pkg="hokuyo_node" type="hokuyo_node" respawn="false" output="screen">s
+   	<param name="calibrate_time" type="bool" value="false"/> 
+  	<param name="port" type="string" value="/dev/ttyACM0"/> 
+  	<param name="intensity" type="bool" value="false"/>
 	<param name="calibrate_time" type="bool" value="false"/>  
-
-	<!-- Set the port to connect to here -->
 	<param name="port" type="string" value="/dev/ttyACM0"/> 
-
 	<param name="intensity" type="bool" value="false"/>
-	<!-- Set frame_id tilt -->
     	<param name="frame_id" value="/laser"/>
-    	<param name="frame_id" value="/tilt_laser"/>
-  </node>
+  </node-->
 
   <!-- RLY08 I/O device -->
   <!--include file="$(find rly_08)/launch/rly_08.launch"/-->
@@ -70,14 +38,11 @@
   <!--node pkg="wam_teleop" type="wam_joystick_teleop" name="wam_joystick_teleop" output="screen"/-->
 
   <!-- Launches POWERBALL ARM -->
-  <include file="$(find robotnik_powerball_driver)/launch/robotnik_powerball_driver_gball.launch" />
+  <!-- include file="$(find robotnik_powerball_driver)/launch/robotnik_powerball_driver_gball.launch" /-->
   
   <!-- Launches WSG_50 GRIPPER -->
-  <include file="$(find wsg_50)/launch/wsg_50_can.launch" />
+  <!--include file="$(find wsg_50)/launch/wsg_50_can.launch" /-->
 
-  <!-- Launches POWERBALL PAD -->
-  <rosparam command="load" file="$(find robotnik_powerball_pad)/launch/ps3.yaml" />
-  <node name="robotnik_powerball_pad" pkg="robotnik_powerball_pad" type="robotnik_powerball_pad" output="screen"/>
   
 </launch>
 

@@ -1,12 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(guardian_navigation)
 
-find_package(catkin REQUIRED COMPONENTS
-  actionlib
-  move_base_msgs
-  roscpp
-)
-
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -38,6 +32,3 @@ include_directories(
 #set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-
-add_executable(send_multiple_goals src/send_multiple_goals.cpp)
-target_link_libraries(send_multiple_goals ${catkin_LIBRARIES})

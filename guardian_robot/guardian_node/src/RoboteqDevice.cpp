@@ -9,11 +9,11 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <termios.h>
 #include <time.h>
+#include <unistd.h>
 #include <sstream>
 
 #include "guardian_node/RoboteqDevice.h"
@@ -24,7 +24,7 @@ using namespace std;
 #define BUFFER_SIZE 1024
 #define MISSING_VALUE -1024
 
-RoboteqDevice::RoboteqDevice()
+RoboteqDevice::RoboteqDevice() : device_fd(0), fd0(0)
 {
 	handle = RQ_INVALID_HANDLE;
 }

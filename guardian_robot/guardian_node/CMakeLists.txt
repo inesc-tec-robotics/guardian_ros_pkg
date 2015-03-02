@@ -9,7 +9,6 @@ find_package(catkin REQUIRED COMPONENTS
     tf
     nav_msgs 
     diagnostic_updater
-    modbus_io 
 )
 
 add_message_files(
@@ -46,7 +45,6 @@ catkin_package(
     tf
     nav_msgs 
     diagnostic_updater
-    modbus_io 
 #  DEPENDS system_lib
 )
 
@@ -63,18 +61,14 @@ include_directories(
 )
 
 ## Declare a cpp executable
-add_executable(guardian_node src/guardian_node.cpp src/Component.cc src/guardian_controller.cc src/RoboteqDevice.cpp)
+add_executable(guardian_node_nxt src/guardian_node.cpp src/Component.cc src/guardian_controller.cc src/RoboteqDevice.cpp)
 add_executable(guardian_node_ax src/guardian_node_ax.cpp src/Component.cc src/ax3500.cc src/SerialDevice.cc)
 
-add_dependencies(guardian_node ${PROJECT_NAME}_generate_messages_cpp)
-add_dependencies(guardian_node_ax ${PROJECT_NAME}_generate_messages_cpp)
-
-add_dependencies(guardian_node ${catkin_EXPORTED_TARGETS})
-add_dependencies(guardian_node_ax ${catkin_EXPORTED_TARGETS})
-
+add_dependencies(guardian_node_nxt guardian_node_generate_messages_cpp)
+add_dependencies(guardian_node_ax guardian_node_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(guardian_node
+target_link_libraries(guardian_node_nxt
   ${catkin_LIBRARIES}
 )
 

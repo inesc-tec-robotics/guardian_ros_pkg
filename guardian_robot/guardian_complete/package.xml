@@ -2,9 +2,9 @@
   <name>guardian_complete</name>
   <version>0.1.0</version>
   <description>guardian_complete</description>
-  <maintainer email="info@robotnik.es">Robotnik</maintainer>
+  <maintainer email="rnavarro@robotnik.es">Román Navarro</maintainer>
 
-  <author>>Robotnik Automation SLL</author>
+  <author email="rnavarro@robotnik.es">Román Navarro</author>
   <license>BSD</license>
   <url>http://ros.org/wiki/guardian_complete</url>
 
@@ -15,6 +15,7 @@
 
   <run_depend>roscpp</run_depend>
   <run_depend>std_msgs</run_depend>
+  <run_depend>rly_08</run_depend>
 
 </package>
 
