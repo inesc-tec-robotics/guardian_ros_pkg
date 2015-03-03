@@ -8,42 +8,76 @@
   <xacro:property name="ptz_joint_friction" value="0.1" />
   <xacro:property name="ptz_joint_damping" value="0.1" />
   <xacro:property name="ptz_mechanical_reduction" value="1.0" />
-
+  <xacro:property name="laser_offset_z" value="0.06" /> 
+  
 
   <xacro:macro name="sensor_hokuyo_front" params="parent prefix visualize origin_x origin_z origin_yaw">
 
- 	<!-- joint -->
-	  <joint name="hokuyo_${prefix}_joint" type="revolute">
+	<!-- joint for laser platform  -->
+	<joint name="laser_tilt_mount_joint" type="fixed">
 	     <axis xyz="0 1 0" />
 	     <origin xyz="${origin_x} 0 ${origin_z}" rpy="0 0 ${origin_yaw}" /> 
 	     <parent link="${parent}"/>
-	     <child link="hokuyo_${prefix}_link"/>
-	     <limit effort="${ptz_joint_effort_limit}" velocity="${ptz_joint_velocity_limit}" lower="-1.5708" upper="1.5708"/>
-	     <joint_properties damping="${ptz_joint_damping}" friction="{ptz_joint_friction}"/>
-	  </joint>
+	     <child link="laser_tilt_mount_link"/>
+	     <limit effort="30" lower="-2.6" upper="2.6" velocity="2.0"/>
+		 <dynamics damping="100"/>
+	</joint>
+	<link name="laser_tilt_mount_link">
+	     <inertial> 
+	  		<origin xyz="0 0 0" rpy="0 0 0"/> 
+	  		<mass value="1"/>
+		 <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/></inertial>
+	</link>
 
- 	<!-- link -->
-	  <link name="hokuyo_${prefix}_link">
-	     <inertial>
-	       <mass value="0.1" />
-	       <origin xyz="0 0 0" rpy="0 0 0" />
-	       <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
-	       <!-- <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" /> -->
-	    </inertial>
-	  </link>
-
- 	<!-- transmission -->
-	 <transmission name="joint_${prefix}_trans">
-	   <type>transmission_interface/SimpleTransmission</type>
-	     <joint name="hokuyo_${prefix}_joint" />
-	     <actuator name="${prefix}_motor">
-	     <hardwareInterface>EffortJointInterface</hardwareInterface>
+	<!-- joint for laser platform rotation -->
+	<joint name="hokuyo_${prefix}_joint" type="revolute">
+	    <axis xyz="0 1 0" />
+	    <origin xyz="0 0 0" rpy="0 0 0" /> 
+	    <parent link="laser_tilt_mount_link"/>
+	    <child link="laser_tilt_link"/> <!-- hokuyo_${prefix}_link -->
+	    <limit effort="${ptz_joint_effort_limit}" velocity="${ptz_joint_velocity_limit}" lower="-1.5708" upper="1.5708"/>
+	    <joint_properties damping="${ptz_joint_damping}" friction="{ptz_joint_friction}"/>
+	</joint>
+	<!-- transmission -->
+	<transmission name="joint_${prefix}_trans">
+	  <type>transmission_interface/SimpleTransmission</type>
+	    <joint name="hokuyo_${prefix}_joint" />
+	    <actuator name="${prefix}_motor">
+	       <hardwareInterface>EffortJointInterface</hardwareInterface>
 	       <mechanicalReduction>${ptz_mechanical_reduction}</mechanicalReduction>
-	     </actuator>
-	 </transmission>
+	    </actuator>
+	</transmission>
 
-	<!-- gazebo --> 
-	 <gazebo reference="hokuyo_${prefix}_link">
+	<link name="laser_tilt_link">
+	   <inertial>
+	     <mass value="0.1" />
+	     <origin xyz="0 0 0" rpy="0 0 0" />
+	     <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+	     <!-- <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" /> -->
+	  </inertial>
+	</link>
+
+	<!--  HOKUYO FRONTAL SENSOR joint -->
+	<joint name="hokuyo_frontal_laser_joint" type="fixed">
+	     <axis xyz="0 1 0" />
+	     <origin xyz="0.021 0 ${laser_offset_z}"/>
+	     <parent link="laser_tilt_link"/>
+	     <child link="hokuyo_${prefix}_link"/>
+	</joint>
+    
+	<!-- HOKUYO FRONTAL SENSOR link -->
+	<link name="hokuyo_${prefix}_link">
+	   <inertial>
+	     <mass value="0.1" />
+	     <origin xyz="0 0 0" rpy="0 0 0" />
+	     <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+	<!--      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" /> -->
+	  </inertial>
+	</link>
+
+	
+	<!-- GAZEBO properties and plugins --> 
+	<gazebo reference="hokuyo_${prefix}_link">
 	    <material>Gazebo/Grey</material>
 	    <sensor type="ray" name="${prefix}_sensor">
 	      <pose>0 0 0 0 0 0</pose>
@@ -76,7 +110,7 @@
 	        <intensities>0</intensities> <!-- Whether or not the hokuyo laser returns intensity values. 0 means no intensities[] -->
 	      </plugin>
 	    </sensor>
-	 </gazebo>
+	</gazebo>
 
   </xacro:macro>
 </robot>
