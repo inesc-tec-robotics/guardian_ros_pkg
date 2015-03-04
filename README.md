@@ -1,6 +1,3 @@
-guardian-ros-pkg
-========
-
 Robotnik Guardian - ROS and Gazebo packages
 
 
@@ -34,3 +31,15 @@ roslaunch guardian_gazebo guardian.launch
 
 ## Guardian inside ship:
 roslaunch guardian_gazebo guardian_ship_interior.launch
+
+### These also launch joystick and keyboard nodes to control the robot
+
+* keyboard: wasd keys
+
+* joystick: config files @ guardian_joystick/launch/
+
+
+		  if needed create yout own and alter the line 
+		  	<rosparam command="load" file="$(find guardian_joystick)/launch/logitech.yaml" />
+		  to
+		  	<rosparam command="load" file="$(find guardian_joystick)/launch/MyOwnConfig.yaml" />
