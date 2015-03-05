@@ -28,7 +28,7 @@ Installation of the guardian-ros-pkg (https://github.com/inesc-tec-robotics/guar
 
 
 ### 4. Before compiling it install these dependencies:
-     * sudo apt-get install ros-hydro-pr2-common ros-hydro-joy ros-hydro-joystick-drivers ros-hydro-ros-control ros-hydro-ros-controllers ros-hydro-controller-manager ros-hydro-gazebo-ros-control ros-hydro-gazebo-plugins ros-hydro-hector-gazebo-plugins
+     sudo apt-get install ros-hydro-pr2-common ros-hydro-joy ros-hydro-joystick-drivers ros-hydro-ros-control ros-hydro-ros-controllers ros-hydro-controller-manager ros-hydro-gazebo-ros-control ros-hydro-gazebo-plugins ros-hydro-hector-gazebo-plugins
 
 ### 5. compile the package
     cd ~/catkin_ws/     
