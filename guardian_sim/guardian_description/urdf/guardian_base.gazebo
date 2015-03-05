@@ -26,7 +26,7 @@
 
 	<!-- chassis -->
 	<gazebo reference="base_link">
-		<material>Gazebo/DarkGrey</material>
+		<material>Gazebo/Grey</material>
 		<turnGravityOff>false</turnGravityOff>
 	</gazebo>
 </robot>

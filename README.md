@@ -20,10 +20,6 @@ ROS Hydro + Gazebo 1.9
 * sudo apt-get install ros-hydro-gazebo-plugins
 * sudo apt-get install ros-hydro-hector-gazebo-plugins
 
-## clone these repos to your workspace:
-git clone https://github.com/inesc-tec-robotics/crob_gazebo_models
-
-
 # 3. To launch the simulation:
 
 ## Guardian in empty world:
