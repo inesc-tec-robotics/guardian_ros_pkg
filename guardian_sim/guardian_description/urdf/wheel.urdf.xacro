@@ -32,6 +32,9 @@
 				<geometry>
 					<mesh filename="package://guardian_description/meshes/wheel.stl" />
 				</geometry>
+				<material name="grey">
+					<color rgba="0.2 0.2 0.2 1.0" />
+				</material>
 			</visual>
 
 			<collision>

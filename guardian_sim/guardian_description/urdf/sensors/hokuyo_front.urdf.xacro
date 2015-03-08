@@ -11,12 +11,12 @@
   <xacro:property name="laser_offset_z" value="0.06" /> 
   
 
-  <xacro:macro name="sensor_hokuyo_front" params="parent prefix visualize origin_x origin_z origin_yaw">
+  <xacro:macro name="sensor_hokuyo_front" params="parent prefix visualize origin_x origin_y origin_z origin_roll origin_pitch origin_yaw">
 
 	<!-- joint for laser platform  -->
 	<joint name="laser_tilt_mount_joint" type="fixed">
 	     <axis xyz="0 1 0" />
-	     <origin xyz="${origin_x} 0 ${origin_z}" rpy="0 0 ${origin_yaw}" /> 
+	     <origin xyz="${origin_x} ${origin_y} ${origin_z}" rpy="${origin_roll} ${origin_pitch} ${origin_yaw}" />
 	     <parent link="${parent}"/>
 	     <child link="laser_tilt_mount_link"/>
 	     <limit effort="30" lower="-2.6" upper="2.6" velocity="2.0"/>

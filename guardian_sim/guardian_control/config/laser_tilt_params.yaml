@@ -1,7 +1,14 @@
 ptz_relative: true
 cmd_topic_ptz: /guardian/command_ptz
-tilt_increment_degrees: 2.6        # in degrees (for 100ms scans -> tilt_range_degrees / (period * 10))
-laser_upper_limit_degrees: 50       # floor (50) | 20
-laser_lower_limit_degrees: -80      # ceiling (-80) | 15
+tilt_increment_degrees: 4.0        # in degrees (for 100ms scans -> tilt_range_degrees / (period * 10))
 epsilon: 0.05
-period: 5.0 # seconds for moving from lower limit to upper limit
+period: 1.0 # seconds for moving from lower limit to upper limit
+
+
+# looking at floor
+#laser_upper_limit_degrees: 40       # floor (50) | 20
+#laser_lower_limit_degrees: 10      # ceiling (-80) | 15
+
+# looking at ceiling
+laser_upper_limit_degrees: -35
+laser_lower_limit_degrees: -75
