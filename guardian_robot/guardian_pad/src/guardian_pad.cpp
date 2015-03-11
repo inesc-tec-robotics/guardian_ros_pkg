@@ -134,6 +134,7 @@ class GuardianPad
 	//! Zoom increment (steps)
 	int zoom_increment_;
 	double speed_increment_;
+    double max_lin_speed_, max_ang_speed_;
 };
 
 
@@ -178,6 +179,9 @@ GuardianPad::GuardianPad():
 	nh_.param("speed_increment", speed_increment_, 0.05);
 	nh_.param("tilt_laser_start_service_io", tilt_laser_start_service_io_, std::string("/robotnik_tilt_laser_cloud/start"));
 	nh_.param("tilt_laser_stop_service_io", tilt_laser_stop_service_io_, std::string("/robotnik_tilt_laser_cloud/stop"));
+    nh_.param("max_lin_speed", max_lin_speed_, 0.7);
+    nh_.param("max_ang_speed", max_ang_speed_, 40.0);
+
 
 	for(int i = 0; i < DEFAULT_NUM_OF_BUTTONS; i++){
 		bRegisteredButtonEvent[i] = false;
@@ -271,7 +275,7 @@ void GuardianPad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 				if(current_vel > speed_increment_){
 		  			current_vel = current_vel - speed_increment_;
 					bRegisteredButtonEvent[speed_down_button_] = true;
-					 ROS_INFO("Velocity: %f m/s | %f%%", current_vel, current_vel / DEFAULT_MAX_LINEAR_SPEED * 100.0);
+                     ROS_INFO("Velocity: %f m/s | %f%%", current_vel, current_vel / max_lin_speed_ * 100.0);
 				}	 	
 		}else{
 			bRegisteredButtonEvent[speed_down_button_] = false;
@@ -279,10 +283,10 @@ void GuardianPad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		 
 		if (joy->buttons[speed_up_button_] == 1){
 			if(!bRegisteredButtonEvent[speed_up_button_])
-				if(current_vel < DEFAULT_MAX_LINEAR_SPEED){
+                if(current_vel < max_lin_speed_){
 					current_vel = current_vel + speed_increment_;
 					bRegisteredButtonEvent[speed_up_button_] = true;
-			 	 	ROS_INFO("Velocity: %f m/s | %f%%", current_vel, current_vel / DEFAULT_MAX_LINEAR_SPEED * 100.0);
+                    ROS_INFO("Velocity: %f m/s | %f%%", current_vel, current_vel / max_lin_speed_ * 100.0);
 				}
 		  
 		}else{
