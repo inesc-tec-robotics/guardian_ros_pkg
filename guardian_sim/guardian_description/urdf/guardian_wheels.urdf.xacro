@@ -8,7 +8,7 @@
 	<xacro:include filename="$(find guardian_description)/urdf/wheel.urdf.xacro" />
 
 	<!-- ###### BASE ###### -->
-	<guardian_base base_footprint_z="0.18" />
+	<guardian_base base_footprint_z="0.165" />
 
 	<!-- ###### TRACKS ###### -->
 	<track parent="base_link" prefix="left_track" joint_yaw="${PI}" />

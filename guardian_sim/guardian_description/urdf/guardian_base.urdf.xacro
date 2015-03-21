@@ -59,8 +59,8 @@
 		<sensor_kinect parent="base_link"/>
 		<sensor_imu parent="base_link" /> <!-- guardian_robot_control uses imu to update odometry -->
 
-		<sensor_hokuyo_front parent="base_link" prefix="tilt_laser" visualize="true" origin_x="0.46781" origin_y="0.0" origin_z="0.24299" origin_roll="0.0" origin_pitch="0.0" origin_yaw="0" />
-		<sensor_hokuyo_back parent="base_link" prefix="back_laser" visualize="true" origin_x="-0.4323" origin_y="0.0" origin_z="0.3" origin_roll="0.0" origin_pitch="0.0" origin_yaw="${PI}" />
+		<sensor_hokuyo_front parent="base_link" prefix="tilt_laser" visualize="true" origin_x="0.45" origin_y="0.025" origin_z="0.24299" origin_roll="-0.01" origin_pitch="0.03" origin_yaw="-0.02" />
+		<sensor_hokuyo_back parent="base_link" prefix="back_laser" visualize="true" origin_x="-0.43" origin_y="-0.015" origin_z="0.3" origin_roll="0.03" origin_pitch="-0.015" origin_yaw="${PI}" />
 	</xacro:macro>
 </robot>
 
