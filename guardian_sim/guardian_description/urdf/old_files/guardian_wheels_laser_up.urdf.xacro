@@ -439,10 +439,10 @@
      <!--<origin xyz="0.066 0 0.0"/> -->
      <origin xyz="${laser_offset_x+0.066} 0 ${laser_offset_z}"/>
      <parent link="laser_tilt_link"/>
-     <child link="hokuyo_frontal_laser_link"/>
+     <child link="hokuyo_front_laser_link"/>
   </joint>
   <!-- Hokuyo Laser -->
-  <link name="hokuyo_frontal_laser_link">
+  <link name="hokuyo_front_laser_link">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>

@@ -6,7 +6,7 @@
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/hokuyo_front.urdf.xacro" />
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/hokuyo_back.urdf.xacro" />
 
-	<xacro:macro name="guardian_base" params="base_footprint_z">
+	<xacro:macro name="guardian_base" params="base_footprint_z use_simulated_kinect">
 
 		<!-- BASE FOOTPRINT -->
 		<!-- base_footprint is a fictitious link(frame) that is on the ground right below base_link origin, navigation stack depends on this frame -->
@@ -27,9 +27,35 @@
 			<parent link="base_footprint" />
 			<child link="base_link" />
 		</joint>
+		
+		
+		<!-- kinect and projector metal support -->
+		
+		<link name="support_bottom_link" />
+		<joint name="support_bottom_joint" type="fixed">
+			<origin xyz="0.185 0 0.2305" rpy="0 0 0" />
+			<parent link="base_link" />
+			<child link="support_bottom_link" />
+		</joint>
+		
+		
+		<link name="support_top_link" />
+		<joint name="support_top_joint" type="fixed">
+			<origin xyz="0.184 0 0.267" rpy="0 0 0" />
+			<parent link="support_bottom_link" />
+			<child link="support_top_link" />
+		</joint>
+
+		<link name="projector_link" />
+		<joint name="projector_joint" type="fixed">
+			<origin xyz="-0.06 -0.031 -0.041" rpy="0 0 0" />
+			<parent link="support_top_link" />
+			<child link="projector_link" />
+		</joint>
+
 
 		<!-- BASE_LINK (Grey) -->
-		<link name="base_link">
+		<link name="base_link"> <!-- center of wheels -> rotation axis -->
 			<inertial>
 				<mass value="95.0" /> <!-- 95.0 -->
 				<origin xyz="0 0 0" />
@@ -56,11 +82,30 @@
 		</link>
 
 		<!-- ################# SENSORS ################# -->
-		<sensor_kinect parent="base_link"/>
+		<xacro:if value="${use_simulated_kinect}">
+ 			<sensor_kinect parent="base_link"/>
+		</xacro:if>
+		<xacro:unless value="${use_simulated_kinect}">
+			<link name="camera_link_support_axis" />
+			<joint name="camera_link_support_axis_joint" type="fixed">
+				<origin xyz="-0.015 0.015 0.0" rpy="1.565 0.4025 0.02" />
+				<parent link="support_top_link" />
+				<child link="camera_link_support_axis" />
+			</joint>
+			
+			<link name="camera_link" />
+			<joint name="camera_link_joint" type="fixed">
+				<origin xyz="0.05 0.057 -0.016" rpy="0 0 0" />
+				<parent link="camera_link_support_axis" />
+				<child link="camera_link" />
+			</joint>
+		</xacro:unless>
+		
+		
 		<sensor_imu parent="base_link" /> <!-- guardian_robot_control uses imu to update odometry -->
 
-		<sensor_hokuyo_front parent="base_link" prefix="tilt_laser" visualize="true" origin_x="0.45" origin_y="0.025" origin_z="0.24299" origin_roll="-0.01" origin_pitch="0.03" origin_yaw="-0.02" />
-		<sensor_hokuyo_back parent="base_link" prefix="back_laser" visualize="true" origin_x="-0.43" origin_y="-0.015" origin_z="0.3" origin_roll="0.03" origin_pitch="-0.015" origin_yaw="${PI}" />
+		<sensor_hokuyo_front parent="base_link" prefix="front_laser" visualize="true" origin_x="0.46" origin_y="-0.0025" origin_z="0.2595" origin_roll="0.0" origin_pitch="0.0" origin_yaw="-0.026" />
+		<sensor_hokuyo_back parent="base_link" prefix="back_laser" visualize="true" origin_x="-0.433" origin_y="-0.0085" origin_z="0.3065" origin_roll="0.0" origin_pitch="0.0" origin_yaw="${PI}" />
 	</xacro:macro>
 </robot>
 

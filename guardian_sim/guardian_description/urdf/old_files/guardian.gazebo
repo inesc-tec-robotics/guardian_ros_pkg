@@ -147,7 +147,7 @@
   </gazebo>
   
   <!-- hokuyo -->
-  <gazebo reference="hokuyo_frontal_laser_link">
+  <gazebo reference="hokuyo_front_laser_link">
     <!-- sensor type="gpu_ray" name="head_hokuyo_sensor" -->
     <sensor type="ray" name="head_hokuyo_sensor">
       <pose>0 0 0 0 0 0</pose>

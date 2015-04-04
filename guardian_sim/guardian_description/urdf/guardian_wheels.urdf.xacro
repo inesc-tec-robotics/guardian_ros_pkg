@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <robot name="guardian" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:property name="wheelSeparation" value="0.612" />
-	<xacro:property name="wheelDiameter" value="0.37" />
+	<xacro:property name="wheelDiameter" value="0.35" />
 
 	<xacro:include filename="$(find guardian_description)/urdf/guardian_base.urdf.xacro" />
 	<xacro:include filename="$(find guardian_description)/urdf/track.urdf.xacro" />
 	<xacro:include filename="$(find guardian_description)/urdf/wheel.urdf.xacro" />
 
 	<!-- ###### BASE ###### -->
-	<guardian_base base_footprint_z="0.165" />
+	<guardian_base base_footprint_z="0.175" use_simulated_kinect="false" /> <!-- wheels radius -->
 
 	<!-- ###### TRACKS ###### -->
 	<track parent="base_link" prefix="left_track" joint_yaw="${PI}" />

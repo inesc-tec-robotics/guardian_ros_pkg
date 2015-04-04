@@ -83,7 +83,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        hokuyo_frontal_laser_link:
+        hokuyo_front_laser_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -128,7 +128,7 @@ Visualization Manager:
           Value: true
         hokuyo_back_laser_link:
           Value: true
-        hokuyo_frontal_laser_link:
+        hokuyo_front_laser_link:
           Value: true
         imu_link:
           Value: true
@@ -160,7 +160,7 @@ Visualization Manager:
                   {}
                 laser_tilt_mount_link:
                   laser_tilt_link:
-                    hokuyo_frontal_laser_link:
+                    hokuyo_front_laser_link:
                       {}
                 left_track:
                   {}

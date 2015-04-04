@@ -6,7 +6,7 @@
 
 
 	<!-- ###### BASE ###### -->
-	<guardian_base base_footprint_z="0.069" />
+	<guardian_base base_footprint_z="0.0635" use_simulated_kinect="false" />
 
 	<!-- ###### TRACKS ###### -->
 	<!-- visual -->

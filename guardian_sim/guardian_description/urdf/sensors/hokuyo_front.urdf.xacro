@@ -1,117 +1,116 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro"> 
- 
-  <!-- Robot parameters -->
-  <xacro:property name="PI" value="3.1415926535897931"/>
-  <xacro:property name="ptz_joint_effort_limit" value="100.0" /> 
-  <xacro:property name="ptz_joint_velocity_limit" value="100.0"/>  
-  <xacro:property name="ptz_joint_friction" value="0.1" />
-  <xacro:property name="ptz_joint_damping" value="0.1" />
-  <xacro:property name="ptz_mechanical_reduction" value="1.0" />
-  <xacro:property name="laser_offset_z" value="0.06" /> 
-  
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="sensor_hokuyo_front" params="parent prefix visualize origin_x origin_y origin_z origin_roll origin_pitch origin_yaw">
+	<!-- Robot parameters -->
+	<xacro:property name="PI" value="3.1415926535897931" />
+	<xacro:property name="ptz_joint_effort_limit" value="30.0" />
+	<xacro:property name="ptz_joint_velocity_limit" value="2.0" />
+	<xacro:property name="ptz_joint_friction" value="0.1" />
+	<xacro:property name="ptz_joint_damping" value="0.1" />
+	<xacro:property name="ptz_mechanical_reduction" value="1.0" />
 
-	<!-- joint for laser platform  -->
-	<joint name="laser_tilt_mount_joint" type="fixed">
-	     <axis xyz="0 1 0" />
-	     <origin xyz="${origin_x} ${origin_y} ${origin_z}" rpy="${origin_roll} ${origin_pitch} ${origin_yaw}" />
-	     <parent link="${parent}"/>
-	     <child link="laser_tilt_mount_link"/>
-	     <limit effort="30" lower="-2.6" upper="2.6" velocity="2.0"/>
-		 <dynamics damping="100"/>
-	</joint>
-	<link name="laser_tilt_mount_link">
-	     <inertial> 
-	  		<origin xyz="0 0 0" rpy="0 0 0"/> 
-	  		<mass value="1"/>
-		 <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/></inertial>
-	</link>
 
-	<!-- joint for laser platform rotation -->
-	<joint name="hokuyo_${prefix}_joint" type="revolute">
-	    <axis xyz="0 1 0" />
-	    <origin xyz="0 0 0" rpy="0 0 0" /> 
-	    <parent link="laser_tilt_mount_link"/>
-	    <child link="laser_tilt_link"/> <!-- hokuyo_${prefix}_link -->
-	    <limit effort="${ptz_joint_effort_limit}" velocity="${ptz_joint_velocity_limit}" lower="-1.5708" upper="1.5708"/>
-	    <joint_properties damping="${ptz_joint_damping}" friction="{ptz_joint_friction}"/>
-	</joint>
-	<!-- transmission -->
-	<transmission name="joint_${prefix}_trans">
-	  <type>transmission_interface/SimpleTransmission</type>
-	    <joint name="hokuyo_${prefix}_joint" />
-	    <actuator name="${prefix}_motor">
-	       <hardwareInterface>EffortJointInterface</hardwareInterface>
-	       <mechanicalReduction>${ptz_mechanical_reduction}</mechanicalReduction>
-	    </actuator>
-	</transmission>
+	<xacro:macro name="sensor_hokuyo_front" params="parent prefix visualize origin_x origin_y origin_z origin_roll origin_pitch origin_yaw"> <!-- origin -> laser rotation axis center -->
+		<!-- front laser tilting platform -->
+		<link name="hokuyo_${prefix}_tilt_support_link" >
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<mass value="0.3" />
+				<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+			</inertial>
+		</link>
+		
+		<joint name="hokuyo_${prefix}_tilt_support_joint" type="fixed">
+			<axis xyz="0 1 0" />
+			<origin xyz="${origin_x} ${origin_y} ${origin_z}" rpy="${origin_roll} ${origin_pitch} ${origin_yaw}" />
+			<parent link="${parent}" />
+			<child link="hokuyo_${prefix}_tilt_support_link" />
+			<limit effort="30" lower="-2.6" upper="2.6" velocity="2.0"/>
+		 	<dynamics damping="100"/>
+		</joint>
+		
+		
+		<!-- front laser tilting platform motor -->
+		<link name="hokuyo_${prefix}_tilt_axis_link" >
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<mass value="1" />
+				<inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+			</inertial>
+		</link>
+		
+		<joint name="hokuyo_${prefix}_tilt_joint" type="revolute">
+			<axis xyz="0 1 0" />
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<parent link="hokuyo_${prefix}_tilt_support_link" />
+			<child link="hokuyo_${prefix}_tilt_axis_link" />
+			<limit effort="${ptz_joint_effort_limit}" velocity="${ptz_joint_velocity_limit}" lower="-1.5708" upper="1.5708" />
+			<joint_properties damping="${ptz_joint_damping}" friction="{ptz_joint_friction}" />
+		</joint>
 
-	<link name="laser_tilt_link">
-	   <inertial>
-	     <mass value="0.1" />
-	     <origin xyz="0 0 0" rpy="0 0 0" />
-	     <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
-	     <!-- <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" /> -->
-	  </inertial>
-	</link>
+		<transmission name="joint_${prefix}_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="hokuyo_${prefix}_joint" />
+			<actuator name="${prefix}_motor">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>${ptz_mechanical_reduction}</mechanicalReduction>
+			</actuator>
+		</transmission>
 
-	<!--  HOKUYO FRONTAL SENSOR joint -->
-	<joint name="hokuyo_frontal_laser_joint" type="fixed">
-	     <axis xyz="0 1 0" />
-	     <origin xyz="0.021 0 ${laser_offset_z}"/>
-	     <parent link="laser_tilt_link"/>
-	     <child link="hokuyo_frontal_laser_link"/>
-	</joint>
-    
-	<!-- HOKUYO FRONTAL SENSOR link -->
-	<link name="hokuyo_frontal_laser_link">
-	   <inertial>
-	     <mass value="0.1" />
-	     <origin xyz="0 0 0" rpy="0 0 0" />
-	     <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
-	<!--      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" /> -->
-	  </inertial>
-	</link>
 
-	
-	<!-- GAZEBO properties and plugins --> 
-	<gazebo reference="hokuyo_frontal_laser_link">
-	    <material>Gazebo/Grey</material>
-	    <sensor type="ray" name="${prefix}_sensor">
-	      <pose>0 0 0 0 0 0</pose>
-	      <visualize>${visualize}</visualize>
-	      <update_rate>10</update_rate> <!-- rate of 10 for scan time ~ 100 ms  -->
-	      <ray>
-	        <scan>
-	          <horizontal>
-	           <samples>684</samples> <!-- 683 steps + 1 -->
-	           <resolution>1</resolution>
-	           <min_angle>-2.0943951</min_angle>   <!-- 240 deg (total) in the front -->
-	           <max_angle>2.0943951</max_angle>
-	          </horizontal>
-	        </scan>
-	        <range>
-	          <min>0.10</min>
-	          <max>5.0</max> <!-- 5.0 -->
-	          <resolution>0.001</resolution> <!-- 0.001 -->
-	        </range>
-	        <noise>
-	          <type>gaussian</type>
-	          <mean>0.0</mean>
-	          <stddev>0.0033</stddev> <!-- 0.0033 -->
-	        </noise>
-	      </ray>
-	      <plugin name="${prefix}_plugin" filename="libgazebo_ros_laser_2D.so">
-	        <topicName>/guardian/laser_tilt_front</topicName>
-	        <frameName>hokuyo_frontal_laser_link</frameName>
-	        <time_increment>0.00009765739</time_increment> <!-- time between measurements --> <!-- 0.0667 sec /683 steps -->
-	        <intensities>0</intensities> <!-- Whether or not the hokuyo laser returns intensity values. 0 means no intensities[] -->
-	      </plugin>
-	    </sensor>
-	</gazebo>
+		<!-- front laser -->
+		<joint name="hokuyo_${prefix}_joint" type="fixed">
+			<axis xyz="0 1 0" />
+			<origin xyz="0.026 -0.0015 0.0565" />
+			<parent link="hokuyo_${prefix}_tilt_axis_link" />
+			<child link="hokuyo_${prefix}_link" />
+		</joint>
 
-  </xacro:macro>
+		<link name="hokuyo_${prefix}_link">
+			<inertial>
+				<mass value="0.1" />
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+			</inertial>
+		</link>
+
+
+		<!-- GAZEBO properties and plugins -->
+		<gazebo reference="hokuyo_${prefix}_link">
+			<material>Gazebo/Grey</material>
+			<sensor type="ray" name="${prefix}_sensor">
+				<pose>0 0 0 0 0 0</pose>
+				<visualize>${visualize}</visualize>
+				<update_rate>10</update_rate> <!-- rate of 10 for scan time ~ 100 ms -->
+				<ray>
+					<scan>
+						<horizontal>
+							<samples>684</samples> <!-- 683 steps + 1 -->
+							<resolution>1</resolution>
+							<min_angle>-2.0943951</min_angle>   <!-- 240 deg (total) in the front -->
+							<max_angle>2.0943951</max_angle>
+						</horizontal>
+					</scan>
+					<range>
+						<min>0.10</min>
+						<max>5.0</max> <!-- 5.0 -->
+						<resolution>0.001</resolution> <!-- 0.001 -->
+					</range>
+					<noise>
+						<type>gaussian</type>
+						<mean>0.0</mean>
+						<stddev>0.0033</stddev> <!-- 0.0033 -->
+					</noise>
+				</ray>
+				<plugin name="${prefix}_plugin" filename="libgazebo_ros_laser_2D.so">
+					<topicName>/guardian/laser_tilt_front</topicName>
+					<frameName>hokuyo_${prefix}_link</frameName>
+					<time_increment>0.00009765739</time_increment> <!-- time between measurements --> <!-- 0.0667 sec /683 steps -->
+					<intensities>0</intensities> <!-- Whether or not the hokuyo laser returns intensity values. 0 means no intensities[] -->
+				</plugin>
+			</sensor>
+		</gazebo>
+
+	</xacro:macro>
 </robot>
 
