@@ -40,6 +40,7 @@ add_service_files(
 	set_analog_output.srv
 	set_mode.srv
 	set_ptz.srv
+	set_float_value.srv
 	get_mode.srv
 	set_digital_output.srv
 	set_odometry.srv

@@ -1,51 +1,57 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:property name="PI" value="3.1415926535897931"/>
- 
-  <xacro:macro name="sensor_imu" params="parent">
-	 
-	<!-- joint -->
-	  <joint name="imu_joint" type="fixed">
-	      <axis xyz="1 0 0"/> <!-- 0 1 0 -->
-	      <origin xyz="0 0 0.2825"/>
-	      <parent link="${parent}"/>
-	      <child link="imu_link"/>
-	  </joint>
+	<xacro:property name="PI" value="3.1415926535897931" />
 
- 	<!-- link -->
-	  <link name="imu_link">
-	      <inertial>
-	        <mass value="0.001"/>
-	        <origin rpy="0 0 0" xyz="0 0 0"/>
-	        <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
-	      </inertial>
-	      <visual>
-	        <origin rpy="0 0 0" xyz="0 0 0"/>
-	        <geometry>
-	          <box size="0.001 0.001 0.001"/>
-	        </geometry>
-	      </visual>
-	      <collision>
-	        <origin rpy="0 0 0" xyz="0 0 0"/>
-	        <geometry>
-	          <box size=".001 .001 .001"/>
-	        </geometry>
-	      </collision>
-	  </link>
+	<xacro:macro name="sensor_imu" params="parent">
 
- 	<!-- plugin -->
-	  <gazebo>
-	    <plugin name="ros_imu" filename="libgazebo_ros_imu.so">
-	       <robotNamespace>/guardian</robotNamespace>
-	       <topicName>imu_data</topicName>
-			<bodyName>imu_link </bodyName>
-			<serviceName>/imu_service</serviceName>
-	        <gaussianNoise>0.005</gaussianNoise>		
-	    </plugin>
-	  </gazebo>
+		<!-- joint -->
+		<joint name="imu_mpu_9150_joint" type="fixed">
+			<axis xyz="1 0 0" /> <!-- 0 1 0 -->
+			<origin xyz="0.0775 0.0 0.1555" rpy="0 0 0 " />
+			<parent link="${parent}" />
+			<child link="imu_mpu_9150_link" />
+		</joint>
 
-  </xacro:macro>
+		<!-- link -->
+		<link name="imu_mpu_9150_link">
+			<inertial>
+				<mass value="0.001" />
+				<origin rpy="0 0 0" xyz="0 0 0" />
+				<inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001" />
+			</inertial>
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0" />
+				<geometry>
+					<box size="0.001 0.001 0.001" />
+				</geometry>
+			</visual>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0" />
+				<geometry>
+					<box size=".001 .001 .001" />
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- plugin -->
+		<gazebo>
+			<plugin name="ros_imu" filename="libgazebo_ros_imu.so">
+				<robotNamespace>/guardian</robotNamespace>
+				<topicName>imu_data</topicName>
+				<bodyName>imu_link </bodyName>
+				<serviceName>/imu_service</serviceName>
+				<gaussianNoise>0.005</gaussianNoise>
+			</plugin>
+		</gazebo>
+
+		<link name="imu_um7_link" />
+		<joint name="imu_um7_joint" type="fixed">
+			<origin xyz="0.056 0.0 0.1355" rpy="0 0 0 " />
+			<parent link="${parent}" />
+			<child link="imu_um7_link" />
+		</joint>
+	</xacro:macro>
 </robot>
 
 
