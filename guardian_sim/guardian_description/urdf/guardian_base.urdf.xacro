@@ -40,7 +40,7 @@
 		
 		<link name="support_top_link" />
 		<joint name="support_top_joint" type="fixed">
-			<origin xyz="0.29 0.0 0.26" rpy="0.0 0 -0.05" />
+			<origin xyz="0.314 0.0 0.256" rpy="0.0 0 0.0" />
 			<parent link="support_bottom_link" />
 			<child link="support_top_link" />
 		</joint>
@@ -87,14 +87,14 @@
 		<xacro:unless value="${use_simulated_kinect}">
 			<link name="camera_link_support_axis" />
 			<joint name="camera_link_support_axis_joint" type="fixed">
-				<origin xyz="0.0 -0.015 0.0" rpy="1.565 0.619 0.05" />
+				<origin xyz="-0.02 -0.015 0.0" rpy="1.5708 0.619 0.0" />
 				<parent link="support_top_link" />
 				<child link="camera_link_support_axis" />
 			</joint>
 			
 			<link name="camera_link" />
 			<joint name="camera_link_joint" type="fixed">
-				<origin xyz="0.045 0.065 0.0155" rpy="0 0 0" />
+				<origin xyz="0.045 0.06 0.017" rpy="0 0 0" />
 				<parent link="camera_link_support_axis" />
 				<child link="camera_link" />
 			</joint>
