@@ -177,8 +177,8 @@ GuardianPad::GuardianPad():
 	nh_.param("tilt_increment",tilt_increment_, 1);
 	nh_.param("zoom_increment", zoom_increment_, 1);
 	nh_.param("speed_increment", speed_increment_, 0.05);
-	nh_.param("tilt_laser_start_service_io", tilt_laser_start_service_io_, std::string("/robotnik_tilt_laser_cloud/start"));
-	nh_.param("tilt_laser_stop_service_io", tilt_laser_stop_service_io_, std::string("/robotnik_tilt_laser_cloud/stop"));
+	nh_.param("tilt_laser_start_service_io", tilt_laser_start_service_io_, std::string("/robotnik_tilt_laser/start"));
+	nh_.param("tilt_laser_stop_service_io", tilt_laser_stop_service_io_, std::string("/robotnik_tilt_laser/stop"));
     nh_.param("max_lin_speed", max_lin_speed_, 0.7);
     nh_.param("max_ang_speed", max_ang_speed_, 40.0);
 
