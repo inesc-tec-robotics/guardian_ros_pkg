@@ -87,7 +87,7 @@
 		<xacro:unless value="${use_simulated_kinect}">
 			<link name="camera_link_support_axis" />
 			<joint name="camera_link_support_axis_joint" type="fixed">
-				<origin xyz="-0.02 -0.015 0.0" rpy="1.5708 0.619 0.0" />
+				<origin xyz="-0.02 -0.015 0.0" rpy="1.5708 0.623 0.0" />
 				<parent link="support_top_link" />
 				<child link="camera_link_support_axis" />
 			</joint>
@@ -103,7 +103,7 @@
 		
 		<sensor_imu parent="base_link" /> <!-- guardian_robot_control uses imu to update odometry -->
 
-		<sensor_hokuyo_front parent="base_link" prefix="front_laser" visualize="true" origin_x="0.46" origin_y="-0.0025" origin_z="0.2595" origin_roll="0.0" origin_pitch="0.0" origin_yaw="-0.026" />
+		<sensor_hokuyo_front parent="base_link" prefix="front_laser" visualize="true" origin_x="0.026" origin_y="-0.0015" origin_z="0.0565" origin_roll="-0.013" origin_pitch="0.0" origin_yaw="-0.023" />
 		<sensor_hokuyo_back parent="base_link" prefix="back_laser" visualize="true" origin_x="-0.433" origin_y="-0.0085" origin_z="0.3065" origin_roll="0.0" origin_pitch="0.0" origin_yaw="${PI}" />
 	</xacro:macro>
 </robot>

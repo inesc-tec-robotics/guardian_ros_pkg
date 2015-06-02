@@ -22,7 +22,7 @@
 		
 		<joint name="hokuyo_${prefix}_tilt_support_joint" type="fixed">
 			<axis xyz="0 1 0" />
-			<origin xyz="${origin_x} ${origin_y} ${origin_z}" rpy="${origin_roll} ${origin_pitch} ${origin_yaw}" />
+			<origin xyz="0.46 -0.0025 0.2535" rpy="0.0 0.0 0.0" />
 			<parent link="${parent}" />
 			<child link="hokuyo_${prefix}_tilt_support_link" />
 			<limit effort="30" lower="-2.6" upper="2.6" velocity="2.0"/>
@@ -61,7 +61,7 @@
 		<!-- front laser -->
 		<joint name="hokuyo_${prefix}_joint" type="fixed">
 			<axis xyz="0 1 0" />
-			<origin xyz="0.026 -0.0015 0.0565" />
+			<origin xyz="${origin_x} ${origin_y} ${origin_z}" rpy="${origin_roll} ${origin_pitch} ${origin_yaw}" />
 			<parent link="hokuyo_${prefix}_tilt_axis_link" />
 			<child link="hokuyo_${prefix}_link" />
 		</joint>
