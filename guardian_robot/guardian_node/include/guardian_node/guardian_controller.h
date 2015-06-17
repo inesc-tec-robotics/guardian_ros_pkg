@@ -367,6 +367,7 @@ class guardian_controller: public Component {
         //! Configs the constants parameters
         void ConfigureConstants();
 
+        int sleepTime;
 };
 
 

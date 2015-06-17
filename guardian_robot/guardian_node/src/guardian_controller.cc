@@ -86,6 +86,8 @@ guardian_controller::guardian_controller(const char *device, double hz): Compone
     this->linearSpeedMps = 0.0;
     this->angularSpeedRads = 0.0;
     this->robot_data.channel_A_ref = this->robot_data.channel_B_ref = 0;
+
+    this->sleepTime=20;
 }
 
 /*!	\fn guardian_controller::~guardian_controller()
@@ -138,7 +140,7 @@ ReturnValue guardian_controller::Configure(){
 		ROS_DEBUG("guardian_controller::Configure succeeded");
 
     //Wait 10 ms before sending another command to device
-	sleepms(10);
+    sleepms(sleepTime);
 
 	return OK;
 }
@@ -174,7 +176,7 @@ void guardian_controller::ReadBatteryVoltage(){
         robot_data.battery = CalculateBattery(robot_data.voltage);
     }
     //Wait 10 ms before sending another command to device
-	sleepms(10);
+    sleepms(sleepTime);
 }
 
 /*!	\fn void void guardian_controller::ReadTemperature()
@@ -195,7 +197,7 @@ void guardian_controller::ReadTemperature(){
         //robot_data.temperature[1]=ValToHSTemp(HexToDec(&buf[4],2));
     }
     //Wait 10 ms before sending another command to device
-	sleepms(10);
+    sleepms(sleepTime);
 }
 
 /*!	\fn void void guardian_controller::ReadControlMode()
@@ -217,7 +219,7 @@ void guardian_controller::ReadMotorControlMode(){
         //robot_data.temperature[1]=ValToHSTemp(HexToDec(&buf[4],2));
     }
     //Wait 10 ms before sending another command to device
-	sleepms(10);
+    sleepms(sleepTime);
 }
 
 /*!	\fn void void guardian_controller::ReadInputControlMode()
@@ -260,7 +262,7 @@ void guardian_controller::WriteMotorControlMode(MotorControlMode mcm){
         ROS_DEBUG("guardian_controller::WriteMotorControlMode: Set mode %d", mode);
     }
     //Wait 10 ms before sending another command to device
-	sleepms(10);
+    sleepms(sleepTime);
 }
 
 /*!	\fn int guardian_controller::ReadAnalogInput(int number)
@@ -285,7 +287,7 @@ int guardian_controller::ReadAnalogInput(int number){
         robot_data.analog_input[number-1] = (float)input/1000.0;    // Converts from mV to V
     }
     //Wait 10 ms before sending another command to device
-	sleepms(10);
+    sleepms(sleepTime);
 
 	return status;
 
@@ -311,7 +313,7 @@ int guardian_controller::ReadDigitalInput(int number){
         robot_data.digital_input[number-1] = input;
     }
     //Wait 10 ms before sending another command to device
-	sleepms(10);
+    sleepms(sleepTime);
 
 	return status;
 }
@@ -382,7 +384,7 @@ int guardian_controller::ReadEncoders(){
         bEncR = true;
     }
     //Wait 10 ms before sending another command to device
-	sleepms(10);
+    sleepms(sleepTime);
 
     if (bEncL && bEncR)
 		return OK;
@@ -428,7 +430,7 @@ void guardian_controller::WriteMotorSpeed(int channel_a, int channel_b){
         ROS_ERROR("guardian_controller::WriteMotorSpeed: Error setting channel A (error = %d)", status);
     }else{
 
-        sleepms(10);
+        sleepms(sleepTime);
 		//ROS_INFO("guardian_controller::WriteMotorSpeed: setting channel B ( %d)", channel_b);
         status = roboteq->SetCommand(_GO, 2, channel_b);
         if( status != RQ_SUCCESS){
@@ -437,7 +439,7 @@ void guardian_controller::WriteMotorSpeed(int channel_a, int channel_b){
 		
     }
     //Wait 10 ms before sending another command to device
-    sleepms(10);
+    sleepms(sleepTime);
 
     // Saves the last references sent to the channels
     robot_data.channel_A_ref = channel_a;
