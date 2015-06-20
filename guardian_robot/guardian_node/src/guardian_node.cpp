@@ -28,7 +28,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * \author Robotnik Automation
- *		   Román Navarro(rnavarro@robotnik.es)
+ *		   Rom��n Navarro(rnavarro@robotnik.es)
  * (C) 2012 Robotnik Automation, SLL
  */
 
@@ -40,6 +40,7 @@
 #include <guardian_node/guardian_controller.h>
 #include <guardian_node/guardian_state.h>
 #include <string>
+#include <sstream>
 #include <ros/ros.h>
 #include <sensor_msgs/JointState.h>
 
@@ -254,9 +255,17 @@ void check_powersupply(diagnostic_updater::DiagnosticStatusWrapper &stat)
 		stat.add("Battery Voltage", volt); // Battery Voltage
 		stat.addf("Battery (%)", "%.3f", batt); // Battery %
 
-		 std::cout << GREEN <<"*** battery: " << batt  << RESET;
-		        std::cout << RED <<"%| v:  " << volt << RESET << std::endl;
 
+		std::stringstream ss;
+		ss << "Battery level: " << batt << "% | Battery voltage: " << volt << " v";
+
+		if (batt < 10) {
+			ROS_ERROR(ss.str().c_str());
+		} else if (batt < 20) {
+			ROS_WARN(ss.str().c_str());
+		} else {
+			ROS_INFO(ss.str().c_str());
+		}
 	}
 }
 
@@ -351,6 +360,7 @@ int main(int argc, char** argv){
 
   	if(!guardian_hw_interface){
       	ROS_ERROR("Something wrong with the hardware interface pointer!");
+      	exit -1;
   	}else{
 		// Applies the configuration to the driver
 		// For odom using tracks, the configuration is pre-defined by default
