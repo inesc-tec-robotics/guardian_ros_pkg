@@ -45,11 +45,11 @@
 			</plugin>
 		</gazebo>
 
-		<link name="imu_um7_link" />
-		<joint name="imu_um7_joint" type="fixed">
+		<link name="imu_link" />
+		<joint name="imu_joint" type="fixed">
 			<origin xyz="0.056 0.0 0.1355" rpy="0 0 0 " />
 			<parent link="${parent}" />
-			<child link="imu_um7_link" />
+			<child link="imu_link" />
 		</joint>
 	</xacro:macro>
 </robot>

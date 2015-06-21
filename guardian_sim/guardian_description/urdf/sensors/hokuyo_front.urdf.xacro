@@ -50,7 +50,9 @@
 
 		<transmission name="joint_${prefix}_trans">
 			<type>transmission_interface/SimpleTransmission</type>
-			<joint name="hokuyo_${prefix}_joint" />
+			<joint name="hokuyo_${prefix}_tilt_joint" >
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+			</joint>
 			<actuator name="${prefix}_motor">
 				<hardwareInterface>EffortJointInterface</hardwareInterface>
 				<mechanicalReduction>${ptz_mechanical_reduction}</mechanicalReduction>

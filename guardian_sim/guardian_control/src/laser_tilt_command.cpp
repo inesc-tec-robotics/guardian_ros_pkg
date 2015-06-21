@@ -17,7 +17,7 @@ void jointStateCallback(const sensor_msgs::JointStateConstPtr& msg)
   joint_state = *msg;
 
   std::vector<std::string> joint_name = joint_state.name;
-  int tilt_laser = std::find (joint_name.begin(),joint_name.end(), std::string("hokuyo_tilt_laser_joint")) - joint_name.begin();
+  int tilt_laser = std::find (joint_name.begin(),joint_name.end(), std::string("hokuyo_front_laser_tilt_joint")) - joint_name.begin();
 
   joint_pos = joint_state.position[tilt_laser]*180/PI; //laser joint position
 
