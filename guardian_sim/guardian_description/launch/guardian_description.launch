@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-	<arg name="use_wheels" default="0" />  <!-- only need to change this line to change between wheels and tracks -->
+	<arg name="use_wheels" default="1" />  <!-- only need to change this line to change between wheels and tracks -->
 	
 	<arg name="publish_odom_on_guardian_robot_control" default="true" if="$(arg use_wheels)" />
 	<arg name="publish_odom_on_guardian_robot_control" default="false" unless="$(arg use_wheels)" />
