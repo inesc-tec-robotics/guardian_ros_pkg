@@ -1,19 +1,11 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:include filename="$(find guardian_description)/urdf/guardian_base.gazebo" />
-	<xacro:include filename="$(find guardian_description)/urdf/sensors/kinect.urdf.xacro" />
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/imu.urdf.xacro" />
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/hokuyo_front.urdf.xacro" />
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/hokuyo_back.urdf.xacro" />
 
-	<!-- schunk arm dependencies -->
-	<xacro:include filename="$(find cob_description)/urdf/common.xacro" />
-	<xacro:include filename="$(find schunk_description)/urdf/materials.urdf.xacro" />
-	<xacro:include filename="$(find cob_description)/gazebo/gazebo.urdf.xacro" />
-	<xacro:include filename="$(find schunk_lwa4p)/calibration/calibration.urdf.xacro" />
-	<xacro:include filename="$(find schunk_description)/urdf/lwa4p/lwa4p.urdf.xacro" />
-
-	<xacro:macro name="guardian_base" params="base_footprint_z use_simulated_kinect">
+	<xacro:macro name="guardian_base" params="base_footprint_z use_simulated_kinect use_schunk_arm" >
 
 		<!-- BASE FOOTPRINT -->
 		<!-- base_footprint is a fictitious link(frame) that is on the ground right below base_link origin, navigation stack depends on this frame -->
@@ -83,125 +75,15 @@
 			</collision>
 		</link>
 
-
-		<!-- SCHUNK LWA4P ARM -->
-		<xacro:schunk_lwa4p name="arm" parent="base_link">
-			<origin xyz="0.15 0 0.37" rpy="0 0 0" />
-		</xacro:schunk_lwa4p>
-
-		<!-- ft45 force and torque sensor -->
-		<link name="ft45_link">
-			<visual>
-				<origin xyz="0 0 -0.025" rpy="0 0 0" />
-				<geometry>
-					<cylinder radius="0.04" length="0.05" />
-				</geometry>
-			</visual>
-			<collision>
-				<origin xyz="0 0 -0.025" rpy="0 0 0" />
-				<geometry>
-					<cylinder radius="0.04" length="0.05" />
-				</geometry>
-			</collision>
-		</link>
-
-		<joint name="ft45_joint" type="fixed">
-			<parent link="arm_6_link" />
-			<child link="ft45_link" />
-			<origin xyz="0 0 0.13" rpy="0 0 0" />
-		</joint>
-
-		<!-- camera coupler -->
-		<link name="coupler_link">
-			<visual>
-				<origin xyz="0 0 -0.002" rpy="0 0 0" />
-				<geometry>
-					<box size="0.24 0.1 0.002" />
-				</geometry>
-			</visual>
-			<collision>
-				<origin xyz="0 0 -0.002" rpy="0 0 0" />
-				<geometry>
-					<box size="0.24 0.1 0.002" />
-				</geometry>
-			</collision>
-		</link>
-
-		<joint name="coupler_joint" type="fixed">
-			<parent link="ft45_link" />
-			<child link="coupler_link" />
-			<origin xyz="0 0 0.002" rpy="0 0 0" />
-		</joint>
-
-		<!-- camera -->
-		<link name="v_camera_link">
-			<visual>
-				<origin xyz="0 0 -0.01" rpy="0 0 0" />
-				<geometry>
-					<box size="0.03 0.07 0.02" />
-				</geometry>
-			</visual>
-			<collision>
-				<origin xyz="0 0 -0.01" rpy="0 0 0" />
-				<geometry>
-					<box size="0.03 0.07 0.02" />
-				</geometry>
-			</collision>
-		</link>
-
-		<joint name="v_camera_joint" type="fixed">
-			<parent link="coupler_link" />
-			<child link="v_camera_link" />
-			<origin xyz="-0.095 0 0.02" rpy="0 0 0" />
-		</joint>
-
-		<!-- projector -->
-		<link name="projector_link">
-			<visual>
-				<origin xyz="0 0 -0.05" rpy="0 0 0" />
-				<geometry>
-					<box size="0.05 0.15 0.1" />
-				</geometry>
-			</visual>
-			<collision>
-				<origin xyz="0 0 -0.05" rpy="0 0 0" />
-				<geometry>
-					<box size="0.05 0.15 0.1" />
-				</geometry>
-			</collision>
-		</link>
-
-		<joint name="projector_joint" type="fixed">
-			<parent link="coupler_link" />
-			<child link="projector_link" />
-			<origin xyz="0.08 0 0.02" rpy="0 0 0" />
-		</joint>
-
-		<!-- welding tool -->
-		<link name="tool_link">
-			<visual>
-				<origin xyz="0 0 -0.07" rpy="0 0 0" />
-				<geometry>
-					<cylinder radius="0.03" length="0.14" />
-				</geometry>
-			</visual>
-			<collision>
-				<origin xyz="0 0 -0.07" rpy="0 0 0" />
-				<geometry>
-					<cylinder radius="0.03" length="0.14" />
-				</geometry>
-			</collision>
-		</link>
-
-		<joint name="tool_joint" type="fixed">
-			<parent link="coupler_link" />
-			<child link="tool_link" />
-			<origin xyz="0 0 0.14" rpy="0 0 0" />
-		</joint>
-
+		<!-- ################# ARM ################# -->
+		<!-- <xacro:if value="${use_schunk_arm}">
+			<xacro:include filename="$(find guardian_description)/urdf/schunk_arm.urdf.xacro" />
+			<schunk_arm parent="base_link" />
+		</xacro:if> -->
 
 		<!-- ################# SENSORS ################# -->
 		<xacro:if value="${use_simulated_kinect}">
+			<xacro:include filename="$(find guardian_description)/urdf/sensors/kinect.urdf.xacro" />
 			<sensor_kinect parent="base_link" />
 		</xacro:if>
 		<xacro:unless value="${use_simulated_kinect}">

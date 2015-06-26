@@ -4,7 +4,7 @@
   <xacro:include filename="$(find guardian_description)/urdf/sensors/kinect_gazebo.urdf.xacro"/>
   
   <!-- Parameterised in part by the values in turtlebot_properties.urdf.xacro -->
-  <xacro:macro name="sensor_kinect" params="parent">
+  <xacro:macro name="sensor_kinect" params="parent" >
     <joint name="camera_rgb_joint" type="fixed">
       <origin xyz="${cam_px} ${cam_py} ${cam_pz}" rpy="${cam_or} ${cam_op} ${cam_oy}"/>
       <parent link="${parent}"/>
