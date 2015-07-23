@@ -43,7 +43,7 @@
 	<!-- Load the URDF into the ROS Parameter Server -->
 	<!-- <param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_simple_collision.urdf.xacro'" /> -->
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_wheels.urdf.xacro' useSimulatedKinect:=$(arg use_simulated_kinect)" if="$(arg use_wheels)" />
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_tracks.urdf.xacro' publishOdometryMsg:=$(arg publish_odom_on_multi_wheel_plugin) publishOdometryTf:=$(arg publish_odom_tf_on_multi_wheel_plugin) useSimulatedKinect:=$(arg use_simulated_kinect)" unless="$(arg use_wheels)" />
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_tracks.urdf.xacro' useSimulatedKinect:=$(arg use_simulated_kinect) publishOdometryMsg:=$(arg publish_odom_on_multi_wheel_plugin) publishOdometryTf:=$(arg publish_odom_tf_on_multi_wheel_plugin)" unless="$(arg use_wheels)" />
 
 	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
 		args="-urdf -model guardian -param robot_description -x $(arg robot_initial_x) -y $(arg robot_initial_y) -Y $(arg robot_initial_yaw)" />
