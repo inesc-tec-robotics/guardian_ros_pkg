@@ -4,6 +4,7 @@
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/imu.urdf.xacro" />
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/hokuyo_front.urdf.xacro" />
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/hokuyo_back.urdf.xacro" />
+	<xacro:include filename="$(find guardian_description)/urdf/sensors/kinect.urdf.xacro" />
 
 	<xacro:macro name="guardian_base" params="base_footprint_z use_simulated_kinect use_schunk_arm" >
 
@@ -83,7 +84,6 @@
 
 		<!-- ################# SENSORS ################# -->
 		<xacro:if value="${use_simulated_kinect}">
-			<xacro:include filename="$(find guardian_description)/urdf/sensors/kinect.urdf.xacro" />
 			<sensor_kinect parent="base_link" />
 		</xacro:if>
 		<xacro:unless value="${use_simulated_kinect}">
