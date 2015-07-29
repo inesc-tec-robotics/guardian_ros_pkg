@@ -128,9 +128,6 @@ double DTOR(double val){
 
 //! Check the robot's state and modifies the guardian_state variable
 void CheckRobotState(){
-	//States state = guardian_hw_interface->GetState();
-	robot_state.status_msg.assign("--");
-
 	roboteq_data ax_data;
 	pose ax_pose;
 		
@@ -354,7 +351,7 @@ int main(int argc, char** argv){
 	ROS_INFO("guardian_node::main: Encoder config: %d, dir: %d, angular_dir = %d", encoder_config_, encoder_dir_, angular_dir_);
 	ROS_INFO("guardian_node::main: Publish TF:%s", publish_tf_?"true":"false");
 	// Interface creation (Closed Loop Mixed Velocity Control)
-	guardian_hw_interface = new guardian_controller((char*)sDevicePort.c_str(), 20.0);		
+	guardian_hw_interface = new guardian_controller((char*)sDevicePort.c_str(), 20.0);
 	// Applying encoder config...
 	guardian_hw_interface->SetEncoderConfig(encoder_config_, encoder_dir_, angular_dir_);
 
@@ -390,10 +387,10 @@ int main(int argc, char** argv){
 		if(guardian_hw_interface->Start()!= OK){
 		    ROS_ERROR("main: Error in guardian Start");
 		}
-		/*while(guardian_hw_interface->GetState() != READY_STATE){			
+		while(guardian_hw_interface->GetState() != READY_STATE){
 			ROS_ERROR("Main: Waiting until READY_STATE (%s). Trying it every %d seconds", guardian_hw_interface->GetStateString(), 2);
 			sleep(2);
-		} */
+		}
 	}
 	
 	for(int i = 0; i < GUARDIAN_JOINTS; i++){

@@ -20,8 +20,6 @@
 
 using namespace std;
 
-int max_left = 0; //apagar???
-int max_right = 0;
 /*!	\fn guardian_controller::guardian_controller(const char *device, double hz)
  * 	\brief Public parmetrized constructor
 */
@@ -115,8 +113,9 @@ guardian_controller::~guardian_controller(){
 ReturnValue guardian_controller::Open(){
 
 	// Setup and start guardian_controller device
-	if(this->roboteq->Connect(sDevice) != RQ_SUCCESS) {
-		ROS_ERROR("guardian_controller::Open: Error opening roboteq port");
+	int status = this->roboteq->Connect(sDevice);
+	if(status != RQ_SUCCESS) {
+		ROS_ERROR("guardian_controller::Open: Error opening roboteq port: error = %d", status);
 		SwitchToState(FAILURE_STATE);
 		this->iErrorType = GUARDIAN_CONTROLLER_ERROR_OPENING;
 		return ERROR;
@@ -135,7 +134,7 @@ ReturnValue guardian_controller::Open(){
 ReturnValue guardian_controller::Configure(){
     int status = 0;
     if( (status = roboteq->SetConfig(_DINA, 1, 1)) != RQ_SUCCESS)
-		ROS_ERROR("guardian_controller::Configure: failed --> %d", status);
+		ROS_ERROR("guardian_controller::Configure: failed: error = %d", status);
 	else
 		ROS_DEBUG("guardian_controller::Configure succeeded");
 
@@ -240,7 +239,7 @@ void guardian_controller::ReadInputControlMode(){
         //robot_data.temperature[1]=ValToHSTemp(HexToDec(&buf[4],2));
     }
     //Wait 10 ms before sending another command to device
-	sleepms(10);*/
+	sleepms(sleepTime);*/
 
 }
 
@@ -373,7 +372,7 @@ int guardian_controller::ReadEncoders(){
         bEncL = true;
     }
     //Wait 10 ms before sending another command to device
-	sleepms(10);
+	sleepms(sleepTime);
 
 	// ENCODER RIGHT
 	//ROS_INFO("guardian_controller::ReadEncoders: RIGHT");
@@ -402,9 +401,13 @@ int guardian_controller::ReadEncoders(){
  *	\return ERROR
 */
 int guardian_controller::ResetEncoders(){
-
-
-	return OK;
+	if (ReadEncoders() == OK) {
+		this->robot_data.last_encoder_right = this->robot_data.encoder_right;
+		this->robot_data.last_encoder_left = this->robot_data.encoder_left;
+		return OK;
+	} else {
+		return ERROR;
+	}
 }
 
 
