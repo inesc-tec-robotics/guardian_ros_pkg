@@ -16,6 +16,8 @@
 #include <unistd.h>
 #include <sstream>
 
+#include <ros/console.h>
+
 #include "guardian_node/RoboteqDevice.h"
 #include "guardian_node/ErrorCodes.h"
 
@@ -184,6 +186,8 @@ int RoboteqDevice::Write(string str)
 	//cout<<"Writing: "<<ReplaceString(str, "\r", "\r\n");
 	int countSent = write(handle, str.c_str(), str.length());
 
+    ROS_DEBUG_STREAM_NAMED("serial_data_write", str);
+
 	//Verify weather the Transmitting Data on UART was Successful or Not
 	if(countSent < 0)
 		return RQ_ERR_TRANSMIT_FAILED;
@@ -209,6 +213,8 @@ int RoboteqDevice::ReadAll(string &str)
 		if(countRcv < BUFFER_SIZE)
 			break;
 	}
+
+    ROS_DEBUG_STREAM_NAMED("serial_data_read", str);
 
 	if(countRcv < 0)
 	{
