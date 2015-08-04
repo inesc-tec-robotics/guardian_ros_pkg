@@ -257,11 +257,11 @@ void check_powersupply(diagnostic_updater::DiagnosticStatusWrapper &stat)
 		ss << "Battery level: " << batt << "% | Battery voltage: " << volt << " v";
 
 		if (batt < 10) {
-			ROS_ERROR(ss.str().c_str());
+			ROS_ERROR_STREAM(ss.str());
 		} else if (batt < 20) {
-			ROS_WARN(ss.str().c_str());
+			ROS_WARN_STREAM(ss.str());
 		} else {
-			ROS_INFO(ss.str().c_str());
+			ROS_INFO_STREAM(ss.str());
 		}
 	}
 }
@@ -275,7 +275,7 @@ int main(int argc, char** argv){
 	ros::NodeHandle n, pn("~");
 	pose robot_pose;	// Position & velocity from the odometry
 	double max_linear_speed_, max_angular_speed_;
-	double diameter_wheels_, distance_between_wheels_, error_factor_;	// Diameter of the wheels and distance between them
+	double diameter_wheels_, diameter_wheels_correction_ratio_, distance_between_wheels_, distance_between_wheels_correction_ratio_;	// Diameter of the wheels and distance between them
 	sensor_msgs::JointState robot_joints_;
 	double desired_freq_ = 0;
 	
@@ -323,14 +323,17 @@ int main(int argc, char** argv){
     {
         pn.param("diameter_wheels", diameter_wheels_,  MOTOR_DIAMETER_TRACK_WHEEL);
         pn.param("distance_between_wheels", distance_between_wheels_,  MOTOR_D_TRACKS_M);
-        pn.param("error_factor", error_factor_, ERROR_D_2);
+        pn.param("distance_between_wheels_correction_ratio", distance_between_wheels_correction_ratio_, ERROR_D_2);
     }
     else
     {
         pn.param("diameter_wheels", diameter_wheels_,  MOTOR_DIAMETER_WHEEL);
         pn.param("distance_between_wheels", distance_between_wheels_,  MOTOR_D_WHEELS_M);
-        pn.param("error_factor", error_factor_, ERROR_D_1);
+        pn.param("distance_between_wheels_correction_ratio", distance_between_wheels_correction_ratio_, ERROR_D_1);
     }
+
+    pn.param("diameter_wheels_correction_ratio", diameter_wheels_correction_ratio_, 1.0);
+
 	pn.param("encoder_config", encoder_config_, ROBOTEQ_DEFAULT_ENCODER_CONF);
 	pn.param("encoder_dir", encoder_dir_, ROBOTEQ_DEFAULT_ENCODER_DIR);
 	pn.param("angular_dir", angular_dir_, ROBOTEQ_DEFAULT_ANGULAR_DIR);
@@ -369,7 +372,8 @@ int main(int argc, char** argv){
 			distance_between_wheels_ *= ERROR_D_1;	// Applying error factor for odom calcs
 		}*/
   		
-  		distance_between_wheels_ *= error_factor_;
+  		distance_between_wheels_ *= distance_between_wheels_correction_ratio_;
+  		diameter_wheels_ *= diameter_wheels_correction_ratio_;
   		
 		// Sets the max. speed read from the param
 		guardian_hw_interface->SetSpeedLimits(max_linear_speed_, DTOR(max_angular_speed_));
