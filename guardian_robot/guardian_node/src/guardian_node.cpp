@@ -257,11 +257,11 @@ void check_powersupply(diagnostic_updater::DiagnosticStatusWrapper &stat)
 		ss << "Battery level: " << batt << "% | Battery voltage: " << volt << " v";
 
 		if (batt < 10) {
-			ROS_ERROR_STREAM(ss.str());
+			if (batt > 0) { ROS_ERROR_STREAM(ss.str()); }
 		} else if (batt < 20) {
 			ROS_WARN_STREAM(ss.str());
 		} else {
-			ROS_INFO_STREAM(ss.str());
+			ROS_DEBUG_STREAM(ss.str());
 		}
 	}
 }
@@ -389,12 +389,13 @@ int main(int argc, char** argv){
 			ROS_ERROR("Main: Error in guardian setup. Trying it every %d seconds", t);
 		}
 		if(guardian_hw_interface->Start()!= OK){
-		    ROS_ERROR("main: Error in guardian Start");
+		    ROS_ERROR("Main: Error in guardian Start");
 		}
 		while(guardian_hw_interface->GetState() != READY_STATE){
 			ROS_ERROR("Main: Waiting until READY_STATE (%s). Trying it every %d seconds", guardian_hw_interface->GetStateString(), 2);
 			sleep(2);
 		}
+		ROS_INFO("Main: READY");
 	}
 	
 	for(int i = 0; i < GUARDIAN_JOINTS; i++){

@@ -9,10 +9,13 @@
 #ifndef __RoboteqDevice_H_
 #define __RoboteqDevice_H_
 
+#include <time.h>
+
 using namespace std;
 
 string ReplaceString(string source, string find, string replacement);
 void sleepms(int milliseconds);
+double get_current_time_ms();
 
 class RoboteqDevice
 {
@@ -24,11 +27,11 @@ private:
 protected:
 	void InitPort();
 
-	int Write(string str);
-	int ReadAll(string &str);
+	int Write(string str, double timeout_millisec = 500);
+	int ReadAll(string &str, size_t number_of_expected_lines = 2, double timeout_millisec = 500, char line_delimiter = '\r');
 
-	int IssueCommand(string commandType, string command, string args, int waitms, string &response, bool isplusminus = false);
-	int IssueCommand(string commandType, string command, int waitms, string &response, bool isplusminus = false);
+	int IssueCommand(string commandType, string command, string args, int waitms, string &response, bool isplusminus = false, size_t number_of_expected_lines = 2, double timeout_millisec = 500);
+	int IssueCommand(string commandType, string command, int waitms, string &response, bool isplusminus = false, size_t number_of_expected_lines = 2, double timeout_millisec = 500);
 
 public:
 	bool IsConnected();

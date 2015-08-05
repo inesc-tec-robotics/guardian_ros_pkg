@@ -178,81 +178,104 @@ void RoboteqDevice::InitPort()
     fcntl(handle,F_SETFL, FNDELAY);	
 }
 
-int RoboteqDevice::Write(string str)
+int RoboteqDevice::Write(string str, double timeout_millisec)
 {
+	ROS_DEBUG_STREAM_NAMED("serial_data_write", str);
+
 	if(!IsConnected())
 		return RQ_ERR_NOT_CONNECTED;
 
 	//cout<<"Writing: "<<ReplaceString(str, "\r", "\r\n");
-	int countSent = write(handle, str.c_str(), str.length());
+	size_t number_bytes_left = str.length();
+	size_t current_byte = 0;
+	double start_time = get_current_time_ms();
+	while (number_bytes_left > 0) {
+		if (get_current_time_ms() - start_time > timeout_millisec) {
+			ROS_DEBUG_STREAM_NAMED("serial_data_write", "Timeout of " << timeout_millisec << "reached when sending " << str.length() << " bytes");
+			return RQ_ERR_TRANSMIT_FAILED;
+		}
 
-    ROS_DEBUG_STREAM_NAMED("serial_data_write", str);
+		int number_bytes_sent = write(handle, &str.c_str()[current_byte], number_bytes_left);
+		if (number_bytes_sent < 0) {
+			return RQ_ERR_TRANSMIT_FAILED;
+		}
+		
+		number_bytes_left -= number_bytes_sent;
+		current_byte += number_bytes_sent;
+	}
 
-	//Verify weather the Transmitting Data on UART was Successful or Not
-	if(countSent < 0)
-		return RQ_ERR_TRANSMIT_FAILED;
+	if (fsync(handle) < 0) {
+		if (errno != EROFS && errno != EINVAL) { return RQ_ERR_TRANSMIT_FAILED; }
+	}
 
 	return RQ_SUCCESS;
 }
 
-int RoboteqDevice::ReadAll(string &str)
+int RoboteqDevice::ReadAll(string &str, size_t number_of_expected_lines, double timeout_millisec, char line_delimiter)
 {
-	int countRcv;
 	if(!IsConnected())
 		return RQ_ERR_NOT_CONNECTED;
 
 	char buf[BUFFER_SIZE + 1] = "";
 
 	str = "";
-	int i = 0;
-	while((countRcv = read(handle, buf, BUFFER_SIZE)) > 0)
+	int countRcv = 0;
+	size_t number_of_lines_received = 0;
+	double start_time = get_current_time_ms();
+	while(number_of_lines_received < number_of_expected_lines)
 	{
-		str.append(buf, countRcv);
+		if (get_current_time_ms() - start_time > timeout_millisec) {
+			ROS_DEBUG_STREAM_NAMED("serial_data_read", "Timeout of " << timeout_millisec << " ms reached: read " << number_of_lines_received << " lines with " << str.size() << " bytes -> content: [" << str << "]");
+			return RQ_ERR_SERIAL_IO;
+		}
 
-		//No further data.
-		if(countRcv < BUFFER_SIZE)
-			break;
+		countRcv = read(handle, buf, BUFFER_SIZE);
+		if(countRcv == -1 && errno != EAGAIN) { return RQ_ERR_SERIAL_RECEIVE; }
+
+		if(countRcv > (BUFFER_SIZE + 1)) {
+			ROS_DEBUG_STREAM_NAMED("serial_data_read", "Received " << countRcv << " bytes with a buffer of " << (BUFFER_SIZE + 1));
+			return RQ_ERR_SERIAL_RECEIVE;
+		}
+
+		if (countRcv > 0) {
+			ROS_DEBUG_STREAM_NAMED("serial_data_read", "Received " << countRcv << " bytes -> content: [" << std::string(buf, countRcv) << "]" );
+			for (int i = 0; i < countRcv; ++i) {
+				if (buf[i] == line_delimiter) { ++number_of_lines_received; }
+			}
+			str.append(buf, countRcv);
+		}
 	}
 
     ROS_DEBUG_STREAM_NAMED("serial_data_read", str);
 
-	if(countRcv < 0)
-	{
-		if(errno == EAGAIN)
-			return RQ_ERR_SERIAL_IO;
-		else
-			return RQ_ERR_SERIAL_RECEIVE;
-	}
-
 	return RQ_SUCCESS;
 }
 
-int RoboteqDevice::IssueCommand(string commandType, string command, string args, int waitms, string &response, bool isplusminus)
+int RoboteqDevice::IssueCommand(string commandType, string command, string args, int waitms, string &response, bool isplusminus, size_t number_of_expected_lines, double timeout_millisec)
 {
 	int status;
 	string read;
 	response = "";
 
 	if(args == "")
-		status = Write(commandType + command + "\r");
+		status = Write(commandType + command + "\r", timeout_millisec);
 	else
-		status = Write(commandType + command + " " + args + "\r");
+		status = Write(commandType + command + " " + args + "\r", timeout_millisec);
 
 	if(status != RQ_SUCCESS) {
 		cout << "RoboteqDevice::IssueCommand: error Writing" << endl;
 		return status;
-		}
+	}
 
 	usleep(waitms * 1000l);
 
-	status = ReadAll(read);
+	status = ReadAll(read, number_of_expected_lines, timeout_millisec);
 	if(status != RQ_SUCCESS) {
 		cout << "RoboteqDevice::IssueCommand: error Reading status = " << status << endl;
 		return status;
-		}
+	}
 
-	if(isplusminus)
-	{
+	if(isplusminus) {
 		if(read.length() < 2)
 			return RQ_INVALID_RESPONSE;
 
@@ -275,9 +298,9 @@ int RoboteqDevice::IssueCommand(string commandType, string command, string args,
 
 	return RQ_SUCCESS;
 }
-int RoboteqDevice::IssueCommand(string commandType, string command, int waitms, string &response, bool isplusminus)
+int RoboteqDevice::IssueCommand(string commandType, string command, int waitms, string &response, bool isplusminus, size_t number_of_expected_lines, double timeout_millisec)
 {
-	return IssueCommand(commandType, command, "", waitms, response, isplusminus);
+	return IssueCommand(commandType, command, "", waitms, response, isplusminus, number_of_expected_lines, timeout_millisec);
 }
 
 int RoboteqDevice::SetConfig(int configItem, int index, int value)
@@ -431,4 +454,13 @@ string ReplaceString(string source, string find, string replacement)
 void sleepms(int milliseconds)
 {
 	usleep(milliseconds / 1000);
+}
+
+double get_current_time_ms() { //returns current time in seconds
+	timeval tv;
+	gettimeofday(&tv, NULL);
+	double rtn_value = (double) tv.tv_usec;
+	rtn_value /= 1e6;
+	rtn_value += (double) tv.tv_sec;
+	return rtn_value * 1000.0;
 }
