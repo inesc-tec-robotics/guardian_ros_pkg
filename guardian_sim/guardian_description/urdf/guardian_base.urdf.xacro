@@ -5,6 +5,7 @@
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/hokuyo_front.urdf.xacro" />
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/hokuyo_back.urdf.xacro" />
 	<xacro:include filename="$(find guardian_description)/urdf/sensors/kinect.urdf.xacro" />
+	<xacro:include filename="$(find guardian_description)/urdf/schunk_arm.urdf.xacro" />
 
 	<xacro:macro name="guardian_base" params="base_footprint_z use_simulated_kinect use_schunk_arm" >
 
@@ -76,11 +77,29 @@
 			</collision>
 		</link>
 
+
+
 		<!-- ################# ARM ################# -->
-		<!-- <xacro:if value="${use_schunk_arm}">
-			<xacro:include filename="$(find guardian_description)/urdf/schunk_arm.urdf.xacro" />
-			<schunk_arm parent="base_link" />
-		</xacro:if> -->
+		<link name="arm_link">
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<cylinder radius="0.001" length="0.001" />
+				</geometry>
+			</visual>
+		</link>
+	
+		<joint name="arm_joint" type="fixed">
+			<parent link="base_link" />
+			<child link="arm_link" />
+			<origin xyz="0.15 0 -0.13" rpy="0 0 0" />
+		</joint>
+		
+		<xacro:if value="${use_schunk_arm}">
+			<schunk_arm parent="arm_link" />
+		</xacro:if>
+
+
 
 		<!-- ################# SENSORS ################# -->
 		<xacro:if value="${use_simulated_kinect}">
