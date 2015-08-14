@@ -2,10 +2,10 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 	<!-- schunk arm dependencies -->
 	<xacro:include filename="$(find cob_description)/urdf/common.xacro" />
-	<xacro:include filename="$(find schunk_description)/urdf/materials.urdf.xacro" />
 	<xacro:include filename="$(find cob_description)/gazebo/gazebo.urdf.xacro" />
-	<xacro:include filename="$(find schunk_lwa4p)/calibration/calibration.urdf.xacro" />
 	<xacro:include filename="$(find schunk_description)/urdf/lwa4p/lwa4p.urdf.xacro" />
+	<xacro:include filename="$(find schunk_description)/urdf/materials.urdf.xacro" />
+	<xacro:include filename="$(find schunk_lwa4p)/calibration/calibration.urdf.xacro" />
 
 	<xacro:macro name="schunk_arm" params="parent" >
 

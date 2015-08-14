@@ -2,6 +2,7 @@
 <launch>
 
 	<arg name="use_wheels" default="1" />  <!-- only need to change this line to change between wheels and tracks -->
+	<arg name="use_schunk_arm" default="1" />
 	
 	<arg name="publish_odom_on_guardian_robot_control" default="true" if="$(arg use_wheels)" />
 	<arg name="publish_odom_on_guardian_robot_control" default="false" unless="$(arg use_wheels)" />
@@ -13,7 +14,7 @@
 	<arg name="publish_odom_tf_on_multi_wheel_plugin" value="1" unless="$(arg publish_odom_tf_on_guardian_robot_control)" />
 	
 	<!-- send urdf to param server -->
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_wheels.urdf.xacro' useSimulatedKinect:=false" if="$(arg use_wheels)"/>
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_tracks.urdf.xacro' useSimulatedKinect:=false publishOdometryMsg:=$(arg publish_odom_on_multi_wheel_plugin) publishOdometryTf:=$(arg publish_odom_tf_on_multi_wheel_plugin)" unless="$(arg use_wheels)" />
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_wheels.urdf.xacro' useSimulatedKinect:=false useSchunkArm:=$(arg use_schunk_arm)" if="$(arg use_wheels)"/>
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_tracks.urdf.xacro' useSimulatedKinect:=false useSchunkArm:=$(arg use_schunk_arm) publishOdometryMsg:=$(arg publish_odom_on_multi_wheel_plugin) publishOdometryTf:=$(arg publish_odom_tf_on_multi_wheel_plugin)" unless="$(arg use_wheels)" />
 
 </launch>
