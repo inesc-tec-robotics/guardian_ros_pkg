@@ -74,11 +74,11 @@
 		  </collision>
 		</link>
 		
-		<joint name="v_camera_joint" type="fixed">
+		<!--joint name="v_camera_joint" type="fixed">
 			<parent link="coupler_link" />
 			<child link="v_camera_link" />
 			<origin xyz="-0.11 0 0" rpy="0 0 1.5708" />
-		</joint>
+		</joint-->
 
 		<!-- projector -->
 		<link name="projector_link">
@@ -100,6 +100,12 @@
 		  <parent link="coupler_link" />
 		  <child link="projector_link" />
 		  <origin xyz="0.05 -0.075 0.02" rpy="0 0 0" />
+		</joint>
+
+		<joint name="v_camera_joint" type="fixed">
+		  <parent link="projector_link" />
+		  <child link="v_camera_link" />
+		  <origin xyz="-0.227186 0.0744 -0.0052" rpy="0.00322 0.02632 1.56316" />
 		</joint>
 
 		<!-- welding tool -->
