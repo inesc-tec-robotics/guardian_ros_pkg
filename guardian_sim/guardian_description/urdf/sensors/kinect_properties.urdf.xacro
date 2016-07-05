@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <robot>
 	<property name="M_PI" value="3.1415926535897931" /> 
-	<property name="cam_px" value="0.306" />
+	<property name="cam_px" value="0.326" />
 	<property name="cam_py" value="0" />
-	<property name="cam_pz" value="0.423" />
-	<property name="cam_or" value="0" />
-	<property name="cam_op" value="-0.78539816339" />
-	<property name="cam_oy" value="0" />
+	<property name="cam_pz" value="0.385" />
+	<property name="cam_or" value="1.5707" />
+	<property name="cam_op" value="-0.261799" />
+	<property name="cam_oy" value="0.349066" />
 </robot>

@@ -9,6 +9,7 @@
 	<arg name="use_tilt_on_front_laser" default="false" />
 	<arg name="use_simulated_kinect" default="false" />
 	<arg name="use_schunk_arm" default="false" />
+	<arg name="use_planar_lasers" default="false" />
 	<arg name="use_wheels" default="1" />
 	
 	<arg name="publish_odom_on_guardian_robot_control" default="true" if="$(arg use_wheels)" />
@@ -21,6 +22,7 @@
 	<arg name="publish_odom_tf_on_multi_wheel_plugin" value="1" unless="$(arg publish_odom_tf_on_guardian_robot_control)" />
 	<arg name="robot_initial_x" default="-3.0" />
 	<arg name="robot_initial_y" default="0.0" />
+	<arg name="robot_initial_z" default="0.0" />
 	<arg name="robot_initial_yaw" default="0.0" />
 	
 
@@ -43,11 +45,15 @@
 
 	<!-- Load the URDF into the ROS Parameter Server -->
 	<!-- <param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_simple_collision.urdf.xacro'" /> -->
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_wheels.urdf.xacro' useSimulatedKinect:=$(arg use_simulated_kinect) useSchunkArm:=$(arg use_schunk_arm)" if="$(arg use_wheels)" />
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_tracks.urdf.xacro' useSimulatedKinect:=$(arg use_simulated_kinect) useSchunkArm:=$(arg use_schunk_arm) publishOdometryMsg:=$(arg publish_odom_on_multi_wheel_plugin) publishOdometryTf:=$(arg publish_odom_tf_on_multi_wheel_plugin)" unless="$(arg use_wheels)" />
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_wheels.urdf.xacro' useSimulatedKinect:=$(arg use_simulated_kinect) useSchunkArm:=$(arg use_schunk_arm) usePlanarLasers:=$(arg use_planar_lasers)" if="$(arg use_wheels)" />
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find guardian_description)/urdf/guardian_tracks.urdf.xacro' useSimulatedKinect:=$(arg use_simulated_kinect) useSchunkArm:=$(arg use_schunk_arm) usePlanarLasers:=$(arg use_planar_lasers) publishOdometryMsg:=$(arg publish_odom_on_multi_wheel_plugin) publishOdometryTf:=$(arg publish_odom_tf_on_multi_wheel_plugin)" unless="$(arg use_wheels)" />
+	
+	<include file="$(find lwa4p_moveit_config)/launch/powerball_simulation.launch" if="$(arg use_schunk_arm)">
+		<arg name="load_robot_description" value="false" />
+	</include>
 
 	<node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
-		args="-urdf -model guardian -param robot_description -x $(arg robot_initial_x) -y $(arg robot_initial_y) -Y $(arg robot_initial_yaw)" />
+		args="-urdf -model guardian -param robot_description -x $(arg robot_initial_x) -y $(arg robot_initial_y) -z $(arg robot_initial_z) -Y $(arg robot_initial_yaw)" />
 
 
 	<!-- ros_control guardian launch file -->

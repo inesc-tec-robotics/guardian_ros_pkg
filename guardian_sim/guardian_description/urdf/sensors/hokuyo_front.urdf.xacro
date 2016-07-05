@@ -80,7 +80,7 @@
 		<!-- GAZEBO properties and plugins -->
 		<gazebo reference="hokuyo_${prefix}_link">
 			<material>Gazebo/Grey</material>
-			<sensor type="ray" name="${prefix}_sensor">
+			<sensor type="gpu_ray" name="${prefix}_sensor">
 				<pose>0 0 0 0 0 0</pose>
 				<visualize>${visualize}</visualize>
 				<update_rate>10</update_rate> <!-- rate of 10 for scan time ~ 100 ms -->
@@ -104,7 +104,7 @@
 						<stddev>0.0033</stddev> <!-- 0.0033 -->
 					</noise>
 				</ray>
-				<plugin name="${prefix}_plugin" filename="libgazebo_ros_laser_2D.so">
+				<plugin name="${prefix}_plugin" filename="libgazebo_ros_gpu_laser.so">
 					<topicName>/guardian/laser_tilt_front</topicName>
 					<frameName>hokuyo_${prefix}_link</frameName>
 					<time_increment>0.00009765739</time_increment> <!-- time between measurements --> <!-- 0.0667 sec /683 steps -->
