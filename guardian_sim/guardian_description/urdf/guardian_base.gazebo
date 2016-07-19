@@ -17,7 +17,10 @@
 			<frameName>map</frameName>
 			<updateRate>100.0</updateRate>
 			<gaussianNoise>0.0</gaussianNoise>
-			<xyzOffset>-0.018 -0.074 0.0</xyzOffset>
+			<!-- van back test -->
+			<!-- <xyzOffset>-0.018 -0.074 0.0</xyzOffset> -->
+			<!-- van side test -->
+			<xyzOffset>0.022 -0.11 -0.027</xyzOffset>
 			<rpyOffset>0.0 0.0 0.0</rpyOffset>
 		</plugin>
 	</gazebo>

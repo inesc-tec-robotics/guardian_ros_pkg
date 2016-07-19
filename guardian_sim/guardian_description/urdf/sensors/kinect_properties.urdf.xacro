@@ -5,8 +5,13 @@
 	<property name="cam_py" value="0" />
 	<property name="cam_pz" value="0.33" />
 
-	<property name="cam_or" value="-1.5707" />
-	<property name="cam_op" value="0.0" />
-	<property name="cam_oy" value="0.1" />
-<!-- 	<property name="cam_oy" value="-0.42" /> -->
+	<!-- van back test -->
+	<!-- <property name="cam_or" value="-1.5707" /> -->
+	<!-- <property name="cam_op" value="0.0" /> -->
+	<!-- <property name="cam_oy" value="0.1" /> -->
+
+	<!-- van side test -->
+	<property name="cam_or" value="0" />
+	<property name="cam_op" value="-1.0" />
+	<property name="cam_oy" value="-0.77" />
 </robot>
