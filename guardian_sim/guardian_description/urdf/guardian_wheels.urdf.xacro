@@ -18,8 +18,8 @@
 	<!-- track doesn't have collision, but the chassis has a collision bounding box -->
 
 	<!-- ###### WHEELS ###### -->
-	<wheel parent="base_link" prefix="back_left" origin_yaw="${PI}" reflect_link_y="-1" reflect_joint_x="-1" reflect_joint_y="1" material="Gazebo/FlatBlack" />
-	<wheel parent="base_link" prefix="back_right" origin_yaw="0" reflect_link_y="1" reflect_joint_x="-1" reflect_joint_y="-1" material="Gazebo/FlatBlack" />
+	<wheel parent="base_link" prefix="back_left" origin_yaw="${PI}" reflect_link_y="-1" reflect_joint_x="-1" reflect_joint_y="1" material="Gazebo/DarkGrey" />
+	<wheel parent="base_link" prefix="back_right" origin_yaw="0" reflect_link_y="1" reflect_joint_x="-1" reflect_joint_y="-1" material="Gazebo/DarkGrey" />
 	<wheel parent="base_link" prefix="front_left" origin_yaw="${PI}" reflect_link_y="-1" reflect_joint_x="1" reflect_joint_y="1" material="Gazebo/DarkGrey" />
 	<wheel parent="base_link" prefix="front_right" origin_yaw="0" reflect_link_y="1" reflect_joint_x="1" reflect_joint_y="-1" material="Gazebo/DarkGrey" />
 

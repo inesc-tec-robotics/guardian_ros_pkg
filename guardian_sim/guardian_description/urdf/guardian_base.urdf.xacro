@@ -12,12 +12,12 @@
 		<!-- BASE FOOTPRINT -->
 		<!-- base_footprint is a fictitious link(frame) that is on the ground right below base_link origin, navigation stack depends on this frame -->
 		<link name="base_footprint">
-			<visual>
-				<origin xyz="0 0 0" rpy="0 0 0" />
-				<geometry>
-					<box size="0.005 0.005 0.005" />
-				</geometry>
-			</visual>
+<!-- 			<visual> -->
+<!-- 				<origin xyz="0 0 0" rpy="0 0 0" /> -->
+<!-- 				<geometry> -->
+<!-- 					<box size="0.005 0.005 0.005" /> -->
+<!-- 				</geometry> -->
+<!-- 			</visual> -->
 		</link>
 
 		<joint name="base_footprint_joint" type="fixed">
@@ -68,13 +68,13 @@
 				</material>
 			</visual>
 
-			<collision>
-				<origin xyz="0 0 0.08" rpy="0 0 0 " />
-				<geometry>
+<!-- 			<collision> -->
+<!-- 				<origin xyz="0 0 0.08" rpy="0 0 0 " /> -->
+<!-- 				<geometry> -->
 					<!-- <box size = "1.127 0.497 0.28"/> --> <!-- includes tracks, making it just tall enough not to hit the laser beams -->
-					<box size="1.127 0.497 0.25" /> <!-- this is not enough -->
-				</geometry>
-			</collision>
+<!-- 					<box size="1.127 0.497 0.25" /> this is not enough -->
+<!-- 				</geometry> -->
+<!-- 			</collision> -->
 		</link>
 
 
@@ -125,18 +125,18 @@
 		<sensor_imu parent="base_link" /> <!-- guardian_robot_control uses imu to update odometry -->
 
 		<xacro:if value="${use_planar_lasers}">
-			<sensor_hokuyo_front parent="base_link" prefix="front_laser" visualize="true"
+			<sensor_hokuyo_front parent="base_link" prefix="front_laser" visualize="false"
 				support_x="0.46" 	support_y="0.0" 		support_z="0.2535" 		support_roll="0.0" 		support_pitch="0.0" 	support_yaw="0.0"
 				sensor_x ="0.03" 	sensor_y="0.0" 			sensor_z ="0.0735" 		sensor_roll ="0" 		sensor_pitch ="0.0" 	sensor_yaw ="0.0" />
-			<sensor_hokuyo_back 	parent="base_link" 		prefix="back_laser" 	visualize="true"
+			<sensor_hokuyo_back 	parent="base_link" 		prefix="back_laser" 	visualize="false"
 				origin_x ="-0.43" 	origin_y="-0.0045" 		origin_z ="0.3435" 		origin_roll ="0" 		origin_pitch ="0.0" 	origin_yaw ="${PI}" />
 		</xacro:if>
 	
 		<xacro:unless value="${use_planar_lasers}">
-			<sensor_hokuyo_front parent="base_link" prefix="front_laser" visualize="true"
+			<sensor_hokuyo_front parent="base_link" prefix="front_laser" visualize="false"
 				support_x="0.46" 	support_y="0.0" 		support_z="0.2535" 		support_roll="0.0" 		support_pitch="0.0" 	support_yaw="0.0"
 				sensor_x ="0.03" 	sensor_y="0.0" 			sensor_z ="0.0735" 		sensor_roll ="-0.05" 	sensor_pitch ="0.0" 	sensor_yaw ="0.0" />
-			<sensor_hokuyo_back 	parent="base_link" 		prefix="back_laser" 	visualize="true"
+			<sensor_hokuyo_back 	parent="base_link" 		prefix="back_laser" 	visualize="false"
 				origin_x ="-0.43" 	origin_y="-0.0045" 		origin_z ="0.3435" 		origin_roll ="0.12" 	origin_pitch ="0.0" 	origin_yaw ="${PI-0.015}" />
 		</xacro:unless>
 	</xacro:macro>

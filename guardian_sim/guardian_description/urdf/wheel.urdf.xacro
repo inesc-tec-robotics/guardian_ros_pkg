@@ -38,8 +38,8 @@
 			</visual>
 
 			<collision>
-				<origin xyz="0 ${reflect_link_y * -0.012} 0" rpy="${PI/2} 0 0" /> <geometry> <cylinder length="${simple_wheel_length}" radius="${simple_wheel_radius}"/> </geometry>
-<!-- 				<origin xyz="0 ${reflect_link_y * wheel_origin_y} 0" rpy="0 0 ${origin_yaw}" /> <geometry> <mesh filename="package://guardian_description/meshes/wheel.stl" /> </geometry> -->
+<!-- 				<origin xyz="0 ${reflect_link_y * -0.012} 0" rpy="${PI/2} 0 0" /> <geometry> <cylinder length="${simple_wheel_length}" radius="${simple_wheel_radius}"/> </geometry> -->
+				<origin xyz="0 ${reflect_link_y * wheel_origin_y} 0" rpy="0 0 ${origin_yaw}" /> <geometry> <mesh filename="package://guardian_description/meshes/wheel.stl" /> </geometry>
 			</collision>
 		</link>
 
