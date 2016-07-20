@@ -9,7 +9,7 @@
 
 	<!-- <xacro:property name="wheel_origin_y" value="0.0" /> -->
 	<xacro:property name="wheel_offset_y" value="0.224" />
-	<xacro:property name="wheel_offset_z" value="0.081" /> <!-- 0.15-0.069 -->
+<!-- 	<xacro:property name="wheel_offset_z" value="0.081" /> 0.15-0.069 -->
 
 
 	<xacro:property name="wheel_joint_damping" value="0.0" />
@@ -19,7 +19,7 @@
 	<xacro:property name="wheel_joint_velocity_limit" value="200.0" />
 	<xacro:property name="wheel_mechanical_reduction" value="1.0" />
 
-	<xacro:macro name="track_wheel" params="parent prefix origin_yaw wheel_offset_x reflect_y joint_yaw">
+	<xacro:macro name="track_wheel" params="parent prefix origin_yaw wheel_offset_x wheel_offset_z reflect_y joint_yaw wheel_radius wheel_length">
 
 		<link name="${prefix}">
 			<inertial>
@@ -29,14 +29,14 @@
 				<!-- <inertia ixx="0.00012411765597" ixy="0.0" ixz="0.0" -->
 				<!-- iyy="0.00015218160428" iyz="0.0" -->
 				<!-- izz="0.00011763977943" /> -->
-				<!-- <inertia ixx="${(1/12)*mass*(3*simple_wheel_radius * simple_wheel_radius + simple_wheel_length*simple_wheel_length)}" ixy="0.0" ixz="0.0" -->
-				<!-- iyy="${(1/12)*mass*(3*simple_wheel_radius * simple_wheel_radius + simple_wheel_length*simple_wheel_length)}" iyz="0.0" -->
-				<!-- izz="${0.5*mass*(simple_wheel_radius * simple_wheel_radius)}" /> wikipedia formula -->
+				<!-- <inertia ixx="${(1/12)*mass*(3*wheel_radius * wheel_radius + wheel_length*wheel_length)}" ixy="0.0" ixz="0.0" -->
+				<!-- iyy="${(1/12)*mass*(3*wheel_radius * wheel_radius + wheel_length*wheel_length)}" iyz="0.0" -->
+				<!-- izz="${0.5*mass*(wheel_radius * wheel_radius)}" /> wikipedia formula -->
 			</inertial>
 			<!-- <visual> -->
 			<!-- <origin xyz="0 ${reflect_y * wheel_origin_y} 0" rpy="${PI/2} 0 ${origin_yaw}" /> -->
 			<!-- <geometry> -->
-			<!-- <cylinder length="${simple_wheel_length}" radius="${simple_wheel_radius}"/> -->
+			<!-- <cylinder length="${wheel_length}" radius="${wheel_radius}"/> -->
 			<!-- </geometry> -->
 			<!-- <material name="black"> -->
 			<!-- <color rgba="0.1 0.1 0.1 1"/> -->
@@ -45,7 +45,7 @@
 			<collision>
 				<origin xyz="0 0 0" rpy="${PI/2} 0 ${origin_yaw}" />
 				<geometry>
-					<cylinder length="${simple_wheel_length}" radius="${simple_wheel_radius}" />
+					<cylinder length="${wheel_length}" radius="${wheel_radius}" />
 				</geometry>
 				<!-- <material name="black"/> -->
 			</collision>
@@ -62,7 +62,9 @@
 
 		<transmission name="joint_${prefix}_trans">
 			<type>transmission_interface/SimpleTransmission</type>
-			<joint name="joint_${prefix}" />
+			<joint name="joint_${prefix}">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+			</joint>
 			<actuator name="joint_${prefix}_motor">
 				<hardwareInterface>EffortJointInterface</hardwareInterface>
 				<!-- hardwareInterface>VelocityJointInterface</hardwareInterface -->

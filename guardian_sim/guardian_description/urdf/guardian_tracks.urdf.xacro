@@ -7,7 +7,7 @@
 	<!-- args: useSimulatedKinect useSchunkArm publishOdometryTf publishOdometryMsg -->
 
 	<!-- ###### BASE ###### -->
-	<guardian_base base_footprint_z="0.0635" use_simulated_kinect="$(arg useSimulatedKinect)" use_schunk_arm="$(arg useSchunkArm)" use_planar_lasers="$(arg usePlanarLasers) />
+	<guardian_base base_footprint_z="0.0635" use_simulated_kinect="$(arg useSimulatedKinect)" use_schunk_arm="$(arg useSchunkArm)" use_planar_lasers="$(arg usePlanarLasers)" />
 
 	<!-- ###### TRACKS ###### -->
 	<!-- visual -->
@@ -15,18 +15,34 @@
 	<track parent="base_link" prefix="right_track" joint_yaw="0" />
 
 	<!-- right track collision -->
-	<track_wheel parent="right_track" prefix="right_tw_1" origin_yaw="0" wheel_offset_x="0.3" reflect_y="-1" joint_yaw="0" />
-	<track_wheel parent="right_track" prefix="right_tw_2" origin_yaw="0" wheel_offset_x="0.15" reflect_y="-1" joint_yaw="0" />
-	<track_wheel parent="right_track" prefix="right_tw_3" origin_yaw="0" wheel_offset_x="0" reflect_y="-1" joint_yaw="0" />
-	<track_wheel parent="right_track" prefix="right_tw_4" origin_yaw="0" wheel_offset_x="-0.15" reflect_y="-1" joint_yaw="0" />
-	<track_wheel parent="right_track" prefix="right_tw_5" origin_yaw="0" wheel_offset_x="-0.3" reflect_y="-1" joint_yaw="0" />
+	<track_wheel parent="right_track" prefix="right_tw_0"  origin_yaw="0" wheel_offset_x="0.43"   wheel_offset_z="0.103"  reflect_y="-1" joint_yaw="0" wheel_radius="0.13"   wheel_length="0.05" />
+	<track_wheel parent="right_track" prefix="right_tw_1"  origin_yaw="0" wheel_offset_x="0.375"  wheel_offset_z="0.0945" reflect_y="-1" joint_yaw="0" wheel_radius="0.1375" wheel_length="0.05" />
+	<track_wheel parent="right_track" prefix="right_tw_2"  origin_yaw="0" wheel_offset_x="0.3"    wheel_offset_z="0.086"  reflect_y="-1" joint_yaw="0" wheel_radius="0.147"  wheel_length="0.05" />
+	<track_wheel parent="right_track" prefix="right_tw_3"  origin_yaw="0" wheel_offset_x="0.225"  wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="0" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="right_track" prefix="right_tw_4"  origin_yaw="0" wheel_offset_x="0.15"   wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="0" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="right_track" prefix="right_tw_5"  origin_yaw="0" wheel_offset_x="0.075"  wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="0" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="right_track" prefix="right_tw_6"  origin_yaw="0" wheel_offset_x="0"      wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="0" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="right_track" prefix="right_tw_7"  origin_yaw="0" wheel_offset_x="-0.075" wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="0" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="right_track" prefix="right_tw_8"  origin_yaw="0" wheel_offset_x="-0.15"  wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="0" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="right_track" prefix="right_tw_9"  origin_yaw="0" wheel_offset_x="-0.225" wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="0" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="right_track" prefix="right_tw_10" origin_yaw="0" wheel_offset_x="-0.3"   wheel_offset_z="0.086"  reflect_y="-1" joint_yaw="0" wheel_radius="0.147"  wheel_length="0.05" />
+	<track_wheel parent="right_track" prefix="right_tw_11" origin_yaw="0" wheel_offset_x="-0.375" wheel_offset_z="0.0945" reflect_y="-1" joint_yaw="0" wheel_radius="0.1375" wheel_length="0.05" />
+	<track_wheel parent="right_track" prefix="right_tw_12" origin_yaw="0" wheel_offset_x="-0.43"  wheel_offset_z="0.103"  reflect_y="-1" joint_yaw="0" wheel_radius="0.13"   wheel_length="0.05" />
 
 	<!-- left track collision -->
-	<track_wheel parent="left_track" prefix="left_tw_1" origin_yaw="${PI}" wheel_offset_x="0.3" reflect_y="-1" joint_yaw="${PI}" />
-	<track_wheel parent="left_track" prefix="left_tw_2" origin_yaw="0" wheel_offset_x="0.15" reflect_y="-1" joint_yaw="${PI}" />
-	<track_wheel parent="left_track" prefix="left_tw_3" origin_yaw="0" wheel_offset_x="0" reflect_y="-1" joint_yaw="${PI}" />
-	<track_wheel parent="left_track" prefix="left_tw_4" origin_yaw="0" wheel_offset_x="-0.15" reflect_y="-1" joint_yaw="${PI}" />
-	<track_wheel parent="left_track" prefix="left_tw_5" origin_yaw="0" wheel_offset_x="-0.3" reflect_y="-1" joint_yaw="${PI}" />
+	<track_wheel parent="left_track" prefix="left_tw_0"    origin_yaw="0" wheel_offset_x="0.43"   wheel_offset_z="0.103"  reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.13"   wheel_length="0.05" />
+	<track_wheel parent="left_track" prefix="left_tw_1"    origin_yaw="0" wheel_offset_x="0.375"  wheel_offset_z="0.0945" reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.1375" wheel_length="0.05" />
+	<track_wheel parent="left_track" prefix="left_tw_2"    origin_yaw="0" wheel_offset_x="0.3"    wheel_offset_z="0.086"  reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.147"  wheel_length="0.05" />
+	<track_wheel parent="left_track" prefix="left_tw_3"    origin_yaw="0" wheel_offset_x="0.225"  wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="left_track" prefix="left_tw_4"    origin_yaw="0" wheel_offset_x="0.15"   wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="left_track" prefix="left_tw_5"    origin_yaw="0" wheel_offset_x="0.075"  wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="left_track" prefix="left_tw_6"    origin_yaw="0" wheel_offset_x="0"      wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="left_track" prefix="left_tw_7"    origin_yaw="0" wheel_offset_x="-0.075" wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="left_track" prefix="left_tw_8"    origin_yaw="0" wheel_offset_x="-0.15"  wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="left_track" prefix="left_tw_9"    origin_yaw="0" wheel_offset_x="-0.225" wheel_offset_z="0.081"  reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.15"   wheel_length="0.05" />
+	<track_wheel parent="left_track" prefix="left_tw_10"   origin_yaw="0" wheel_offset_x="-0.3"   wheel_offset_z="0.086"  reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.147"  wheel_length="0.05" />
+	<track_wheel parent="left_track" prefix="left_tw_11"   origin_yaw="0" wheel_offset_x="-0.375" wheel_offset_z="0.0945" reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.1375" wheel_length="0.05" />
+	<track_wheel parent="left_track" prefix="left_tw_12"   origin_yaw="0" wheel_offset_x="-0.43"  wheel_offset_z="0.103"  reflect_y="-1" joint_yaw="${PI}" wheel_radius="0.13"   wheel_length="0.05" />
 
 
 	<!-- ###### PLUGIN ###### -->
@@ -34,11 +50,11 @@
 		<plugin name="diffdrive_plugin_multiwheel" filename="libdiffdrive_plugin_multi_wheel.so">
 			<alwaysOn>true</alwaysOn>
 			<updateRate>10.0</updateRate>
-			<leftJoints>joint_left_tw_1 joint_left_tw_2 joint_left_tw_3 joint_left_tw_4 joint_left_tw_5 </leftJoints>
-			<rightJoints>joint_right_tw_1 joint_right_tw_2 joint_right_tw_3 joint_right_tw_4 joint_right_tw_5 </rightJoints>
+			<leftJoints>joint_left_tw_0 joint_left_tw_1 joint_left_tw_2 joint_left_tw_3 joint_left_tw_4 joint_left_tw_5 joint_left_tw_6 joint_left_tw_7 joint_left_tw_8 joint_left_tw_9 joint_left_tw_10 joint_left_tw_11 joint_left_tw_12</leftJoints>
+			<rightJoints>joint_right_tw_0 joint_right_tw_1 joint_right_tw_2 joint_right_tw_3 joint_right_tw_4 joint_right_tw_5 joint_right_tw_6 joint_right_tw_7 joint_right_tw_8 joint_right_tw_9 joint_right_tw_10 joint_right_tw_11 joint_right_tw_12</rightJoints>
 			<wheelSeparation>0.448</wheelSeparation>
 			<wheelDiameter>0.3</wheelDiameter>
-			<torque>20</torque>
+			<torque>60</torque>
 			<robotBaseFrame>base_footprint</robotBaseFrame>
 			<commandTopic>/guardian/cmd_vel</commandTopic>
 			<odometryTopic>/guardian/odom</odometryTopic>
