@@ -21,6 +21,7 @@ add_service_files(DIRECTORY srv
   FILES
   config_pid.srv
   set_odometry.srv
+  set_odometry_calibration.srv
   set_pid.srv
 )
 

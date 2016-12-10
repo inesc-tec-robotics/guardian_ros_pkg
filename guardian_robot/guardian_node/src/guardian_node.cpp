@@ -45,6 +45,7 @@
 #include <sensor_msgs/JointState.h>
 
 #include <guardian_node/set_odometry.h>
+#include <guardian_node/set_odometry_calibration.h>
 #include <diagnostic_updater/diagnostic_updater.h>
 #include <diagnostic_updater/publisher.h>
 #include <boost/assign.hpp>
@@ -96,6 +97,8 @@ double orientation_y_ = 0.0;
 double orientation_z_ = 0.0;
 double orientation_w_ = 0.0;
 
+// Diameter of the wheels and distance between them
+double diameter_wheels_, diameter_wheels_correction_ratio_, distance_between_wheels_, distance_between_wheels_correction_ratio_;
 
 diagnostic_updater::HeaderlessTopicDiagnostic *sus_command_freq, *sus_io_freq; // Diagnostic to control the frequency of topics
 
@@ -175,6 +178,23 @@ bool set_odometry(guardian_node::set_odometry::Request &req,
 	guardian_hw_interface->ModifyOdometry(req.x, req.y, req.orientation);
 	res.ret = true;
 	
+	return true;
+}
+
+/*
+ *  Service set odometry calibration
+ *  Sets the odometry calibrationof the robot
+ */
+bool set_odometry_calibration(guardian_node::set_odometry_calibration::Request &req,
+         guardian_node::set_odometry_calibration::Response &res )
+{
+	ROS_INFO("guardian_node::set_odometry_calibration: request -> diameter_of_wheels_correction_ratio = %f, distance_between_wheels_correction_ratio = %f", req.diameter_of_wheels_correction_ratio, req.distance_between_wheels_correction_ratio);
+
+	diameter_wheels_correction_ratio_ = req.diameter_of_wheels_correction_ratio;
+	distance_between_wheels_correction_ratio_ = req.distance_between_wheels_correction_ratio;
+	guardian_hw_interface->SetMotorWheelParams(diameter_wheels_ * diameter_wheels_correction_ratio_, distance_between_wheels_ * distance_between_wheels_correction_ratio_);
+	res.ret = true;
+
 	return true;
 }
 
@@ -275,7 +295,6 @@ int main(int argc, char** argv){
 	ros::NodeHandle n, pn("~");
 	pose robot_pose;	// Position & velocity from the odometry
 	double max_linear_speed_, max_angular_speed_;
-	double diameter_wheels_, diameter_wheels_correction_ratio_, distance_between_wheels_, distance_between_wheels_correction_ratio_;	// Diameter of the wheels and distance between them
 	sensor_msgs::JointState robot_joints_;
 	double desired_freq_ = 0;
 	
@@ -372,12 +391,12 @@ int main(int argc, char** argv){
 			distance_between_wheels_ *= ERROR_D_1;	// Applying error factor for odom calcs
 		}*/
   		
-  		distance_between_wheels_ *= distance_between_wheels_correction_ratio_;
-  		diameter_wheels_ *= diameter_wheels_correction_ratio_;
+  		//distance_between_wheels_ *= distance_between_wheels_correction_ratio_;
+  		//diameter_wheels_ *= diameter_wheels_correction_ratio_;
   		
 		// Sets the max. speed read from the param
 		guardian_hw_interface->SetSpeedLimits(max_linear_speed_, DTOR(max_angular_speed_));
-		guardian_hw_interface->SetMotorWheelParams(diameter_wheels_, distance_between_wheels_);
+		guardian_hw_interface->SetMotorWheelParams(diameter_wheels_ * diameter_wheels_correction_ratio_, distance_between_wheels_ * distance_between_wheels_correction_ratio_);
 		guardian_hw_interface->EnablePID(false);
 		guardian_hw_interface->ToggleMotorPower(true);
 		guardian_hw_interface->SetSpeed(0.0, 0.0);
@@ -428,7 +447,8 @@ int main(int argc, char** argv){
 
 	//
 	// Defining services
-	ros::ServiceServer set_odometry_srv_ = pn.advertiseService("set_odometry",  set_odometry);
+	ros::ServiceServer set_odometry_srv_ = pn.advertiseService("set_odometry", set_odometry);
+	ros::ServiceServer set_odometry_calibration_srv_ = pn.advertiseService("set_odometry_calibation", set_odometry_calibration);
 	//
 	// Topics freq control 
 	// For /guardian/cmd_vel
